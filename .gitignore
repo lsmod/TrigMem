@@ -1,0 +1,15 @@
+# Ignore everything by default
+*
+
+# Allow markdown files
+!*.md
+!**/*.md
+
+# Allow license file
+!gpl-3.0.txt
+
+# Allow directories (needed for nested .md files)
+!examples/
+
+# Allow this gitignore itself
+!.gitignore
