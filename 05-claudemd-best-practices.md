@@ -1,8 +1,8 @@
 # Section 5: CLAUDE.md Best Practices
 
 CLAUDE.md is the most important—and most frequently misused—Claude Code memory mechanism. Because
-it's always loaded, every token has a multiplicative cost. This section provides practical guidance
-for keeping your CLAUDE.md lean, maintainable, and effective.
+it's always loaded, every token occupies context window space in every message. This section
+provides practical guidance for keeping your CLAUDE.md lean, maintainable, and effective.
 
 ---
 
@@ -10,12 +10,13 @@ for keeping your CLAUDE.md lean, maintainable, and effective.
 
 ### Why Every Token Matters
 
-CLAUDE.md is loaded at the start of **every conversation**. Unlike Skills or Commands that load
-on-demand, CLAUDE.md tokens are consumed in every message exchange.
+CLAUDE.md is included in the system prompt for **every message** in a conversation. The Claude API
+is stateless — each request sends the full prompt (system prompt + history + new message). Unlike
+Skills or Commands that load on-demand, CLAUDE.md tokens are present in every exchange.
 
-**The Multiplicative Cost:**
+**Tokens processed per conversation:**
 ```
-Total Cost = CLAUDE.md Tokens × Number of Messages
+Total Tokens Processed = CLAUDE.md Tokens × Number of Messages
 ```
 
 | CLAUDE.md Size | 10 Messages | 50 Messages | 100 Messages |
@@ -24,7 +25,23 @@ Total Cost = CLAUDE.md Tokens × Number of Messages
 | 500 tokens | 5,000 | 25,000 | 50,000 |
 | 2,000 tokens | 20,000 | 100,000 | 200,000 |
 
-A 2,000-token CLAUDE.md costs **20x more** than a 100-token CLAUDE.md over the same conversation.
+A 2,000-token CLAUDE.md occupies **20x more context window space** than a 100-token CLAUDE.md
+over the same conversation.
+
+> **Prompt caching reduces financial cost, not context pressure**
+>
+> Claude Code automatically uses [prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching).
+> After the first message, stable repeated content (like CLAUDE.md) is read from cache at **10%
+> of the base input token price** — a ~90% cost reduction. The first write costs 1.25x base price.
+>
+> | Message | Financial cost (per token) |
+> |---------|--------------------------|
+> | First message | 1.25x base (cache write) |
+> | Subsequent messages | 0.1x base (cache read) |
+>
+> **However, cached tokens still occupy context window space.** The context window is the binding
+> constraint — not price. A bloated CLAUDE.md crowds out room for conversation history, tool
+> results, and reasoning. This is why minimizing CLAUDE.md remains critical even with caching.
 
 ### The Target
 
@@ -444,7 +461,7 @@ Dev: `pnpm dev` | Tests: `pnpm test` | Build: `pnpm build`
 
 ## Summary
 
-1. **Token Economy**: Every CLAUDE.md token costs you in every message. Target 100-200 tokens.
+1. **Token Economy**: Every CLAUDE.md token occupies context window space in every message. Prompt caching reduces the financial cost (~90% after the first message), but the context window pressure remains. Target 100-200 tokens.
 
 2. **Pointer Pattern**: CLAUDE.md is an index, not the book. Point to detailed docs.
 

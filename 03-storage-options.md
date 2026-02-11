@@ -34,8 +34,9 @@ The CLAUDE.md file serves as the **project identity card**. It provides essentia
 in every conversation about your project.
 
 ### When Loaded
-**Always** - automatically loaded at the start of every conversation. This means every token in CLAUDE.md
-has a cost multiplied by the number of messages in your conversation.
+**Always** - included in the system prompt for every message in a conversation. The API is stateless,
+so CLAUDE.md is re-sent with each request. Prompt caching reduces the financial cost (~90% after the
+first message), but the tokens still occupy context window space every time.
 
 ### File Location
 ```

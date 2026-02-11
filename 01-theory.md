@@ -22,21 +22,29 @@ make informed choices—especially when the simpler decision guides don't give a
 **Minimize token consumption to maximize effectiveness.**
 
 The AI's context window is a finite, precious resource. Every token loaded—whether from CLAUDE.md,
-Rules, Skills, or conversation history—has a cost:
+Rules, Skills, or conversation history—is re-sent with every API call. The API is stateless: each
+message reconstructs the full prompt (system prompt + conversation history + new message).
 
 ```
-Total Context Cost = Tokens × Messages in Conversation
+Total Tokens Processed = Tokens × Messages in Conversation
 ```
 
-A 500-token CLAUDE.md file costs:
+A 500-token CLAUDE.md file is processed:
 - 500 tokens in a 1-message conversation
 - 5,000 tokens in a 10-message conversation
 - 50,000 tokens in a 100-message conversation
 
+**The prompt caching nuance:** Claude Code automatically uses [prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching).
+After the first message, cached content (like CLAUDE.md) costs only **10% of the base input price**
+on subsequent reads. So while the tokens are still *processed* every message, the *financial cost*
+is significantly reduced (~90%) for stable, repeated content. However, the tokens still **occupy
+context window space** regardless of caching — which is the more important constraint.
+
 **Implications:**
-- Keep always-loaded content (CLAUDE.md) as small as possible
+- Keep always-loaded content (CLAUDE.md) as small as possible — it consumes context window space every message
 - Use on-demand loading (Skills, Commands) for detailed instructions
 - Use the pointer pattern: brief references in CLAUDE.md, full content elsewhere
+- Prompt caching mitigates financial cost, but not context window pressure
 
 ### Goal 2: Precision
 
@@ -125,7 +133,7 @@ you predict how your storage choice will affect the Three Core Goals.
 
 | Value | Meaning | Token Impact |
 |-------|---------|--------------|
-| **Always** | Loaded every conversation | High (multiplied by message count) |
+| **Always** | Loaded every conversation | High (present every message; financial cost reduced ~90% by prompt caching, but context window impact remains) |
 | **Pattern-matched** | Loaded when file patterns match | Medium (only when relevant) |
 | **On-demand** | Loaded only when explicitly invoked | Low (only when needed) |
 
