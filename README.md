@@ -42,6 +42,10 @@ This method is free and open source under the [GPL v3 license](gpl-3.0.txt).
 
 ## Version
 
+0.1.2 Alpha - 12/02/2026
+
+### Previous releases
+
 0.1.0 Alpha - 05/02/2026
 
 ## Author
