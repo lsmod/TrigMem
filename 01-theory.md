@@ -34,17 +34,19 @@ A 500-token CLAUDE.md file is processed:
 - 5,000 tokens in a 10-message conversation
 - 50,000 tokens in a 100-message conversation
 
-**The prompt caching nuance:** Claude Code automatically uses [prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching).
-After the first message, cached content (like CLAUDE.md) costs only **10% of the base input price**
-on subsequent reads. So while the tokens are still *processed* every message, the *financial cost*
-is significantly reduced (~90%) for stable, repeated content. However, the tokens still **occupy
-context window space** regardless of caching — which is the more important constraint.
 
 **Implications:**
 - Keep always-loaded content (CLAUDE.md) as small as possible — it consumes context window space every message
 - Use on-demand loading (Skills, Commands) for detailed instructions
 - Use the pointer pattern: brief references in CLAUDE.md, full content elsewhere
 - Prompt caching mitigates financial cost, but not context window pressure
+
+
+**The prompt caching nuance:** Claude Code automatically uses [prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching).
+After the first message, cached content (like CLAUDE.md) costs only **10% of the base input price**
+on subsequent reads. So while the tokens are still *processed* every message, the *financial cost*
+is significantly reduced (~90%) for stable, repeated content. However, the tokens still **occupy
+context window space** regardless of caching — which is the more important constraint.
 
 ### Goal 2: Precision
 
@@ -155,6 +157,14 @@ you predict how your storage choice will affect the Three Core Goals.
 - Automatic → More convenient, but may load unexpectedly
 - User-explicit → Predictable, but requires user knowledge
 
+> **⚠️ Invocation Is Probabilistic, Not Deterministic**
+>
+> When a skill's invocation is set to "Automatic" (Claude decides), invocation is
+> *probabilistic*—Claude may or may not invoke the skill depending on prompt context,
+> conversation history, and description matching. A skill that fires reliably in one
+> session may not fire in another. For practical techniques to improve invocation
+> reliability, see [Section 7 — Invocation Reliability](07-configurable-skills.md#invocation-reliability).
+
 ### Dimension 4: Context Isolation
 
 **Where does this run?**
@@ -220,6 +230,18 @@ This matrix is your reference tool for understanding how each mechanism behaves.
 - Need: Any + On-demand + Any + Isolated
 - → **Sub-agent** (only mechanism with isolation)
 
+
+> **Scope Note: Claude Code Hooks**
+>
+> Claude Code also provides **hooks**—lifecycle callbacks (PreToolUse, PostToolUse,
+> SubagentStart, SubagentStop, etc.) that run shell commands at specific points during
+> a conversation. Hooks enable powerful automation: re-injecting context, preventing
+> dangerous commands, auto-formatting files, or validating tool arguments.
+>
+> Hooks are **out of scope** for TrigMem because they address *lifecycle action automation*,
+> not *what Claude stores and remembers*. TrigMem focuses on memory placement—where
+> information lives so Claude can retrieve it. Hooks complement memory management (e.g., a
+> hook could auto-format code after a skill runs) but are not themselves a memory mechanism.
 ---
 
 ## Applying Theory to Decisions

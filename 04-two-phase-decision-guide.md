@@ -152,6 +152,7 @@ Once you've identified the destination, use these refinement guidelines.
 > - **It's OK to move things later**: A skill that starts in CLAUDE.md can move to Rules
 > - **Consider trade-offs over time**: Token economy vs. precision vs. convenience
 > - **Watch for signals**: If Claude ignores a rule, maybe it's in the wrong place
+> - **Stuck between two destinations?** Use the [Mechanism × Dimension Matrix](01-theory.md#the-mechanism--dimension-matrix) to compare trade-offs
 >
 > The goal is a *working* system, not a perfect one. Iterate based on real usage.
 
@@ -277,6 +278,7 @@ Refactor the authentication module to follow Hexagonal Architecture.
 Agents should **reference** skills for patterns rather than duplicating knowledge.
 This keeps agents lightweight and focused on execution.
 
+
 **Micro-examples:**
 - "Refactor all API handlers" → Sub-agent (large task, benefits from isolation)
 - "Spawn a frontend specialist and backend specialist in parallel" → Sub-agents (domain-specific experts)
@@ -284,6 +286,8 @@ This keeps agents lightweight and focused on execution.
 
 *See [Worked Examples](examples/worked-examples.md) for complete walkthroughs.*
 
+
+> **⚠️ Sub-agents don't inherit CLAUDE.md, skills, or rules.** Use `skills:` frontmatter for custom agents, or pass content in the prompt for ad-hoc spawns. See [Section 3 — Sub-agent Context Isolation](03-storage-options.md#5-sub-agents) for details.
 ---
 
 ### Phase 2 → CLAUDE.md / Rules
@@ -393,6 +397,9 @@ Claude will read these files when relevant, but they won't consume tokens in eve
 
 ## Common Patterns
 
+Phase 2 sometimes reveals that a single piece of knowledge spans multiple categories.
+When that happens, **decompose it across mechanisms** — each part goes where it fits best.
+
 ### Pattern: "We use X technology"
 - **Identity statement** (e.g., "We use PostgreSQL") → CLAUDE.md
 - **How to use it** (e.g., "How to write Prisma queries") → Skill
@@ -407,6 +414,11 @@ Claude will read these files when relevant, but they won't consume tokens in eve
 - **Universal standard** (e.g., "SOLID principles") → Skill
 - **Our specific rules** (e.g., "Use kebab-case for files") → Rules
 - **Why we do it** (if long explanation) → External docs + pointer
+
+### Pattern: "Enforce an architectural standard"
+- **The pattern itself** (e.g., "Repository Pattern principles") → Skill
+- **Our conventions** (e.g., "Repos live in `src/repos/`, use Prisma") → Rule
+- **An agent that applies it** (e.g., "Refactor all data access to use repos") → Sub-agent referencing the Skill
 
 ---
 

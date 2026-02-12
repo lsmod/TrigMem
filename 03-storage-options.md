@@ -34,9 +34,9 @@ The CLAUDE.md file serves as the **project identity card**. It provides essentia
 in every conversation about your project.
 
 ### When Loaded
-**Always** - included in the system prompt for every message in a conversation. The API is stateless,
-so CLAUDE.md is re-sent with each request. Prompt caching reduces the financial cost (~90% after the
-first message), but the tokens still occupy context window space every time.
+**Always** — included in the system prompt for every message in a conversation. The API is stateless,
+so CLAUDE.md is re-sent with each request. Prompt caching reduces financial cost but not context
+pressure (see [Section 1 — Context Economy](01-theory.md#goal-1-context-economy)).
 
 ### File Location
 ```
@@ -180,6 +180,12 @@ YAML config block with project-specific values.
 - **Self-documenting**: Description tells Claude when to use it
 - **Composable**: Skills can reference other skills
 
+### Stack-Scoped Portability
+
+Skills are portable *within a technology stack*. A React skill works on any React project; a
+Python testing skill works on any Python project. A well-crafted skill becomes a reusable asset
+across every project in that stack—write once, use in all matching projects.
+
 ### Invocation Control
 
 | Frontmatter | User invokes | Claude invokes |
@@ -187,6 +193,20 @@ YAML config block with project-specific values.
 | (default) | Yes | Yes |
 | `disable-model-invocation: true` | Yes | No |
 | `user-invocable: false` | No | Yes |
+
+> **Note: Skill Invocation Is Probabilistic**
+>
+> When Claude auto-invokes a skill, invocation is *probabilistic*—it depends on how well the
+> skill's `description` matches the current prompt context. A skill may fire reliably in one
+> conversation but not in another. To improve reliability:
+>
+> - Add explicit directives in CLAUDE.md (e.g., "Always use the `/code-review` skill when
+>   reviewing pull requests")
+> - Use fully qualified skill names in prompts (e.g., `/project-name:skill-name`)
+> - Reference exact skill paths in your prompt (e.g., "Use the skill at
+>   `.claude/skills/error-handling/SKILL.md`")
+>
+> For a comprehensive treatment, see [Section 7 — Invocation Reliability](07-configurable-skills.md#invocation-reliability).
 
 ### Best For
 - How-to procedures (e.g., "how to implement X pattern")
@@ -261,6 +281,25 @@ project-root/
 - **Focused**: Single responsibility per agent
 - **Parallel-capable**: Multiple agents can run simultaneously
 - **Clean handoff**: Results returned to parent context
+
+> **⚠️ Sub-agent Context Isolation: What Is NOT Inherited**
+>
+> Sub-agents run in an isolated context that does **not** inherit from the parent conversation:
+>
+> - **CLAUDE.md is NOT loaded** — sub-agents receive only their own system prompt plus basic
+>   environment details (working directory, platform). They do not see the project's CLAUDE.md.
+> - **Skills are NOT inherited** — the parent conversation's skill registry is not available
+>   to the sub-agent.
+> - **Rules are NOT inherited** — pattern-matched rules from the parent context do not carry over.
+>
+> **Mechanisms for passing context to sub-agents:**
+>
+> - **Custom sub-agents** (`.claude/agents/`): Use the `skills:` frontmatter field to explicitly
+>   preload skills. This injects the full skill content into the sub-agent's context at startup.
+> - **Ad-hoc Task tool sub-agents** (Explore, Plan, general-purpose): Have no `skills:` mechanism.
+>   You must pass relevant content directly in the prompt text when spawning the sub-agent.
+>
+> See the [official sub-agent documentation](https://code.claude.com/docs/en/sub-agents) for details.
 
 ### Best For
 - Large refactoring tasks

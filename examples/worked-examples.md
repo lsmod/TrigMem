@@ -296,6 +296,11 @@ new error handling pattern. The pattern is documented in
 .claude/skills/error-handling/SKILL.md."
 ```
 
+> **Note:** In this ad-hoc Task tool invocation, the *parent* context has access to CLAUDE.md
+> and the skill registry. It reads the skill file and passes its content into the sub-agent's
+> prompt. The sub-agent itself does not have direct access to the skill registry—it only sees
+> what the parent explicitly provides.
+
 Or if this is a recurring task, create an agent definition:
 
 `.claude/agents/refactor-agent.md`
@@ -317,6 +322,28 @@ You are a refactoring specialist focused on systematic code updates.
    - Verify changes compile
 3. Summarize all changes
 ```
+
+> **⚠️ Sub-agents Don't Auto-Inherit Skills**
+>
+> The agent definition above says "Reference the error-handling skill," but sub-agents do
+> **not** automatically inherit the parent conversation's skill registry.
+>
+> **For custom sub-agents** (`.claude/agents/`): Use the `skills:` frontmatter field to
+> preload the skill into the agent's context:
+>
+> ```yaml
+> ---
+> skills:
+>   - error-handling
+> ---
+>
+> # Refactoring Agent
+> ...
+> ```
+>
+> **For ad-hoc Task tool prompts**: The parent context (which *does* have skill access) should
+> read the skill file and pass its content directly in the prompt. The sub-agent itself has no
+> access to the skill registry.
 
 ### Rationale
 

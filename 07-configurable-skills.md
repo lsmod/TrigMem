@@ -111,6 +111,8 @@ the pattern; the configuration says _where_ in this project.
 ### 1. True Portability
 
 Write the skill once, configure per project. No more copying and editing.
+Portability is *stack-scoped*: a well-crafted skill becomes a reusable asset across all
+projects in the same technology stack (e.g., all React projects, all Python projects).
 
 ### 2. Separation of Concerns
 
@@ -560,6 +562,85 @@ If configuration is empty, I will:
 - PR templates with project-specific sections
 - Deployment scripts with environment paths
 - Build configurations
+
+---
+
+## Invocation Reliability
+
+### The Problem: Silent Invocation Failure
+
+When a skill's invocation is set to automatic (the default), Claude decides whether to invoke
+it based on the `description` frontmatter and conversation context. This decision is
+*probabilistic*—a skill that fires reliably in one session may not fire in another. Worse,
+failures are **silent**: Claude simply proceeds without the skill, and you may not notice
+the difference until you see lower-quality output.
+
+### Techniques to Improve Reliability
+
+#### 1. Add Explicit Directives in CLAUDE.md
+
+Tell Claude when to use specific skills:
+
+```markdown
+# In CLAUDE.md
+## Skill Directives
+- Always use `/code-review` when reviewing pull requests
+- Use `/error-handling` when implementing try/catch patterns
+- Use `/hexagonal-architecture` when creating domain or adapter code
+```
+
+This trades a small amount of context economy for significantly more reliable invocation.
+
+#### 2. Use the Skill Tool Explicitly
+
+In prompts to Claude, reference the Skill tool directly:
+
+```
+Use the Skill tool to invoke the `code-review` skill, then review this PR.
+```
+
+This removes ambiguity and forces the invocation.
+
+#### 3. Use Fully Qualified Skill Names
+
+When a project or skill pack uses namespaced skills, reference the full qualified name:
+
+```
+Use the `/my-project:error-handling` skill.
+```
+
+#### 4. Write Precise `description` Frontmatter
+
+The `description` field is how Claude decides whether to auto-invoke a skill. Vague
+descriptions lead to unreliable matching. Be specific about triggers:
+
+```yaml
+# Bad — vague, Claude may not match this to relevant situations
+description: "Helps with code quality"
+
+# Good — specific triggers Claude can match against
+description: |
+  Reviews code for security vulnerabilities, performance issues, and style violations.
+  Use when reviewing pull requests, auditing code, or when the user asks about
+  code quality, best practices, or security concerns.
+```
+
+#### 5. Preload Skills into Custom Sub-agents
+
+Custom sub-agents (`.claude/agents/`) support a `skills:` frontmatter field that injects
+the full skill content into the agent's context at startup:
+
+```yaml
+---
+skills:
+  - error-handling
+  - code-review
+---
+```
+
+This guarantees the sub-agent has access to the skill content—no probabilistic invocation
+needed. Note that ad-hoc Task tool sub-agents (Explore, Plan, general-purpose) do not
+support this mechanism; for those, pass skill content directly in the prompt.
 
 ---
 
