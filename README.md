@@ -42,10 +42,11 @@ This method is free and open source under the [GPL v3 license](gpl-3.0.txt).
 
 ## Version
 
-0.1.2 Alpha - 12/02/2026
+0.1.3 Alpha - 12/02/2026 - adds MkDocs and fix bad anchor link
 
 ### Previous releases
 
+0.1.2 Alpha - 12/02/2026
 0.1.0 Alpha - 05/02/2026
 
 ## Author
