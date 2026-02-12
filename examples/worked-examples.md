@@ -19,7 +19,7 @@ walks through Phase 1 (Triage) and Phase 2 (Refinement) to arrive at the correct
 
 **Try it first:** Where does this information go?
 
-<details>
+<details markdown>
 <summary>Click to see solution</summary>
 
 ### Phase 1: Triage
@@ -74,7 +74,7 @@ token economy principles.
 
 **Try it first:** Where does this information go?
 
-<details>
+<details markdown>
 <summary>Click to see solution</summary>
 
 ### Phase 1: Triage
@@ -160,7 +160,7 @@ should explicitly trigger. Commands are the right mechanism because:
 
 **Try it first:** Where does this information go?
 
-<details>
+<details markdown>
 <summary>Click to see solution</summary>
 
 ### Phase 1: Triage
@@ -255,7 +255,7 @@ Skills are ideal because:
 
 **Try it first:** Where does this information go?
 
-<details>
+<details markdown>
 <summary>Click to see solution</summary>
 
 ### Phase 1: Triage
@@ -369,7 +369,7 @@ This isn't a "storage" decision per se—it's recognizing that sub-agents are th
 
 **Try it first:** This one is tricky—where does this information go?
 
-<details>
+<details markdown>
 <summary>Click to see solution</summary>
 
 ### Phase 1: Triage
@@ -518,7 +518,7 @@ This edge case shows that:
 
 **Try it first:** Another tricky one—where does this go?
 
-<details>
+<details markdown>
 <summary>Click to see solution</summary>
 
 ### Phase 1: Triage

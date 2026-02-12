@@ -1,0 +1,59 @@
+site_name: TrigMem
+site_url: https://lsmod.github.io/TrigMem/
+site_description: Trigallez's Memory Management Method for Claude Code
+site_author: Arno Trigallez
+
+repo_url: https://github.com/lsmod/TrigMem
+repo_name: lsmod/TrigMem
+
+docs_dir: docs
+site_dir: _site
+
+nav:
+  - Home: README.md
+  - 1. Theory: 01-theory.md
+  - 2. What You're Storing: 02-what-youre-storing.md
+  - 3. Storage Options: 03-storage-options.md
+  - 4. Two-Phase Decision Guide: 04-two-phase-decision-guide.md
+  - 5. CLAUDE.md Best Practices: 05-claudemd-best-practices.md
+  - 6. Migration Guide: 06-migration-guide.md
+  - 7. Configurable Skills: 07-configurable-skills.md
+  - Worked Examples: examples/worked-examples.md
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - tables
+  - admonition
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true

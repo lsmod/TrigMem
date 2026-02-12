@@ -13,3 +13,14 @@
 
 # Allow this gitignore itself
 !.gitignore
+
+# Allow MkDocs config and dependencies
+!mkdocs.yml
+!requirements.txt
+!docs/
+!docs/**
+
+# Allow GitHub Actions
+!.github/
+!.github/workflows/
+!.github/workflows/**

@@ -152,7 +152,7 @@ Once you've identified the destination, use these refinement guidelines.
 > - **It's OK to move things later**: A skill that starts in CLAUDE.md can move to Rules
 > - **Consider trade-offs over time**: Token economy vs. precision vs. convenience
 > - **Watch for signals**: If Claude ignores a rule, maybe it's in the wrong place
-> - **Stuck between two destinations?** Use the [Mechanism × Dimension Matrix](01-theory.md#the-mechanism--dimension-matrix) to compare trade-offs
+> - **Stuck between two destinations?** Use the [Mechanism × Dimension Matrix](01-theory.md#the-mechanism-dimension-matrix) to compare trade-offs
 >
 > The goal is a *working* system, not a perfect one. Iterate based on real usage.
 
