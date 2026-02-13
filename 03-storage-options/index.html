@@ -1,0 +1,2335 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/03-storage-options/">
+      
+      
+        <link rel="prev" href="../02-what-youre-storing/">
+      
+      
+        <link rel="next" href="../04-two-phase-decision-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>3. Storage Options - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-3-the-storage-options" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Storage Options
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CLAUDE.md
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. CLAUDE.md">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rule-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Skills
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-scoped-portability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack-Scoped Portability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invocation-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invocation Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-sub-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Sub-agents
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Sub-agents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skills-and-commands-understanding-the-merger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skills and Commands: Understanding the Merger
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skills and Commands: Understanding the Merger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-distinction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Distinction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Guidance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#priority-and-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priority and Precedence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Priority and Precedence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading Priority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflict-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conflict Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#official-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Official Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. CLAUDE.md
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. CLAUDE.md">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rule-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Skills
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skill-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-scoped-portability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack-Scoped Portability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invocation-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invocation Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-sub-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Sub-agents
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Sub-agents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-loaded_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Loaded
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-location_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-for_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best For
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skills-and-commands-understanding-the-merger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skills and Commands: Understanding the Merger
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skills and Commands: Understanding the Merger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-distinction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Distinction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Guidance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#priority-and-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priority and Precedence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Priority and Precedence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading Priority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflict-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conflict Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#official-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Official Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-3-the-storage-options">Section 3: The Storage Options<a class="headerlink" href="#section-3-the-storage-options" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Already familiar with Claude Code storage?</strong></p>
+<p>If you already know how CLAUDE.md, Rules, Skills, Commands, and Sub-agents work,
+you can <a href="../04-two-phase-decision-guide/">skip to the Two-Phase Decision Guide</a>.
+This section is a reference—come back when you need specifics.</p>
+</blockquote>
+<p>This section provides a complete reference of all memory mechanisms available in Claude Code. With the
+theory and categories from Sections 1-2, you can now understand <em>why</em> each mechanism is designed the way
+it is.</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Claude Code provides <strong>five distinct memory mechanisms</strong>, each designed for specific use cases. The key to
+effective AI memory management is understanding when to use each one.</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Primary Purpose</th>
+<th>When Loaded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLAUDE.md</td>
+<td>Project identity &amp; essential context</td>
+<td>Always (every conversation)</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td>Pattern-triggered behavioral guidance</td>
+<td>When file patterns match</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>Reusable procedures &amp; knowledge</td>
+<td>On-demand (user or Claude)</td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>User-controlled workflows</td>
+<td>Explicit user invocation</td>
+</tr>
+<tr>
+<td>Sub-agents</td>
+<td>Isolated, focused task execution</td>
+<td>When spawned for specific tasks</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-claudemd">1. CLAUDE.md<a class="headerlink" href="#1-claudemd" title="Permanent link">&para;</a></h2>
+<h3 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h3>
+<p>The CLAUDE.md file serves as the <strong>project identity card</strong>. It provides essential context that Claude needs
+in every conversation about your project.</p>
+<h3 id="when-loaded">When Loaded<a class="headerlink" href="#when-loaded" title="Permanent link">&para;</a></h3>
+<p><strong>Always</strong> — included in the system prompt for every message in a conversation. The API is stateless,
+so CLAUDE.md is re-sent with each request. Prompt caching reduces financial cost but not context
+pressure (see <a href="../01-theory/#goal-1-context-economy">Section 1 — Context Economy</a>).</p>
+<h3 id="file-location">File Location<a class="headerlink" href="#file-location" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>project-root/
+└── CLAUDE.md
+</code></pre></div>
+<p>Claude Code also checks for CLAUDE.md files in parent directories, creating a hierarchy of context.</p>
+<h3 id="key-characteristics">Key Characteristics<a class="headerlink" href="#key-characteristics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Always in context</strong>: No invocation needed</li>
+<li><strong>Project-bound</strong>: Tied to this specific project</li>
+<li><strong>Token-sensitive</strong>: Keep it concise (target 100-200 tokens)</li>
+<li><strong>Identity-focused</strong>: Who/what/where, not detailed how-to</li>
+</ul>
+<h3 id="best-for">Best For<a class="headerlink" href="#best-for" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Project name and brief description</li>
+<li>Tech stack summary (e.g., "TypeScript + React + PostgreSQL")</li>
+<li>Key directory pointers (e.g., "Source code in <code>src/</code>, tests in <code>tests/</code>")</li>
+<li>Critical constraints (e.g., "Never modify <code>legacy/</code> folder")</li>
+<li>Links to detailed documentation (pointer pattern)</li>
+</ul>
+<h3 id="anti-patterns">Anti-Patterns<a class="headerlink" href="#anti-patterns" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Full architecture documentation</li>
+<li>Complete coding style guides</li>
+<li>Long lists of rules</li>
+<li>Step-by-step procedures</li>
+</ul>
+<hr />
+<h2 id="2-rules">2. Rules<a class="headerlink" href="#2-rules" title="Permanent link">&para;</a></h2>
+<h3 id="purpose_1">Purpose<a class="headerlink" href="#purpose_1" title="Permanent link">&para;</a></h3>
+<p>Rules provide <strong>automatic behavioral guidance</strong> that activates when Claude is working with specific file
+types or patterns. Think of them as "if working on X, remember Y."</p>
+<h3 id="when-loaded_1">When Loaded<a class="headerlink" href="#when-loaded_1" title="Permanent link">&para;</a></h3>
+<p><strong>Pattern-triggered</strong> - loaded automatically when Claude is working with files that match the rule's
+glob pattern.</p>
+<h3 id="file-location_1">File Location<a class="headerlink" href="#file-location_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>project-root/
+└── .claude/
+    └── rules/
+        ├── typescript.md      # Triggered by *.ts files
+        ├── tests.md           # Triggered by *.test.* files
+        └── api-routes.md      # Triggered by src/api/**
+</code></pre></div>
+<h3 id="rule-file-format">Rule File Format<a class="headerlink" href="#rule-file-format" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>---
+<span class="gu">globs: [&quot;*.ts&quot;, &quot;*.tsx&quot;]</span>
+<span class="gu">---</span>
+
+<span class="gh"># TypeScript Rules</span>
+
+When working with TypeScript files:
+<span class="k">-</span><span class="w"> </span>Use strict mode
+<span class="k">-</span><span class="w"> </span>Prefer interfaces over types for object shapes
+<span class="k">-</span><span class="w"> </span>...
+</code></pre></div>
+<h3 id="key-characteristics_1">Key Characteristics<a class="headerlink" href="#key-characteristics_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Automatic activation</strong>: No user action needed</li>
+<li><strong>Pattern-scoped</strong>: Only loads when relevant files are accessed</li>
+<li><strong>Contextual</strong>: Guidance appears when it's most relevant</li>
+<li><strong>Composable</strong>: Multiple rules can apply simultaneously</li>
+</ul>
+<h3 id="best-for_1">Best For<a class="headerlink" href="#best-for_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>File-type-specific coding standards</li>
+<li>Directory-specific conventions</li>
+<li>Pattern-based reminders</li>
+<li>Contextual warnings</li>
+</ul>
+<h3 id="considerations">Considerations<a class="headerlink" href="#considerations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Rules add to context when triggered—keep them focused</li>
+<li>Overlapping patterns can cause multiple rules to load</li>
+<li>Good for "always do this when working on X" guidance</li>
+</ul>
+<blockquote>
+<p><strong>⚠️ Warning: Broad Patterns</strong></p>
+<p>Rules with broad globs (e.g., <code>**/*</code>, <code>*</code>, or no globs at all) load on nearly every file access,
+providing <strong>no token savings over CLAUDE.md</strong>. Use specific patterns like <code>*.ts</code> or <code>src/api/**</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*.ts</code></td>
+<td>Loads only for TypeScript files ✓</td>
+</tr>
+<tr>
+<td><code>src/api/**</code></td>
+<td>Loads only in API directory ✓</td>
+</tr>
+<tr>
+<td><code>**/*</code></td>
+<td>Loads for all files ✗ (no savings)</td>
+</tr>
+<tr>
+<td><em>(no globs)</em></td>
+<td>May load frequently ✗</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<hr />
+<h2 id="3-skills">3. Skills<a class="headerlink" href="#3-skills" title="Permanent link">&para;</a></h2>
+<h3 id="purpose_2">Purpose<a class="headerlink" href="#purpose_2" title="Permanent link">&para;</a></h3>
+<p>Skills are <strong>reusable knowledge and procedures</strong> that Claude can invoke when needed. They encapsulate
+expertise that applies across many situations.</p>
+<h3 id="when-loaded_2">When Loaded<a class="headerlink" href="#when-loaded_2" title="Permanent link">&para;</a></h3>
+<p><strong>On-demand</strong> - loaded when:
+- User explicitly invokes with <code>/skill-name</code>
+- Claude determines the skill is relevant (auto-invocation)</p>
+<h3 id="file-location_2">File Location<a class="headerlink" href="#file-location_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>project-root/
+└── .claude/
+    └── skills/
+        └── skill-name/
+            └── SKILL.md
+</code></pre></div>
+<h3 id="skill-file-format">Skill File Format<a class="headerlink" href="#skill-file-format" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">skill-name</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">What this skill does.</span>
+<span class="w">  </span><span class="no">Use when [specific triggers], [scenarios], or when user asks [questions].</span>
+<span class="nt">allowed-tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read, Grep, Glob</span>
+<span class="nn">---</span>
+
+<span class="c1"># Skill Name</span>
+
+<span class="c1"># Purpose</span>
+<span class="l l-Scalar l-Scalar-Plain">Brief description of what this skill accomplishes.</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Instructions</span>
+<span class="l l-Scalar l-Scalar-Plain">Step-by-step instructions Claude follows.</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Configuration (if configurable)</span>
+<span class="l l-Scalar l-Scalar-Plain">YAML config block with project-specific values.</span>
+</code></pre></div>
+<h3 id="key-characteristics_2">Key Characteristics<a class="headerlink" href="#key-characteristics_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Lazy loading</strong>: Only loaded when invoked</li>
+<li><strong>Reusable</strong>: Can be universal (portable) or project-specific</li>
+<li><strong>Self-documenting</strong>: Description tells Claude when to use it</li>
+<li><strong>Composable</strong>: Skills can reference other skills</li>
+</ul>
+<h3 id="stack-scoped-portability">Stack-Scoped Portability<a class="headerlink" href="#stack-scoped-portability" title="Permanent link">&para;</a></h3>
+<p>Skills are portable <em>within a technology stack</em>. A React skill works on any React project; a
+Python testing skill works on any Python project. A well-crafted skill becomes a reusable asset
+across every project in that stack—write once, use in all matching projects.</p>
+<h3 id="invocation-control">Invocation Control<a class="headerlink" href="#invocation-control" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Frontmatter</th>
+<th>User invokes</th>
+<th>Claude invokes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(default)</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>disable-model-invocation: true</code></td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>user-invocable: false</code></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note: Skill Invocation Is Probabilistic</strong></p>
+<p>When Claude auto-invokes a skill, invocation is <em>probabilistic</em>—it depends on how well the
+skill's <code>description</code> matches the current prompt context. A skill may fire reliably in one
+conversation but not in another. To improve reliability:</p>
+<ul>
+<li>Add explicit directives in CLAUDE.md (e.g., "Always use the <code>/code-review</code> skill when
+  reviewing pull requests")</li>
+<li>Use fully qualified skill names in prompts (e.g., <code>/project-name:skill-name</code>)</li>
+<li>Reference exact skill paths in your prompt (e.g., "Use the skill at
+  <code>.claude/skills/error-handling/SKILL.md</code>")</li>
+</ul>
+<p>For a comprehensive treatment, see <a href="../07-configurable-skills/#invocation-reliability">Section 7 — Invocation Reliability</a>.</p>
+</blockquote>
+<h3 id="best-for_2">Best For<a class="headerlink" href="#best-for_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>How-to procedures (e.g., "how to implement X pattern")</li>
+<li>Reusable methodologies (e.g., code review checklists)</li>
+<li>Domain expertise (e.g., security best practices)</li>
+<li>Complex multi-step workflows</li>
+</ul>
+<hr />
+<h2 id="4-commands">4. Commands<a class="headerlink" href="#4-commands" title="Permanent link">&para;</a></h2>
+<h3 id="purpose_3">Purpose<a class="headerlink" href="#purpose_3" title="Permanent link">&para;</a></h3>
+<p>Commands are <strong>user-controlled workflows</strong> with explicit triggers. They represent actions the user
+consciously initiates.</p>
+<h3 id="when-loaded_3">When Loaded<a class="headerlink" href="#when-loaded_3" title="Permanent link">&para;</a></h3>
+<p><strong>Explicit invocation only</strong> - loaded when user types <code>/command-name</code>.</p>
+<h3 id="file-location_3">File Location<a class="headerlink" href="#file-location_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>project-root/
+└── .claude/
+    └── commands/
+        └── command-name.md
+</code></pre></div>
+<h3 id="command-file-format">Command File Format<a class="headerlink" href="#command-file-format" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># Command Name</span>
+
+Brief description of what this command does.
+
+<span class="gu">## Instructions</span>
+
+Steps Claude follows when this command is invoked.
+</code></pre></div>
+<h3 id="key-characteristics_3">Key Characteristics<a class="headerlink" href="#key-characteristics_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>User-initiated</strong>: Never auto-invoked by Claude</li>
+<li><strong>Action-oriented</strong>: Typically has side effects (creates files, runs commands)</li>
+<li><strong>Explicit</strong>: User knows exactly what they're triggering</li>
+<li><strong>Visible</strong>: Always appears in the <code>/</code> menu</li>
+</ul>
+<h3 id="best-for_3">Best For<a class="headerlink" href="#best-for_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Deployment workflows</li>
+<li>Code generation templates</li>
+<li>Project-specific automation</li>
+<li>Actions with significant side effects</li>
+</ul>
+<hr />
+<h2 id="5-sub-agents">5. Sub-agents<a class="headerlink" href="#5-sub-agents" title="Permanent link">&para;</a></h2>
+<h3 id="purpose_4">Purpose<a class="headerlink" href="#purpose_4" title="Permanent link">&para;</a></h3>
+<p>Sub-agents provide <strong>isolated execution contexts</strong> for focused, complex tasks. They run in a separate
+context with their own conversation history.</p>
+<h3 id="when-loaded_4">When Loaded<a class="headerlink" href="#when-loaded_4" title="Permanent link">&para;</a></h3>
+<p><strong>When spawned</strong> - created on-demand for specific tasks, typically via the Task tool or explicit
+agent configuration.</p>
+<h3 id="file-location_4">File Location<a class="headerlink" href="#file-location_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>project-root/
+└── .claude/
+    └── agents/
+        └── agent-name.md
+</code></pre></div>
+<h3 id="key-characteristics_4">Key Characteristics<a class="headerlink" href="#key-characteristics_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Context isolation</strong>: Separate conversation history</li>
+<li><strong>Focused</strong>: Single responsibility per agent</li>
+<li><strong>Parallel-capable</strong>: Multiple agents can run simultaneously</li>
+<li><strong>Clean handoff</strong>: Results returned to parent context</li>
+</ul>
+<blockquote>
+<p><strong>⚠️ Sub-agent Context Isolation: What Is NOT Inherited</strong></p>
+<p>Sub-agents run in an isolated context that does <strong>not</strong> inherit from the parent conversation:</p>
+<ul>
+<li><strong>CLAUDE.md is NOT loaded</strong> — sub-agents receive only their own system prompt plus basic
+  environment details (working directory, platform). They do not see the project's CLAUDE.md.</li>
+<li><strong>Skills are NOT inherited</strong> — the parent conversation's skill registry is not available
+  to the sub-agent.</li>
+<li><strong>Rules are NOT inherited</strong> — pattern-matched rules from the parent context do not carry over.</li>
+</ul>
+<p><strong>Mechanisms for passing context to sub-agents:</strong></p>
+<ul>
+<li><strong>Custom sub-agents</strong> (<code>.claude/agents/</code>): Use the <code>skills:</code> frontmatter field to explicitly
+  preload skills. This injects the full skill content into the sub-agent's context at startup.</li>
+<li><strong>Ad-hoc Task tool sub-agents</strong> (Explore, Plan, general-purpose): Have no <code>skills:</code> mechanism.
+  You must pass relevant content directly in the prompt text when spawning the sub-agent.</li>
+</ul>
+<p>See the <a href="https://code.claude.com/docs/en/sub-agents">official sub-agent documentation</a> for details.</p>
+</blockquote>
+<h3 id="best-for_4">Best For<a class="headerlink" href="#best-for_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Large refactoring tasks</li>
+<li>Parallel independent work streams</li>
+<li>Tasks requiring clean slate context</li>
+<li>Complex operations benefiting from isolation</li>
+</ul>
+<hr />
+<h2 id="skills-and-commands-understanding-the-merger">Skills and Commands: Understanding the Merger<a class="headerlink" href="#skills-and-commands-understanding-the-merger" title="Permanent link">&para;</a></h2>
+<p>Recent Claude Code updates have unified the skill and command systems. Here's what you need to know:</p>
+<h3 id="current-behavior">Current Behavior<a class="headerlink" href="#current-behavior" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Both live in <code>.claude/</code></strong>: Skills in <code>skills/</code>, commands in <code>commands/</code></li>
+<li><strong>Both use frontmatter</strong>: Same YAML configuration options</li>
+<li><strong>Invocation differs</strong>: Commands are user-only; skills can be auto-invoked</li>
+</ul>
+<h3 id="key-distinction">Key Distinction<a class="headerlink" href="#key-distinction" title="Permanent link">&para;</a></h3>
+<p>The primary difference is <strong>invocation control</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Auto-invocable by Claude</th>
+<th>User invocable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skill (default)</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Skill (<code>disable-model-invocation: true</code>)</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Command</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="practical-guidance">Practical Guidance<a class="headerlink" href="#practical-guidance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Use Commands when</strong>: The action has side effects and should only run when user explicitly wants it</li>
+<li><strong>Use Skills when</strong>: The knowledge/procedure might be useful and Claude should be able to invoke it</li>
+<li><strong>Use <code>disable-model-invocation: true</code></strong>: When you want skill organization but command-like behavior</li>
+</ul>
+<hr />
+<h2 id="priority-and-precedence">Priority and Precedence<a class="headerlink" href="#priority-and-precedence" title="Permanent link">&para;</a></h2>
+<p>When multiple mechanisms provide conflicting guidance, Claude Code follows this general precedence:</p>
+<h3 id="loading-priority">Loading Priority<a class="headerlink" href="#loading-priority" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>CLAUDE.md</strong> - Always loaded first, establishes baseline context</li>
+<li><strong>Rules</strong> - Loaded when file patterns match, layer on top of CLAUDE.md</li>
+<li><strong>Skills/Commands</strong> - Loaded on invocation, most specific context</li>
+</ol>
+<h3 id="conflict-resolution">Conflict Resolution<a class="headerlink" href="#conflict-resolution" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Later context generally wins</strong>: Skills invoked during a task can override earlier guidance</li>
+<li><strong>Specificity matters</strong>: More specific guidance (skill for exact task) typically takes precedence</li>
+<li><strong>Explicit &gt; implicit</strong>: User-invoked commands/skills override auto-loaded rules</li>
+</ul>
+<h3 id="best-practice">Best Practice<a class="headerlink" href="#best-practice" title="Permanent link">&para;</a></h3>
+<p>Avoid conflicts by design:
+- CLAUDE.md: Identity and pointers (what/where)
+- Rules: File-type conventions (how for specific files)
+- Skills: Procedures and methods (how to do X)
+- Commands: User actions (do X now)</p>
+<p>When mechanisms overlap, the most recently loaded, most specific guidance typically prevails.</p>
+<hr />
+<h2 id="quick-reference-table">Quick Reference Table<a class="headerlink" href="#quick-reference-table" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>CLAUDE.md</th>
+<th>Rules</th>
+<th>Skills</th>
+<th>Commands</th>
+<th>Sub-agents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Location</strong></td>
+<td>Root</td>
+<td><code>.claude/rules/</code></td>
+<td><code>.claude/skills/</code></td>
+<td><code>.claude/commands/</code></td>
+<td><code>.claude/agents/</code></td>
+</tr>
+<tr>
+<td><strong>Loading</strong></td>
+<td>Always</td>
+<td>Pattern-match</td>
+<td>On-demand</td>
+<td>User-invoke</td>
+<td>When spawned</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Project</td>
+<td>File patterns</td>
+<td>Universal/Project</td>
+<td>Project</td>
+<td>Task-specific</td>
+</tr>
+<tr>
+<td><strong>Context Cost</strong></td>
+<td>Every message</td>
+<td>When triggered</td>
+<td>When invoked</td>
+<td>When invoked</td>
+<td>Isolated</td>
+</tr>
+<tr>
+<td><strong>Auto-invoke</strong></td>
+<td>N/A</td>
+<td>Yes (by pattern)</td>
+<td>Yes (optional)</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><strong>Best For</strong></td>
+<td>Identity</td>
+<td>Conventions</td>
+<td>Procedures</td>
+<td>Actions</td>
+<td>Isolation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="official-documentation">Official Documentation<a class="headerlink" href="#official-documentation" title="Permanent link">&para;</a></h2>
+<p>For authoritative details on each mechanism, see the official Claude Code documentation:</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Official Docs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLAUDE.md</strong></td>
+<td><a href="https://code.claude.com/docs/en/memory">Memory</a></td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td><a href="https://code.claude.com/docs/en/skills">Extend Claude with skills</a></td>
+</tr>
+<tr>
+<td><strong>Sub-agents</strong></td>
+<td><a href="https://code.claude.com/docs/en/sub-agents">Create custom subagents</a></td>
+</tr>
+<tr>
+<td><strong>Overview</strong></td>
+<td><a href="https://code.claude.com/docs/en/features-overview">Extend Claude Code</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Skills and Commands have been merged in recent Claude Code versions. See the Skills
+documentation for current behavior.</p>
+</blockquote>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>Choosing the right mechanism depends on:</p>
+<ol>
+<li><strong>When should this be available?</strong> (always vs. on-demand vs. pattern-triggered)</li>
+<li><strong>Who should trigger it?</strong> (automatic vs. user-controlled)</li>
+<li><strong>Is context isolation needed?</strong> (main context vs. sub-agent)</li>
+<li><strong>Is it reusable across projects?</strong> (portable vs. project-specific)</li>
+</ol>
+<p>Now that you understand the mechanisms, the next section brings it all together with a practical
+decision framework.</p>
+<hr />
+<p><em>Previous: <a href="../02-what-youre-storing/">Section 2 - What You're Storing</a></em>
+<em>Next: <a href="../04-two-phase-decision-guide/">Section 4 - Two-Phase Decision Guide</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

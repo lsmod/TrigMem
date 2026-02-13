@@ -1,0 +1,1931 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/05-claudemd-best-practices/">
+      
+      
+        <link rel="prev" href="../04-two-phase-decision-guide/">
+      
+      
+        <link rel="next" href="../06-migration-guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>5. CLAUDE.md Best Practices - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-5-claudemd-best-practices" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. CLAUDE.md Best Practices
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-token-economy-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Token Economy Principle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Token Economy Principle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-every-token-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Every Token Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-means-practically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What This Means Practically
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-pointer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Pointer Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Pointer Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#claudemd-is-a-table-of-contents-not-the-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLAUDE.md Is a Table of Contents, Not the Book
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bad-example-bloated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bad Example (Bloated)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-example-pointer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Good Example (Pointer Pattern)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-anchors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery Anchors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-minimal-claudemd-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Minimal CLAUDE.md Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-by-section-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section-by-Section Guidance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section-by-Section Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-header-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Header (Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-stack-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Stack (Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-structure-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Structure (Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-commands-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Commands (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-docs-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Docs (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-critical-constraints-if-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Critical Constraints (If Any)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anti-patterns-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Patterns to Avoid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anti-Patterns to Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-1-full-architecture-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 1: Full Architecture Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-2-complete-test-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 2: Complete Test Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-3-inline-code-style-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 3: Inline Code Style Guides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-4-long-lists-of-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 4: Long Lists of Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-assessment-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Assessment Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-Assessment Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token-economy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token Economy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-anchors_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery Anchors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-and-after-complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before and After: Complete Example
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before and After: Complete Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-bloated-600-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before (Bloated - ~600 tokens)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-lean-100-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After (Lean - ~100 tokens)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-token-economy-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Token Economy Principle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Token Economy Principle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-every-token-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Every Token Matters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-means-practically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What This Means Practically
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-pointer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Pointer Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Pointer Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#claudemd-is-a-table-of-contents-not-the-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLAUDE.md Is a Table of Contents, Not the Book
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bad-example-bloated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bad Example (Bloated)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-example-pointer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Good Example (Pointer Pattern)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-anchors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery Anchors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-minimal-claudemd-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Minimal CLAUDE.md Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#section-by-section-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Section-by-Section Guidance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Section-by-Section Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-header-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Header (Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-stack-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Stack (Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-structure-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Structure (Required)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-commands-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Commands (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-docs-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Docs (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-critical-constraints-if-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Critical Constraints (If Any)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anti-patterns-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Patterns to Avoid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anti-Patterns to Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-1-full-architecture-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 1: Full Architecture Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-2-complete-test-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 2: Complete Test Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-3-inline-code-style-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 3: Inline Code Style Guides
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-pattern-4-long-lists-of-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-Pattern 4: Long Lists of Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-assessment-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Assessment Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-Assessment Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#token-economy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token Economy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovery-anchors_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovery Anchors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-and-after-complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before and After: Complete Example
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Before and After: Complete Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-bloated-600-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before (Bloated - ~600 tokens)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-lean-100-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        After (Lean - ~100 tokens)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-5-claudemd-best-practices">Section 5: CLAUDE.md Best Practices<a class="headerlink" href="#section-5-claudemd-best-practices" title="Permanent link">&para;</a></h1>
+<p>CLAUDE.md is the most important—and most frequently misused—Claude Code memory mechanism. Because
+it's always loaded, every token occupies context window space in every message. This section
+provides practical guidance for keeping your CLAUDE.md lean, maintainable, and effective.</p>
+<hr />
+<h2 id="the-token-economy-principle">The Token Economy Principle<a class="headerlink" href="#the-token-economy-principle" title="Permanent link">&para;</a></h2>
+<h3 id="why-every-token-matters">Why Every Token Matters<a class="headerlink" href="#why-every-token-matters" title="Permanent link">&para;</a></h3>
+<p>CLAUDE.md is included in the system prompt for <strong>every message</strong> in a conversation. The Claude API
+is stateless — each request sends the full prompt (system prompt + history + new message). Unlike
+Skills or Commands that load on-demand, CLAUDE.md tokens are present in every exchange.</p>
+<p><strong>Tokens processed per conversation:</strong>
+<div class="highlight"><pre><span></span><code>Total Tokens Processed = CLAUDE.md Tokens × Number of Messages
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>CLAUDE.md Size</th>
+<th>10 Messages</th>
+<th>50 Messages</th>
+<th>100 Messages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100 tokens</td>
+<td>1,000</td>
+<td>5,000</td>
+<td>10,000</td>
+</tr>
+<tr>
+<td>500 tokens</td>
+<td>5,000</td>
+<td>25,000</td>
+<td>50,000</td>
+</tr>
+<tr>
+<td>2,000 tokens</td>
+<td>20,000</td>
+<td>100,000</td>
+<td>200,000</td>
+</tr>
+</tbody>
+</table>
+<p>A 2,000-token CLAUDE.md occupies <strong>20x more context window space</strong> than a 100-token CLAUDE.md
+over the same conversation.</p>
+<blockquote>
+<p><strong>Prompt caching reduces financial cost, not context pressure</strong></p>
+<p>Claude Code automatically uses <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">prompt caching</a>.
+After the first message, stable repeated content (like CLAUDE.md) is read from cache at <strong>10%
+of the base input token price</strong> — a ~90% cost reduction. The first write costs 1.25x base price.</p>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Financial cost (per token)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First message</td>
+<td>1.25x base (cache write)</td>
+</tr>
+<tr>
+<td>Subsequent messages</td>
+<td>0.1x base (cache read)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>However, cached tokens still occupy context window space.</strong> The context window is the binding
+constraint — not price. A bloated CLAUDE.md crowds out room for conversation history, tool
+results, and reasoning. This is why minimizing CLAUDE.md remains critical even with caching.</p>
+</blockquote>
+<h3 id="the-target">The Target<a class="headerlink" href="#the-target" title="Permanent link">&para;</a></h3>
+<p><strong>Keep CLAUDE.md under 100-200 tokens.</strong></p>
+<p>This isn't arbitrary—it's the sweet spot where you have enough context to orient Claude without
+paying excessive token costs. Everything beyond essential identity should live elsewhere.</p>
+<h3 id="what-this-means-practically">What This Means Practically<a class="headerlink" href="#what-this-means-practically" title="Permanent link">&para;</a></h3>
+<p>Ask yourself: "Does Claude need this in <em>every single message exchange</em>?"</p>
+<ul>
+<li><strong>Yes</strong> → Keep in CLAUDE.md (but keep it brief)</li>
+<li><strong>No</strong> → Move to Skills, Rules, Commands, or external docs</li>
+</ul>
+<hr />
+<h2 id="the-pointer-pattern">The Pointer Pattern<a class="headerlink" href="#the-pointer-pattern" title="Permanent link">&para;</a></h2>
+<h3 id="claudemd-is-a-table-of-contents-not-the-book">CLAUDE.md Is a Table of Contents, Not the Book<a class="headerlink" href="#claudemd-is-a-table-of-contents-not-the-book" title="Permanent link">&para;</a></h3>
+<p>Think of CLAUDE.md as a <strong>directory</strong> or <strong>index</strong>—not a comprehensive document. It should tell
+Claude <em>what exists and where to find it</em>, not contain all the details.</p>
+<h3 id="bad-example-bloated">Bad Example (Bloated)<a class="headerlink" href="#bad-example-bloated" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># Project: ShopFlow</span>
+
+<span class="gu">## Tech Stack</span>
+<span class="k">-</span><span class="w"> </span>Next.js 14 with App Router
+<span class="k">-</span><span class="w"> </span>TypeScript 5.3 with strict mode
+<span class="k">-</span><span class="w"> </span>Prisma ORM with PostgreSQL
+<span class="k">-</span><span class="w"> </span>Redis for caching
+<span class="k">-</span><span class="w"> </span>Stripe for payments
+<span class="k">-</span><span class="w"> </span>SendGrid for emails
+
+<span class="gu">## Architecture</span>
+We use Hexagonal Architecture with the following structure:
+<span class="k">-</span><span class="w"> </span>Domain layer in src/domain/ contains all business logic
+<span class="k">-</span><span class="w"> </span>Application layer in src/application/ contains use cases
+<span class="k">-</span><span class="w"> </span>Infrastructure layer in src/infrastructure/ contains adapters
+<span class="k">-</span><span class="w"> </span>Presentation layer in src/presentation/ contains API routes
+[... 50 more lines of architecture details ...]
+
+<span class="gu">## Testing</span>
+We use Jest for unit tests and Playwright for E2E tests.
+To run tests:
+<span class="k">-</span><span class="w"> </span>Unit tests: pnpm test
+<span class="k">-</span><span class="w"> </span>E2E tests: pnpm test:e2e
+<span class="k">-</span><span class="w"> </span>Coverage: pnpm test:coverage
+Test files should be colocated with source files using .test.ts extension.
+[... 30 more lines of testing conventions ...]
+
+<span class="gu">## Coding Standards</span>
+<span class="k">-</span><span class="w"> </span>Use functional components with hooks
+<span class="k">-</span><span class="w"> </span>No class components
+<span class="k">-</span><span class="w"> </span>Prefer named exports
+<span class="k">-</span><span class="w"> </span>Use barrel files for public APIs
+[... 40 more lines of coding standards ...]
+</code></pre></div>
+<p><strong>Token count: ~800-1,000 tokens</strong> — loaded in every message.</p>
+<h3 id="good-example-pointer-pattern">Good Example (Pointer Pattern)<a class="headerlink" href="#good-example-pointer-pattern" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># ShopFlow</span>
+
+B2B e-commerce platform. Next.js 14, TypeScript, Prisma, PostgreSQL.
+
+<span class="gu">## Structure</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/domain/`</span> - Business logic
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/application/`</span> - Use cases
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/infrastructure/`</span> - Adapters
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/presentation/`</span> - API routes
+
+<span class="gu">## Quick Commands</span>
+<span class="k">-</span><span class="w"> </span>Tests: <span class="sb">`pnpm test`</span>
+<span class="k">-</span><span class="w"> </span>Dev: <span class="sb">`pnpm dev`</span>
+
+<span class="gu">## Documentation</span>
+<span class="k">-</span><span class="w"> </span>Architecture: <span class="sb">`docs/architecture.md`</span>
+<span class="k">-</span><span class="w"> </span>Testing: <span class="sb">`docs/testing.md`</span>
+<span class="k">-</span><span class="w"> </span>Conventions: <span class="sb">`docs/conventions.md`</span>
+</code></pre></div>
+<p><strong>Token count: ~80-100 tokens</strong> — 10x smaller, same essential information.</p>
+<h3 id="discovery-anchors">Discovery Anchors<a class="headerlink" href="#discovery-anchors" title="Permanent link">&para;</a></h3>
+<p>A <strong>Discovery Anchor</strong> is a brief pointer that tells Claude where to find detailed information
+when needed. Claude will read these files when the context requires it.</p>
+<p><strong>Pattern:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## [Topic]</span>
+See <span class="sb">`path/to/detailed-docs.md`</span> for [what&#39;s there].
+</code></pre></div></p>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Architecture</span>
+See <span class="sb">`docs/architecture.md`</span> for full system design.
+
+<span class="gu">## Testing</span>
+Run <span class="sb">`/test`</span> or see <span class="sb">`.claude/commands/test.md`</span> for testing workflow.
+
+<span class="gu">## Coding Standards</span>
+TypeScript conventions in <span class="sb">`.claude/rules/typescript.md`</span>.
+</code></pre></div></p>
+<hr />
+<h2 id="recommended-structure">Recommended Structure<a class="headerlink" href="#recommended-structure" title="Permanent link">&para;</a></h2>
+<h3 id="the-minimal-claudemd-template">The Minimal CLAUDE.md Template<a class="headerlink" href="#the-minimal-claudemd-template" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># [Project Name]</span>
+
+[One-sentence description of what this project does.]
+
+<span class="gu">## Stack</span>
+[Technology list - keep to essentials]
+
+<span class="gu">## Structure</span>
+[Key directories only - 3-5 lines max]
+
+<span class="gu">## Commands</span>
+[Most common commands - 2-3 lines max]
+
+<span class="gu">## Docs</span>
+[Pointers to detailed documentation]
+</code></pre></div>
+<h3 id="section-by-section-guidance">Section-by-Section Guidance<a class="headerlink" href="#section-by-section-guidance" title="Permanent link">&para;</a></h3>
+<h4 id="1-header-required">1. Header (Required)<a class="headerlink" href="#1-header-required" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Project name</li>
+<li>One-sentence description</li>
+<li><strong>Keep to 1-2 lines</strong></li>
+</ul>
+<h4 id="2-stack-required">2. Stack (Required)<a class="headerlink" href="#2-stack-required" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Core technologies only</li>
+<li>No version numbers unless critical</li>
+<li><strong>Keep to 1 line if possible</strong></li>
+</ul>
+<h4 id="3-structure-required">3. Structure (Required)<a class="headerlink" href="#3-structure-required" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Only the directories Claude needs to navigate</li>
+<li>Skip obvious ones (<code>node_modules/</code>, <code>.git/</code>)</li>
+<li><strong>Keep to 3-5 lines</strong></li>
+</ul>
+<h4 id="4-commands-optional">4. Commands (Optional)<a class="headerlink" href="#4-commands-optional" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Only the commands you use constantly</li>
+<li>Full workflows belong in Commands (<code>.claude/commands/</code>)</li>
+<li><strong>Keep to 2-3 lines</strong></li>
+</ul>
+<h4 id="5-docs-recommended">5. Docs (Recommended)<a class="headerlink" href="#5-docs-recommended" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Pointers to external documentation</li>
+<li>This is where detailed content lives</li>
+<li><strong>Keep to 2-4 lines</strong></li>
+</ul>
+<h4 id="6-critical-constraints-if-any">6. Critical Constraints (If Any)<a class="headerlink" href="#6-critical-constraints-if-any" title="Permanent link">&para;</a></h4>
+<ul>
+<li>"Never modify X"</li>
+<li>"Always check Y before Z"</li>
+<li>Only include if violations are costly</li>
+<li><strong>Keep to 1-2 lines if needed</strong></li>
+</ul>
+<hr />
+<h2 id="anti-patterns-to-avoid">Anti-Patterns to Avoid<a class="headerlink" href="#anti-patterns-to-avoid" title="Permanent link">&para;</a></h2>
+<h3 id="anti-pattern-1-full-architecture-documentation">Anti-Pattern 1: Full Architecture Documentation<a class="headerlink" href="#anti-pattern-1-full-architecture-documentation" title="Permanent link">&para;</a></h3>
+<p>❌ <strong>Bad:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Architecture</span>
+
+We use Hexagonal Architecture (also known as Ports and Adapters).
+
+The core principle is that business logic should be isolated from
+infrastructure concerns. The domain layer contains pure business rules
+with no dependencies on external systems...
+
+[200+ more words explaining hexagonal architecture]
+</code></pre></div></p>
+<p>✅ <strong>Good:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Architecture</span>
+Hexagonal Architecture. See <span class="sb">`docs/architecture.md`</span> for details.
+</code></pre></div></p>
+<p><strong>Why:</strong> Architecture explanations are universal knowledge—put them in a Skill. Project-specific
+structure goes in CLAUDE.md briefly; details go in external docs.</p>
+<h3 id="anti-pattern-2-complete-test-commands">Anti-Pattern 2: Complete Test Commands<a class="headerlink" href="#anti-pattern-2-complete-test-commands" title="Permanent link">&para;</a></h3>
+<p>❌ <strong>Bad:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Testing</span>
+
+To run all tests:
+pnpm test
+
+To run specific tests:
+pnpm test -- --grep &quot;pattern&quot;
+
+To run with coverage:
+pnpm test:coverage
+
+To run E2E tests:
+pnpm test:e2e
+
+To run in watch mode:
+pnpm test:watch
+
+Before submitting a PR, always run:
+<span class="k">1.</span> pnpm lint
+<span class="k">2.</span> pnpm test
+<span class="k">3.</span> pnpm build
+</code></pre></div></p>
+<p>✅ <strong>Good:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Tests</span>
+Run <span class="sb">`/test`</span> for full test workflow. Quick: <span class="sb">`pnpm test`</span>
+</code></pre></div></p>
+<p><strong>Why:</strong> Full testing workflows belong in a Command (<code>.claude/commands/test.md</code>). CLAUDE.md
+only needs the quick reference.</p>
+<h3 id="anti-pattern-3-inline-code-style-guides">Anti-Pattern 3: Inline Code Style Guides<a class="headerlink" href="#anti-pattern-3-inline-code-style-guides" title="Permanent link">&para;</a></h3>
+<p>❌ <strong>Bad:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Code Style</span>
+
+<span class="k">-</span><span class="w"> </span>Use functional components, never class components
+<span class="k">-</span><span class="w"> </span>Prefer named exports over default exports
+<span class="k">-</span><span class="w"> </span>Use TypeScript strict mode
+<span class="k">-</span><span class="w"> </span>No <span class="sb">`any`</span> types - use <span class="sb">`unknown`</span> and narrow
+<span class="k">-</span><span class="w"> </span>Components should have a single responsibility
+<span class="k">-</span><span class="w"> </span>Use hooks for state management
+<span class="k">-</span><span class="w"> </span>Prefer composition over inheritance
+<span class="k">-</span><span class="w"> </span>Use barrel files for public APIs
+<span class="k">-</span><span class="w"> </span>File names should be kebab-case
+<span class="k">-</span><span class="w"> </span>Component names should be PascalCase
+[... continues for 30 more lines ...]
+</code></pre></div></p>
+<p>✅ <strong>Good:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Style</span>
+TypeScript + React conventions in <span class="sb">`.claude/rules/`</span>.
+</code></pre></div></p>
+<p><strong>Why:</strong> Code style rules should live in Rules (triggered when editing relevant files) or
+external docs. CLAUDE.md just points to them.</p>
+<blockquote>
+<p><strong>When to Use Rules vs External Files</strong></p>
+<table>
+<thead>
+<tr>
+<th>Content Type</th>
+<th>Use Rules</th>
+<th>Use External Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TypeScript conventions</td>
+<td>✓ (glob: <code>*.ts</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>Test file patterns</td>
+<td>✓ (glob: <code>*.test.*</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>General coding standards</td>
+<td></td>
+<td>✓ + pointer</td>
+</tr>
+<tr>
+<td>Architecture guidelines</td>
+<td></td>
+<td>✓ + pointer</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insight:</strong> Rules only save tokens when they have <strong>specific</strong> glob patterns. General
+content that isn't file-type-specific should use external files with a pointer in CLAUDE.md.</p>
+</blockquote>
+<h3 id="anti-pattern-4-long-lists-of-rules">Anti-Pattern 4: Long Lists of Rules<a class="headerlink" href="#anti-pattern-4-long-lists-of-rules" title="Permanent link">&para;</a></h3>
+<p>❌ <strong>Bad:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Rules</span>
+
+<span class="k">1.</span> Never commit directly to main
+<span class="k">2.</span> Always create feature branches
+<span class="k">3.</span> Run tests before pushing
+<span class="k">4.</span> Use conventional commits
+<span class="k">5.</span> No console.log in production code
+<span class="k">6.</span> Always handle errors
+<span class="k">7.</span> No magic numbers
+<span class="k">8.</span> Use constants for repeated values
+[... 20 more rules ...]
+</code></pre></div></p>
+<p>✅ <strong>Good:</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Conventions</span>
+See <span class="sb">`docs/conventions.md`</span>. Key: conventional commits, feature branches.
+</code></pre></div></p>
+<p><strong>Why:</strong> Rules lists grow unbounded. Keep the top 1-2 critical ones inline; everything else
+goes to external docs or Rules files.</p>
+<hr />
+<h2 id="self-assessment-checklist">Self-Assessment Checklist<a class="headerlink" href="#self-assessment-checklist" title="Permanent link">&para;</a></h2>
+<p>Use this checklist to evaluate your CLAUDE.md:</p>
+<h3 id="token-economy">Token Economy<a class="headerlink" href="#token-economy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Under 200 tokens total?</li>
+<li>[ ] No content that could live in Skills, Rules, or Commands?</li>
+<li>[ ] Using pointer pattern for detailed documentation?</li>
+</ul>
+<h3 id="structure">Structure<a class="headerlink" href="#structure" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Clear project identity (name + one-sentence description)?</li>
+<li>[ ] Essential tech stack only?</li>
+<li>[ ] Key directories only (3-5 max)?</li>
+<li>[ ] Common commands only (2-3 max)?</li>
+</ul>
+<h3 id="content-quality">Content Quality<a class="headerlink" href="#content-quality" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] No full architecture documentation inline?</li>
+<li>[ ] No complete style guides inline?</li>
+<li>[ ] No long lists of rules?</li>
+<li>[ ] No step-by-step procedures (those are Commands)?</li>
+</ul>
+<h3 id="discovery-anchors_1">Discovery Anchors<a class="headerlink" href="#discovery-anchors_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Pointing to external docs where appropriate?</li>
+<li>[ ] Claude can find detailed information when needed?</li>
+</ul>
+<hr />
+<h2 id="before-and-after-complete-example">Before and After: Complete Example<a class="headerlink" href="#before-and-after-complete-example" title="Permanent link">&para;</a></h2>
+<h3 id="before-bloated-600-tokens">Before (Bloated - ~600 tokens)<a class="headerlink" href="#before-bloated-600-tokens" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># ShopFlow E-Commerce Platform</span>
+
+ShopFlow is a B2B e-commerce platform designed for wholesale distributors
+to manage their product catalogs, process orders, and handle customer
+relationships.
+
+<span class="gu">## Technology Stack</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**Frontend**</span>: Next.js 14 with App Router, React 18, TypeScript 5.3
+<span class="k">-</span><span class="w"> </span><span class="gs">**Styling**</span>: Tailwind CSS 3.4, Radix UI components
+<span class="k">-</span><span class="w"> </span><span class="gs">**Backend**</span>: Next.js API Routes, tRPC for type-safe APIs
+<span class="k">-</span><span class="w"> </span><span class="gs">**Database**</span>: PostgreSQL 15 with Prisma ORM
+<span class="k">-</span><span class="w"> </span><span class="gs">**Caching**</span>: Redis for session storage and query caching
+<span class="k">-</span><span class="w"> </span><span class="gs">**Authentication**</span>: NextAuth.js with JWT tokens
+<span class="k">-</span><span class="w"> </span><span class="gs">**Payments**</span>: Stripe for payment processing
+<span class="k">-</span><span class="w"> </span><span class="gs">**Email**</span>: SendGrid for transactional emails
+<span class="k">-</span><span class="w"> </span><span class="gs">**Storage**</span>: AWS S3 for product images
+<span class="k">-</span><span class="w"> </span><span class="gs">**Hosting**</span>: Vercel for frontend, Railway for database
+
+<span class="gu">## Project Structure</span>
+src/
+├── app/                 # Next.js App Router pages
+│   ├── (auth)/         # Authentication routes
+│   ├── (dashboard)/    # Main dashboard routes
+│   └── api/            # API routes
+├── components/         # React components
+│   ├── ui/            # Base UI components
+│   ├── forms/         # Form components
+│   └── layouts/       # Layout components
+├── lib/               # Utility functions
+├── hooks/             # Custom React hooks
+├── stores/            # Zustand stores
+├── types/             # TypeScript types
+└── server/            # Server-side code
+    ├── db/            # Database utilities
+    ├── services/      # Business logic
+    └── trpc/          # tRPC routers
+
+<span class="gu">## Development Commands</span>
+<span class="k">-</span><span class="w"> </span>Start dev server: <span class="sb">`pnpm dev`</span>
+<span class="k">-</span><span class="w"> </span>Run tests: <span class="sb">`pnpm test`</span>
+<span class="k">-</span><span class="w"> </span>Run E2E tests: <span class="sb">`pnpm test:e2e`</span>
+<span class="k">-</span><span class="w"> </span>Lint code: <span class="sb">`pnpm lint`</span>
+<span class="k">-</span><span class="w"> </span>Format code: <span class="sb">`pnpm format`</span>
+<span class="k">-</span><span class="w"> </span>Build: <span class="sb">`pnpm build`</span>
+<span class="k">-</span><span class="w"> </span>Database migrations: <span class="sb">`pnpm db:migrate`</span>
+<span class="k">-</span><span class="w"> </span>Seed database: <span class="sb">`pnpm db:seed`</span>
+
+<span class="gu">## Coding Standards</span>
+<span class="k">-</span><span class="w"> </span>Always use TypeScript strict mode
+<span class="k">-</span><span class="w"> </span>No <span class="sb">`any`</span> types allowed
+<span class="k">-</span><span class="w"> </span>Use functional components only
+<span class="k">-</span><span class="w"> </span>Prefer named exports
+<span class="k">-</span><span class="w"> </span>Use Tailwind for styling, no CSS files
+<span class="k">-</span><span class="w"> </span>All components must have tests
+</code></pre></div>
+<h3 id="after-lean-100-tokens">After (Lean - ~100 tokens)<a class="headerlink" href="#after-lean-100-tokens" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># ShopFlow</span>
+
+B2B e-commerce for wholesale distributors.
+
+<span class="gu">## Stack</span>
+Next.js 14, TypeScript, Prisma, PostgreSQL, Stripe, Tailwind
+
+<span class="gu">## Structure</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/app/`</span> - Pages (App Router)
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/components/`</span> - React components
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/server/`</span> - API &amp; business logic
+
+<span class="gu">## Commands</span>
+Dev: <span class="sb">`pnpm dev`</span> | Tests: <span class="sb">`pnpm test`</span> | Build: <span class="sb">`pnpm build`</span>
+
+<span class="gu">## Docs</span>
+<span class="k">-</span><span class="w"> </span>Architecture: <span class="sb">`docs/architecture.md`</span>
+<span class="k">-</span><span class="w"> </span>API: <span class="sb">`docs/api.md`</span>
+<span class="k">-</span><span class="w"> </span>Conventions: <span class="sb">`docs/conventions.md`</span>
+</code></pre></div>
+<p><strong>Result:</strong> Same essential information, 6x fewer tokens, better maintainability.</p>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Token Economy</strong>: Every CLAUDE.md token occupies context window space in every message. Prompt caching reduces the financial cost (~90% after the first message), but the context window pressure remains. Target 100-200 tokens.</p>
+</li>
+<li>
+<p><strong>Pointer Pattern</strong>: CLAUDE.md is an index, not the book. Point to detailed docs.</p>
+</li>
+<li>
+<p><strong>Essential Content Only</strong>:</p>
+</li>
+<li>Project identity (name + one-liner)</li>
+<li>Core tech stack</li>
+<li>Key directories (3-5)</li>
+<li>Common commands (2-3)</li>
+<li>
+<p>Documentation pointers</p>
+</li>
+<li>
+<p><strong>Avoid Anti-Patterns</strong>:</p>
+</li>
+<li>No full architecture docs</li>
+<li>No complete style guides</li>
+<li>No long rule lists</li>
+<li>
+<p>No step-by-step procedures</p>
+</li>
+<li>
+<p><strong>Use the Checklist</strong>: Regularly audit your CLAUDE.md against the self-assessment.</p>
+</li>
+</ol>
+<hr />
+<p><em>Previous: <a href="../04-two-phase-decision-guide/">Section 4 - Two-Phase Decision Guide</a></em>
+<em>Next: <a href="../06-migration-guide/">Section 6 - Migration Guide</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

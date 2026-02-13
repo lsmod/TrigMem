@@ -1,0 +1,2230 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/examples/worked-examples/">
+      
+      
+        <link rel="prev" href="../../07-configurable-skills/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Worked Examples - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#worked-examples" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Worked Examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-1-project-tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Project Tech Stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 1: Project Tech Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2-deployment-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: Deployment Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 2: Deployment Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3-repository-pattern-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 3: Repository Pattern Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 3: Repository Pattern Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4-large-refactoring-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 4: Large Refactoring Task
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 4: Large Refactoring Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-5-coding-style-preferences-edge-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 5: Coding Style Preferences (Edge Case)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 5: Coding Style Preferences (Edge Case)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ambiguity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Ambiguity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-analyze-each-piece" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Analyze Each Piece
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Rules?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-split-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative: Split It
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-6-testing-fixtures-edge-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 6: Testing Fixtures (Edge Case)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 6: Testing Fixtures (Edge Case)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-not-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Not CLAUDE.md?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-not-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Not a Skill?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-pattern-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference: Pattern Matching
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Check Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-1-project-tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 1: Project Tech Stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 1: Project Tech Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-2-deployment-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 2: Deployment Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 2: Deployment Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-3-repository-pattern-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 3: Repository Pattern Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 3: Repository Pattern Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-4-large-refactoring-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 4: Large Refactoring Task
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 4: Large Refactoring Task">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-5-coding-style-preferences-edge-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 5: Coding Style Preferences (Edge Case)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 5: Coding Style Preferences (Edge Case)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ambiguity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Ambiguity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-analyze-each-piece" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Analyze Each Piece
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Rules?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-split-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative: Split It
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-6-testing-fixtures-edge-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example 6: Testing Fixtures (Edge Case)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 6: Testing Fixtures (Edge Case)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-triage_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-refinement_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-decision_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Decision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-not-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Not CLAUDE.md?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-not-a-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Not a Skill?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rationale_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-pattern-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference: Pattern Matching
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Check Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="worked-examples">Worked Examples<a class="headerlink" href="#worked-examples" title="Permanent link">&para;</a></h1>
+<p>This document contains 6 worked examples demonstrating the TrigMem decision process. Each example
+walks through Phase 1 (Triage) and Phase 2 (Refinement) to arrive at the correct storage location.</p>
+<p><strong>How to Use These Examples:</strong></p>
+<ol>
+<li>Read the scenario</li>
+<li>Try to decide the destination yourself using the <a href="../../04-two-phase-decision-guide/">Two-Phase Decision Guide</a></li>
+<li>Expand the solution to check your answer</li>
+<li>Review the rationale to understand the reasoning</li>
+</ol>
+<hr />
+<h2 id="example-1-project-tech-stack">Example 1: Project Tech Stack<a class="headerlink" href="#example-1-project-tech-stack" title="Permanent link">&para;</a></h2>
+<h3 id="scenario">Scenario<a class="headerlink" href="#scenario" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"We use PostgreSQL with Prisma as our ORM. The database runs in Docker locally."</p>
+</blockquote>
+<p><strong>Try it first:</strong> Where does this information go?</p>
+<details>
+<summary>Click to see solution</summary>
+<h3 id="phase-1-triage">Phase 1: Triage<a class="headerlink" href="#phase-1-triage" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: Is this a user-triggered action with side effects?</strong>
+No. This is information, not an action.</p>
+<p><strong>Q2: Is this universal how-to knowledge portable across projects?</strong>
+No. This is about <em>this specific project's</em> tech stack, not a general pattern.</p>
+<p><strong>Q3: Does this need context isolation or parallel execution?</strong>
+No. This is just context information.</p>
+<p><strong>Q4: Is this always-needed project context or corrections?</strong>
+<strong>Yes!</strong> This is project identity—Claude needs to know this in every conversation.</p>
+<p>→ <strong>Destination: CLAUDE.md</strong></p>
+<h3 id="phase-2-refinement">Phase 2: Refinement<a class="headerlink" href="#phase-2-refinement" title="Permanent link">&para;</a></h3>
+<p><strong>Is it project identity or structure?</strong>
+Project identity (what technologies we use).</p>
+<p><strong>Is it too long for CLAUDE.md?</strong>
+No, it's one line.</p>
+<h3 id="final-decision">Final Decision<a class="headerlink" href="#final-decision" title="Permanent link">&para;</a></h3>
+<p><strong>→ CLAUDE.md</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gh"># MyProject</span>
+PostgreSQL + Prisma. Docker for local database.
+</code></pre></div>
+<h3 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">&para;</a></h3>
+<p>This is Category 1 (Project Identity)—essential context that Claude needs in every conversation
+to understand the project. It's brief enough to include directly in CLAUDE.md without violating
+token economy principles.</p>
+</details>
+<hr />
+<h2 id="example-2-deployment-workflow">Example 2: Deployment Workflow<a class="headerlink" href="#example-2-deployment-workflow" title="Permanent link">&para;</a></h2>
+<h3 id="scenario_1">Scenario<a class="headerlink" href="#scenario_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"To deploy to staging: run tests, build the Docker image, push to registry, and trigger
+the Kubernetes deployment."</p>
+</blockquote>
+<p><strong>Try it first:</strong> Where does this information go?</p>
+<details>
+<summary>Click to see solution</summary>
+<h3 id="phase-1-triage_1">Phase 1: Triage<a class="headerlink" href="#phase-1-triage_1" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: Is this a user-triggered action with side effects?</strong>
+<strong>Yes!</strong> This is a multi-step workflow that deploys code—definitely has side effects.</p>
+<p>→ <strong>Destination: Command</strong></p>
+<h3 id="phase-2-refinement_1">Phase 2: Refinement<a class="headerlink" href="#phase-2-refinement_1" title="Permanent link">&para;</a></h3>
+<p><strong>Is it a simple, single action?</strong>
+No, it's a multi-step workflow with prerequisites.</p>
+<p><strong>Does it need arguments?</strong>
+Possibly—environment (staging vs production) could be an argument.</p>
+<p><strong>Should Claude NEVER auto-invoke this?</strong>
+Correct. Commands are user-only by default. This is appropriate for deployment.</p>
+<h3 id="final-decision_1">Final Decision<a class="headerlink" href="#final-decision_1" title="Permanent link">&para;</a></h3>
+<p><strong>→ Command</strong> at <code>.claude/commands/deploy.md</code></p>
+<div class="highlight"><pre><span></span><code><span class="gh"># Deploy</span>
+
+Deploy the application to an environment.
+
+<span class="gu">## Usage</span>
+/deploy [environment]
+
+<span class="gu">## Environments</span>
+<span class="k">-</span><span class="w"> </span>staging (default)
+<span class="k">-</span><span class="w"> </span>production
+
+<span class="gu">## Steps</span>
+
+<span class="k">1.</span> Run tests
+<span class="sb">   ```bash</span>
+<span class="w">   </span>pnpm<span class="w"> </span><span class="nb">test</span>
+<span class="sb">   ```</span>
+
+<span class="k">2.</span> Build Docker image
+<span class="sb">   ```bash</span>
+<span class="w">   </span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myapp:latest<span class="w"> </span>.
+<span class="sb">   ```</span>
+
+<span class="k">3.</span> Push to registry
+<span class="sb">   ```bash</span>
+<span class="w">   </span>docker<span class="w"> </span>push<span class="w"> </span>registry.example.com/myapp:latest
+<span class="sb">   ```</span>
+
+<span class="k">4.</span> Trigger Kubernetes deployment
+<span class="sb">   ```bash</span>
+<span class="w">   </span>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment/myapp<span class="w"> </span>-n<span class="w"> </span><span class="nv">$ENVIRONMENT</span>
+<span class="sb">   ```</span>
+
+<span class="gu">## Pre-flight Checks</span>
+<span class="k">- [ ]</span> All tests pass
+<span class="k">- [ ]</span> On main branch (for production)
+<span class="k">- [ ]</span> CHANGELOG updated
+</code></pre></div>
+<h3 id="rationale_1">Rationale<a class="headerlink" href="#rationale_1" title="Permanent link">&para;</a></h3>
+<p>This is Category 3 (Operational Commands)—a workflow with significant side effects that the user
+should explicitly trigger. Commands are the right mechanism because:
+- User controls when deployment happens
+- Side effects (deploying to servers) are significant
+- Multi-step process benefits from documented procedure</p>
+</details>
+<hr />
+<h2 id="example-3-repository-pattern-implementation">Example 3: Repository Pattern Implementation<a class="headerlink" href="#example-3-repository-pattern-implementation" title="Permanent link">&para;</a></h2>
+<h3 id="scenario_2">Scenario<a class="headerlink" href="#scenario_2" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"How to implement the Repository Pattern: repositories abstract data access, provide collection-like
+interfaces for domain objects, and hide persistence details from the domain layer."</p>
+</blockquote>
+<p><strong>Try it first:</strong> Where does this information go?</p>
+<details>
+<summary>Click to see solution</summary>
+<h3 id="phase-1-triage_2">Phase 1: Triage<a class="headerlink" href="#phase-1-triage_2" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: Is this a user-triggered action with side effects?</strong>
+No. This is knowledge/guidance, not an action.</p>
+<p><strong>Q2: Is this universal how-to knowledge portable across projects?</strong>
+<strong>Yes!</strong> The Repository Pattern is a universal design pattern that applies to any project using
+similar architecture.</p>
+<p>→ <strong>Destination: Skill</strong></p>
+<h3 id="phase-2-refinement_2">Phase 2: Refinement<a class="headerlink" href="#phase-2-refinement_2" title="Permanent link">&para;</a></h3>
+<p><strong>Is it truly portable?</strong>
+Yes. The Repository Pattern concept applies to any project using domain-driven design,
+regardless of language or framework.</p>
+<p><strong>Should Claude auto-invoke it?</strong>
+Yes, Claude should use this knowledge when the user is working on data access or domain logic.
+Default skill behavior (both user and Claude can invoke) is appropriate.</p>
+<p><strong>Is it configurable?</strong>
+Could be—repository locations vary by project. But the core pattern is universal.</p>
+<h3 id="final-decision_2">Final Decision<a class="headerlink" href="#final-decision_2" title="Permanent link">&para;</a></h3>
+<p><strong>→ Skill</strong> at <code>.claude/skills/repository-pattern/SKILL.md</code></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">repository-pattern</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">Implements the Repository Pattern for data access abstraction.</span>
+<span class="w">  </span><span class="no">Use when creating repositories, working with domain entities,</span>
+<span class="w">  </span><span class="no">or designing data access layers.</span>
+<span class="nt">allowed-tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read, Write, Grep, Glob</span>
+<span class="nn">---</span>
+
+<span class="c1"># Repository Pattern</span>
+
+<span class="c1">## Purpose</span>
+<span class="l l-Scalar l-Scalar-Plain">Guide implementation of the Repository Pattern to abstract data access</span>
+<span class="l l-Scalar l-Scalar-Plain">from domain logic.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">## Core Principles</span>
+
+<span class="l l-Scalar l-Scalar-Plain">1. **Abstract Data Access**</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Repositories provide a collection-like</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">interface for domain objects</span>
+
+<span class="nt">2. **Hide Persistence**</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Domain layer shouldn&#39;t know about databases,</span>
+<span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">files, or APIs</span>
+
+<span class="nt">3. **Single Responsibility**</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Each repository handles one aggregate root</span>
+
+<span class="c1">## Implementation Steps</span>
+
+<span class="c1">### Step 1: Define Repository Interface</span>
+<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">typescript</span>
+<span class="l l-Scalar l-Scalar-Plain">interface UserRepository {</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">findById(id</span><span class="nt">: string)</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Promise&lt;User | null&gt;;</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">findByEmail(email</span><span class="nt">: string)</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Promise&lt;User | null&gt;;</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">save(user</span><span class="nt">: User)</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Promise&lt;void&gt;;</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">delete(user</span><span class="nt">: User)</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Promise&lt;void&gt;;</span>
+<span class="err">}</span>
+<span class="err">```</span>
+
+<span class="c1">### Step 2: Implement Repository</span>
+<span class="p p-Indicator">[</span><span class="nv">... implementation details ...</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<h3 id="rationale_2">Rationale<a class="headerlink" href="#rationale_2" title="Permanent link">&para;</a></h3>
+<p>This is Category 4 (Reusable Patterns)—universal knowledge that applies across projects.
+Skills are ideal because:
+- Loaded on-demand (no token cost when not needed)
+- Portable (works in any project using this pattern)
+- Auto-invokable (Claude uses it when relevant)
+- Composable (can be combined with other patterns)</p>
+</details>
+<hr />
+<h2 id="example-4-large-refactoring-task">Example 4: Large Refactoring Task<a class="headerlink" href="#example-4-large-refactoring-task" title="Permanent link">&para;</a></h2>
+<h3 id="scenario_3">Scenario<a class="headerlink" href="#scenario_3" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"Refactor all 15 API handlers in the <code>src/api/</code> folder to use the new error handling pattern.
+Each handler needs updated try/catch blocks and standardized error responses."</p>
+</blockquote>
+<p><strong>Try it first:</strong> Where does this information go?</p>
+<details>
+<summary>Click to see solution</summary>
+<h3 id="phase-1-triage_3">Phase 1: Triage<a class="headerlink" href="#phase-1-triage_3" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: Is this a user-triggered action with side effects?</strong>
+Yes, but this is more about <em>execution</em> than a stored workflow.</p>
+<p><strong>Q2: Is this universal how-to knowledge portable across projects?</strong>
+No. This is about refactoring <em>this specific</em> codebase.</p>
+<p><strong>Q3: Does this need context isolation or parallel execution?</strong>
+<strong>Yes!</strong> This is a large, multi-file refactoring task. Benefits from:
+- Isolated context (don't clutter main conversation)
+- Potentially parallel work (multiple handlers can be updated independently)
+- Focused execution (single task, clear completion criteria)</p>
+<p>→ <strong>Destination: Sub-agent</strong></p>
+<h3 id="phase-2-refinement_3">Phase 2: Refinement<a class="headerlink" href="#phase-2-refinement_3" title="Permanent link">&para;</a></h3>
+<p><strong>Why do you need isolation?</strong>
+- Large task (15 files)
+- Don't want intermediate steps cluttering the main conversation
+- Clear handoff: "refactoring complete" with summary of changes</p>
+<p><strong>Does the agent need special context?</strong>
+Yes—the error handling pattern. Could reference an error-handling skill.</p>
+<h3 id="final-decision_3">Final Decision<a class="headerlink" href="#final-decision_3" title="Permanent link">&para;</a></h3>
+<p><strong>→ Sub-agent</strong> (spawned for this task, not a persistent file)</p>
+<p>The user would invoke this as a task, not store it permanently:</p>
+<div class="highlight"><pre><span></span><code>&quot;Use a sub-agent to refactor all API handlers in src/api/ to use the
+new error handling pattern. The pattern is documented in
+.claude/skills/error-handling/SKILL.md.&quot;
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> In this ad-hoc Task tool invocation, the <em>parent</em> context has access to CLAUDE.md
+and the skill registry. It reads the skill file and passes its content into the sub-agent's
+prompt. The sub-agent itself does not have direct access to the skill registry—it only sees
+what the parent explicitly provides.</p>
+</blockquote>
+<p>Or if this is a recurring task, create an agent definition:</p>
+<p><code>.claude/agents/refactor-agent.md</code>
+<div class="highlight"><pre><span></span><code><span class="gh"># Refactoring Agent</span>
+
+You are a refactoring specialist focused on systematic code updates.
+
+<span class="gu">## Context</span>
+<span class="k">-</span><span class="w"> </span>Reference the error-handling skill for the target pattern
+<span class="k">-</span><span class="w"> </span>Work through files methodically
+<span class="k">-</span><span class="w"> </span>Report changes made in each file
+
+<span class="gu">## Approach</span>
+<span class="k">1.</span> List all files matching the pattern
+<span class="k">2.</span> For each file:
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Read current implementation
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Apply the new pattern
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Verify changes compile
+<span class="k">3.</span> Summarize all changes
+</code></pre></div></p>
+<blockquote>
+<p><strong>⚠️ Sub-agents Don't Auto-Inherit Skills</strong></p>
+<p>The agent definition above says "Reference the error-handling skill," but sub-agents do
+<strong>not</strong> automatically inherit the parent conversation's skill registry.</p>
+<p><strong>For custom sub-agents</strong> (<code>.claude/agents/</code>): Use the <code>skills:</code> frontmatter field to
+preload the skill into the agent's context:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">skills</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error-handling</span>
+<span class="nn">---</span>
+
+<span class="c1"># Refactoring Agent</span>
+<span class="nn">...</span>
+</code></pre></div>
+<p><strong>For ad-hoc Task tool prompts</strong>: The parent context (which <em>does</em> have skill access) should
+read the skill file and pass its content directly in the prompt. The sub-agent itself has no
+access to the skill registry.</p>
+</blockquote>
+<h3 id="rationale_3">Rationale<a class="headerlink" href="#rationale_3" title="Permanent link">&para;</a></h3>
+<p>This is a complex, multi-file task that benefits from context isolation:
+- Main conversation stays clean
+- Agent can work through files systematically
+- Clear completion handoff with summary
+- Could potentially parallelize across multiple agents</p>
+<p>This isn't a "storage" decision per se—it's recognizing that sub-agents are the right
+<em>execution mechanism</em> for this type of work.</p>
+</details>
+<hr />
+<h2 id="example-5-coding-style-preferences-edge-case">Example 5: Coding Style Preferences (Edge Case)<a class="headerlink" href="#example-5-coding-style-preferences-edge-case" title="Permanent link">&para;</a></h2>
+<h3 id="scenario_4">Scenario<a class="headerlink" href="#scenario_4" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"We prefer functional components over class components. Use arrow functions for handlers.
+Destructure props in the function signature. Keep components under 200 lines."</p>
+</blockquote>
+<p><strong>Try it first:</strong> This one is tricky—where does this information go?</p>
+<details>
+<summary>Click to see solution</summary>
+<h3 id="phase-1-triage_4">Phase 1: Triage<a class="headerlink" href="#phase-1-triage_4" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: Is this a user-triggered action with side effects?</strong>
+No. These are preferences/guidelines.</p>
+<p><strong>Q2: Is this universal how-to knowledge portable across projects?</strong>
+Partially. "Prefer functional components" is universal React knowledge, but "keep under 200 lines"
+is a project-specific convention.</p>
+<p><strong>Q3: Does this need context isolation or parallel execution?</strong>
+No.</p>
+<p><strong>Q4: Is this always-needed project context or corrections?</strong>
+Depends on interpretation...</p>
+<p>→ <strong>This is ambiguous—could go multiple places!</strong></p>
+<h3 id="the-ambiguity">The Ambiguity<a class="headerlink" href="#the-ambiguity" title="Permanent link">&para;</a></h3>
+<p>This content mixes multiple categories:
+- "Prefer functional components" → Could be Category 4 (Reusable Patterns) — universal React knowledge
+- "Keep under 200 lines" → Could be Category 5 (Architectural Guidance) or Category 6 (Iterative Corrections)
+- All of it could go in Rules triggered by <code>.tsx</code> files</p>
+<h3 id="phase-2-analyze-each-piece">Phase 2: Analyze Each Piece<a class="headerlink" href="#phase-2-analyze-each-piece" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Preference</th>
+<th>Category</th>
+<th>Best Destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Functional over class</td>
+<td>Universal React knowledge</td>
+<td>Could be Skill or Rule</td>
+</tr>
+<tr>
+<td>Arrow functions for handlers</td>
+<td>Convention</td>
+<td>Rule (triggered by React files)</td>
+</tr>
+<tr>
+<td>Destructure props</td>
+<td>Convention</td>
+<td>Rule (triggered by React files)</td>
+</tr>
+<tr>
+<td>Under 200 lines</td>
+<td>Project convention</td>
+<td>Rule (triggered by all files)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="final-decision_4">Final Decision<a class="headerlink" href="#final-decision_4" title="Permanent link">&para;</a></h3>
+<p><strong>→ Rules</strong> at <code>.claude/rules/react-components.md</code></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">globs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*.tsx&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.jsx&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+
+<span class="c1"># React Component Guidelines</span>
+
+<span class="nt">When working with React components</span><span class="p">:</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use functional components (not class components)</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use arrow functions for event handlers</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Destructure props in the function signature</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Keep components under 200 lines—split if larger</span>
+</code></pre></div>
+<h3 id="why-rules">Why Rules?<a class="headerlink" href="#why-rules" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Pattern-triggered</strong>: These guidelines apply when editing React files</li>
+<li><strong>Contextual</strong>: Loaded only when relevant (editing <code>.tsx</code> files)</li>
+<li><strong>Project-specific</strong>: While some are universal React practices, they're codified
+   as <em>this project's</em> conventions</li>
+</ol>
+<h3 id="alternative-split-it">Alternative: Split It<a class="headerlink" href="#alternative-split-it" title="Permanent link">&para;</a></h3>
+<p>If some guidelines are truly universal (and you want to share them):
+- Universal patterns → Skill (e.g., <code>react-best-practices</code>)
+- Project conventions → Rules (e.g., <code>react-components.md</code>)</p>
+<p><strong>Example Skill</strong> at <code>.claude/skills/react-best-practices/SKILL.md</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">react-best-practices</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">Universal React component patterns and best practices.</span>
+<span class="w">  </span><span class="no">Use when writing or reviewing React components.</span>
+<span class="nt">allowed-tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read, Write, Grep, Glob</span>
+<span class="nn">---</span>
+
+<span class="c1"># React Best Practices</span>
+
+<span class="c1">## Functional Components</span>
+
+<span class="nt">Prefer functional components over class components</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Simpler to read and test</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Better performance with React hooks</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Easier to share logic between components</span>
+
+<span class="c1">## Event Handlers</span>
+
+<span class="nt">Use arrow functions for event handlers</span><span class="p">:</span>
+<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">tsx</span>
+<span class="l l-Scalar l-Scalar-Plain">// Good</span>
+<span class="l l-Scalar l-Scalar-Plain">const handleClick = () =&gt; { ... }</span>
+
+<span class="l l-Scalar l-Scalar-Plain">// Avoid</span>
+<span class="l l-Scalar l-Scalar-Plain">function handleClick() { ... }</span>
+<span class="err">```</span>
+
+<span class="c1">## Props Destructuring</span>
+
+<span class="nt">Destructure props in the function signature</span><span class="p">:</span>
+<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">tsx</span>
+<span class="l l-Scalar l-Scalar-Plain">// Good</span>
+<span class="l l-Scalar l-Scalar-Plain">const Button = ({ label, onClick, disabled }</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ButtonProps) =&gt; { ... }</span>
+
+<span class="l l-Scalar l-Scalar-Plain">// Avoid</span>
+<span class="nt">const Button = (props</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ButtonProps) =&gt; { ... }</span>
+<span class="err">```</span>
+</code></pre></div>
+<p><strong>Example Rules</strong> at <code>.claude/rules/react-components.md</code> (referencing the skill):</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">globs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*.tsx&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.jsx&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+
+<span class="c1"># React Component Conventions</span>
+
+<span class="l l-Scalar l-Scalar-Plain">For universal React patterns, see the `react-best-practices` skill.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Project-specific conventions for this codebase</span><span class="p p-Indicator">:</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Keep components under 200 lines—split into smaller components if larger</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Place shared components in `src/components/shared/`</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use the naming convention `ComponentName.tsx` (PascalCase)</span>
+</code></pre></div>
+<h3 id="rationale_4">Rationale<a class="headerlink" href="#rationale_4" title="Permanent link">&para;</a></h3>
+<p>This edge case shows that:
+1. Content can mix categories
+2. Rules are good for file-specific conventions
+3. When in doubt, ask: "When should this load?" (always → CLAUDE.md, file pattern → Rules)</p>
+</details>
+<hr />
+<h2 id="example-6-testing-fixtures-edge-case">Example 6: Testing Fixtures (Edge Case)<a class="headerlink" href="#example-6-testing-fixtures-edge-case" title="Permanent link">&para;</a></h2>
+<h3 id="scenario_5">Scenario<a class="headerlink" href="#scenario_5" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"In test files, always use fixtures from <code>tests/fixtures/</code>. Never create inline test data.
+Import fixtures at the top of the test file."</p>
+</blockquote>
+<p><strong>Try it first:</strong> Another tricky one—where does this go?</p>
+<details>
+<summary>Click to see solution</summary>
+<h3 id="phase-1-triage_5">Phase 1: Triage<a class="headerlink" href="#phase-1-triage_5" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: Is this a user-triggered action with side effects?</strong>
+No. This is a testing convention.</p>
+<p><strong>Q2: Is this universal how-to knowledge portable across projects?</strong>
+No. The fixture location (<code>tests/fixtures/</code>) is project-specific.</p>
+<p><strong>Q3: Does this need context isolation or parallel execution?</strong>
+No.</p>
+<p><strong>Q4: Is this always-needed project context or corrections?</strong>
+Yes, but only when writing tests.</p>
+<p>→ <strong>Destination: Rules</strong> (pattern-triggered)</p>
+<h3 id="phase-2-refinement_4">Phase 2: Refinement<a class="headerlink" href="#phase-2-refinement_4" title="Permanent link">&para;</a></h3>
+<p><strong>Is it tied to specific file patterns?</strong>
+Yes! This applies when editing test files (<code>.test.ts</code>, <code>.spec.ts</code>, etc.)</p>
+<p><strong>Is it a correction for repeated mistakes?</strong>
+Partially—"never create inline test data" suggests Claude has done this wrong before.</p>
+<h3 id="final-decision_5">Final Decision<a class="headerlink" href="#final-decision_5" title="Permanent link">&para;</a></h3>
+<p><strong>→ Rules</strong> at <code>.claude/rules/testing.md</code></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">globs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*.test.ts&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.test.tsx&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.spec.ts&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.spec.tsx&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+
+<span class="c1"># Testing Conventions</span>
+
+<span class="nt">When writing or modifying tests</span><span class="p">:</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use fixtures from `tests/fixtures/` for test data</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never create inline test data objects</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Import fixtures at the top of the test file</span>
+
+<span class="nt">Example</span><span class="p">:</span>
+<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">typescript</span>
+<span class="l l-Scalar l-Scalar-Plain">import { mockUser, mockOrder } from &#39;tests/fixtures/users&#39;;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">describe(&#39;OrderService&#39;, () =&gt; {</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">it(&#39;should process order&#39;, () =&gt; {</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">const result = processOrder(mockUser, mockOrder);</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">// ...</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">});</span>
+<span class="err">}</span><span class="l l-Scalar l-Scalar-Plain">);</span>
+<span class="err">```</span>
+</code></pre></div>
+<h3 id="why-not-claudemd">Why Not CLAUDE.md?<a class="headerlink" href="#why-not-claudemd" title="Permanent link">&para;</a></h3>
+<p>While you could put "we use fixtures" in CLAUDE.md, it's more effective in Rules because:
+- Loads only when editing test files (token economy)
+- Appears at the right moment (contextual)
+- Can include specific examples</p>
+<h3 id="why-not-a-skill">Why Not a Skill?<a class="headerlink" href="#why-not-a-skill" title="Permanent link">&para;</a></h3>
+<p>The fixture pattern is project-specific (the path <code>tests/fixtures/</code>). A skill would need to be
+configurable to be portable.</p>
+<h3 id="rationale_5">Rationale<a class="headerlink" href="#rationale_5" title="Permanent link">&para;</a></h3>
+<p>This is Category 6 (Iterative Corrections) combined with Category 5 (Architectural Guidance).
+Rules are ideal because they trigger automatically when editing test files, ensuring the guidance
+appears when it's most relevant.</p>
+</details>
+<hr />
+<h2 id="quick-reference-pattern-matching">Quick Reference: Pattern Matching<a class="headerlink" href="#quick-reference-pattern-matching" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>If the content is about...</th>
+<th>Consider...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What the project is</td>
+<td>CLAUDE.md</td>
+</tr>
+<tr>
+<td>Where things are</td>
+<td>CLAUDE.md (brief) or Rules</td>
+</tr>
+<tr>
+<td>How to run/build/deploy</td>
+<td>Command</td>
+</tr>
+<tr>
+<td>Universal patterns/methods</td>
+<td>Skill</td>
+</tr>
+<tr>
+<td>Project-specific conventions</td>
+<td>Rules</td>
+</tr>
+<tr>
+<td>"Don't do X" corrections</td>
+<td>Rules</td>
+</tr>
+<tr>
+<td>Large multi-file tasks</td>
+<td>Sub-agent</td>
+</tr>
+<tr>
+<td>Detailed reference docs</td>
+<td>External docs + pointer</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="self-check-questions">Self-Check Questions<a class="headerlink" href="#self-check-questions" title="Permanent link">&para;</a></h2>
+<p>After working through an example, ask yourself:</p>
+<ol>
+<li><strong>Did Phase 1 identify the right destination?</strong></li>
+<li>If Q1 was Yes → Command</li>
+<li>If Q2 was Yes → Skill</li>
+<li>If Q3 was Yes → Sub-agent</li>
+<li>
+<p>If Q4 was Yes → CLAUDE.md / Rules</p>
+</li>
+<li>
+<p><strong>Did Phase 2 refine the decision correctly?</strong></p>
+</li>
+<li>For CLAUDE.md: Is it brief enough? Use pointer pattern if long.</li>
+<li>For Commands: Is it user-triggered with side effects?</li>
+<li>For Skills: Is it truly portable? Consider configurable pattern if not.</li>
+<li>
+<p>For Rules: Is it tied to file patterns?</p>
+</li>
+<li>
+<p><strong>What category is this content?</strong></p>
+</li>
+<li>Cat 1: Project Identity → CLAUDE.md</li>
+<li>Cat 2: Codebase Structure → CLAUDE.md</li>
+<li>Cat 3: Operational Commands → Command</li>
+<li>Cat 4: Reusable Patterns → Skill</li>
+<li>Cat 5: Architectural Guidance → Rules</li>
+<li>Cat 6: Iterative Corrections → Rules</li>
+</ol>
+<hr />
+<p><em>Back to: <a href="../../04-two-phase-decision-guide/">Two-Phase Decision Guide</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

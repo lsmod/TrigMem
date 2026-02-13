@@ -1,0 +1,1634 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/01-theory/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../02-what-youre-storing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>1. Theory - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-1-why-it-works-the-theory" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Theory
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-core-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Core Goals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Three Core Goals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#goal-1-context-economy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal 1: Context Economy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal-2-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal 2: Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal-3-reusability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal 3: Reusability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-impossible-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Impossible Triangle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-5-dimensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5 Dimensions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The 5 Dimensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dimension-1-portability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 1: Portability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-2-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 2: Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-3-invocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 3: Invocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-4-context-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 4: Context Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-5-composability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 5: Composability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mechanism-dimension-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mechanism × Dimension Matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Mechanism × Dimension Matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-theory-to-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Theory to Decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Applying Theory to Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-the-decision-guide-is-clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the Decision Guide Is Clear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-you-need-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When You Need Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-off-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-off Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-three-core-goals_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Core Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-5-dimensions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5 Dimensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-key-insight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Key Insight
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-core-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Core Goals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Three Core Goals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#goal-1-context-economy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal 1: Context Economy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal-2-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal 2: Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goal-3-reusability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal 3: Reusability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-impossible-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Impossible Triangle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-5-dimensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5 Dimensions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The 5 Dimensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dimension-1-portability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 1: Portability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-2-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 2: Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-3-invocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 3: Invocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-4-context-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 4: Context Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dimension-5-composability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimension 5: Composability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-mechanism-dimension-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mechanism × Dimension Matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Mechanism × Dimension Matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-theory-to-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Theory to Decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Applying Theory to Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-the-decision-guide-is-clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When the Decision Guide Is Clear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-you-need-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When You Need Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-off-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-off Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-three-core-goals_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Core Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-5-dimensions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5 Dimensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-key-insight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Key Insight
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-1-why-it-works-the-theory">Section 1: Why It Works — The Theory<a class="headerlink" href="#section-1-why-it-works-the-theory" title="Permanent link">&para;</a></h1>
+<p>This section introduces the foundational concepts behind TrigMem. Understanding these goals and
+dimensions will help you make better decisions about where to store information—and more importantly,
+<em>why</em> those decisions matter.</p>
+<blockquote>
+<p><strong>Quick Start Path</strong></p>
+<p>If you want to jump straight to practical decisions, you can skip to the
+<a href="../04-two-phase-decision-guide/">Two-Phase Decision Guide</a> now and return here when you want
+deeper understanding. However, reading this section first provides valuable context.</p>
+</blockquote>
+<hr />
+<h2 id="the-three-core-goals">The Three Core Goals<a class="headerlink" href="#the-three-core-goals" title="Permanent link">&para;</a></h2>
+<p>Every storage decision is a trade-off between three competing goals. Understanding these helps you
+make informed choices—especially when the simpler decision guides don't give a clear answer.</p>
+<h3 id="goal-1-context-economy">Goal 1: Context Economy<a class="headerlink" href="#goal-1-context-economy" title="Permanent link">&para;</a></h3>
+<p><strong>Minimize token consumption to maximize effectiveness.</strong></p>
+<p>The AI's context window is a finite, precious resource. Every token loaded—whether from CLAUDE.md,
+Rules, Skills, or conversation history—is re-sent with every API call. The API is stateless: each
+message reconstructs the full prompt (system prompt + conversation history + new message).</p>
+<div class="highlight"><pre><span></span><code>Total Tokens Processed = Tokens × Messages in Conversation
+</code></pre></div>
+<p>A 500-token CLAUDE.md file is processed:
+- 500 tokens in a 1-message conversation
+- 5,000 tokens in a 10-message conversation
+- 50,000 tokens in a 100-message conversation</p>
+<p><strong>Implications:</strong></p>
+<ul>
+<li>Keep always-loaded content (CLAUDE.md) as small as possible — it consumes context window space every message</li>
+<li>Use on-demand loading (Skills, Commands) for detailed instructions</li>
+<li>Use the pointer pattern: brief references in CLAUDE.md, full content elsewhere</li>
+<li>Prompt caching mitigates financial cost, but not context window pressure</li>
+</ul>
+<p><strong>The prompt caching nuance:</strong> Claude Code automatically uses <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">prompt caching</a>.
+After the first message, cached content (like CLAUDE.md) costs only <strong>10% of the base input price</strong>
+on subsequent reads. So while the tokens are still <em>processed</em> every message, the <em>financial cost</em>
+is significantly reduced (~90%) for stable, repeated content. However, the tokens still <strong>occupy
+context window space</strong> regardless of caching — which is the more important constraint.</p>
+<h3 id="goal-2-precision">Goal 2: Precision<a class="headerlink" href="#goal-2-precision" title="Permanent link">&para;</a></h3>
+<p><strong>Provide specific, actionable instructions when they're relevant.</strong></p>
+<p>General advice is often ignored; specific steps are followed. The more precise your instructions,
+the more reliably Claude will execute them.</p>
+<p><strong>The Precision Hierarchy:</strong></p>
+<ol>
+<li><strong>Vague</strong>: "Write good tests" (often ignored)</li>
+<li><strong>General</strong>: "Write unit tests for all functions" (sometimes followed)</li>
+<li><strong>Specific</strong>: "Use Jest, mock external dependencies, assert on return values" (usually followed)</li>
+<li><strong>Precise</strong>: Step-by-step procedure with examples (reliably followed)</li>
+</ol>
+<p><strong>Implications:</strong></p>
+<ul>
+<li>Skills should contain detailed, actionable procedures</li>
+<li>Rules should be specific to file types/patterns</li>
+<li>Don't try to be precise about everything in CLAUDE.md (violates Context Economy)</li>
+</ul>
+<h3 id="goal-3-reusability">Goal 3: Reusability<a class="headerlink" href="#goal-3-reusability" title="Permanent link">&para;</a></h3>
+<p><strong>Write once, use everywhere.</strong></p>
+<p>The best instructions are portable across projects. This prevents:
+- Manual copying between projects
+- "Config drift" where copies diverge over time
+- Redundant work updating the same patterns repeatedly</p>
+<p><strong>Implications:</strong></p>
+<ul>
+<li>Separate universal patterns (portable Skills) from project-specific conventions (Rules/CLAUDE.md)</li>
+<li>Don't hardcode paths in Skills—use configuration or let the project define them</li>
+<li>Design Skills to work with any project using the same technology stack</li>
+</ul>
+<h3 id="the-impossible-triangle">The Impossible Triangle<a class="headerlink" href="#the-impossible-triangle" title="Permanent link">&para;</a></h3>
+<p>These three goals create tension:</p>
+<div class="highlight"><pre><span></span><code>                    CONTEXT ECONOMY
+                         /\
+                        /  \
+                       /    \
+                      /      \
+                     /        \
+                    /          \
+                   /____________\
+            PRECISION          REUSABILITY
+</code></pre></div>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li><strong>Economy vs. Precision</strong>: More precise instructions = more tokens</li>
+<li><strong>Precision vs. Reusability</strong>: Project-specific precision kills portability</li>
+<li><strong>Reusability vs. Economy</strong>: Portable skills may load more than needed</li>
+</ul>
+<p><strong>The TrigMem Solution:</strong></p>
+<ul>
+<li>Use <strong>multiple mechanisms</strong> with different trade-off profiles</li>
+<li><strong>CLAUDE.md</strong>: Optimizes for Economy (minimal, always-loaded)</li>
+<li><strong>Skills</strong>: Optimizes for Reusability + Precision (detailed, on-demand, portable)</li>
+<li><strong>Rules</strong>: Optimizes for Precision (specific to file patterns)</li>
+<li><strong>Commands</strong>: Optimizes for Precision + Control (user-initiated)</li>
+</ul>
+<hr />
+<h2 id="the-5-dimensions">The 5 Dimensions<a class="headerlink" href="#the-5-dimensions" title="Permanent link">&para;</a></h2>
+<p>Each storage mechanism behaves differently across five key dimensions. Understanding these helps
+you predict how your storage choice will affect the Three Core Goals.</p>
+<h3 id="dimension-1-portability">Dimension 1: Portability<a class="headerlink" href="#dimension-1-portability" title="Permanent link">&para;</a></h3>
+<p><strong>Can this be reused across different projects?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Universal</strong></td>
+<td>Works in any project with same tech</td>
+<td>"How to write React hooks"</td>
+</tr>
+<tr>
+<td><strong>Project-bound</strong></td>
+<td>Specific to one codebase</td>
+<td>"Components are in <code>src/ui/</code>"</td>
+</tr>
+<tr>
+<td><strong>Mixed</strong></td>
+<td>Can be either, depends on content</td>
+<td>Rules for TypeScript (universal) vs. paths (project-bound)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact on Goals:</strong></p>
+<ul>
+<li>Universal → High Reusability</li>
+<li>Project-bound → Can be more Precise for that project</li>
+</ul>
+<h3 id="dimension-2-loading">Dimension 2: Loading<a class="headerlink" href="#dimension-2-loading" title="Permanent link">&para;</a></h3>
+<p><strong>When does this content enter the context window?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Token Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Always</strong></td>
+<td>Loaded every conversation</td>
+<td>High (present every message; financial cost reduced ~90% by prompt caching, but context window impact remains)</td>
+</tr>
+<tr>
+<td><strong>Pattern-matched</strong></td>
+<td>Loaded when file patterns match</td>
+<td>Medium (only when relevant)</td>
+</tr>
+<tr>
+<td><strong>On-demand</strong></td>
+<td>Loaded only when explicitly invoked</td>
+<td>Low (only when needed)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact on Goals:</strong></p>
+<ul>
+<li>Always → Hurts Economy, but always available</li>
+<li>On-demand → Great Economy, but requires invocation</li>
+</ul>
+<h3 id="dimension-3-invocation">Dimension 3: Invocation<a class="headerlink" href="#dimension-3-invocation" title="Permanent link">&para;</a></h3>
+<p><strong>Who decides when this gets used?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Always active</strong></td>
+<td>Cannot be turned off</td>
+<td>No control (CLAUDE.md)</td>
+</tr>
+<tr>
+<td><strong>Automatic</strong></td>
+<td>Claude decides based on context</td>
+<td>AI-controlled</td>
+</tr>
+<tr>
+<td><strong>User-explicit</strong></td>
+<td>Only runs when user invokes</td>
+<td>Full user control</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact on Goals:</strong></p>
+<ul>
+<li>Automatic → More convenient, but may load unexpectedly</li>
+<li>User-explicit → Predictable, but requires user knowledge</li>
+</ul>
+<blockquote>
+<p><strong>⚠️ Invocation Is Probabilistic, Not Deterministic</strong></p>
+<p>When a skill's invocation is set to "Automatic" (Claude decides), invocation is
+<em>probabilistic</em>—Claude may or may not invoke the skill depending on prompt context,
+conversation history, and description matching. A skill that fires reliably in one
+session may not fire in another. For practical techniques to improve invocation
+reliability, see <a href="../07-configurable-skills/#invocation-reliability">Section 7 — Invocation Reliability</a>.</p>
+</blockquote>
+<h3 id="dimension-4-context-isolation">Dimension 4: Context Isolation<a class="headerlink" href="#dimension-4-context-isolation" title="Permanent link">&para;</a></h3>
+<p><strong>Where does this run?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main context</strong></td>
+<td>Runs in primary conversation</td>
+<td>History visible, may clutter</td>
+</tr>
+<tr>
+<td><strong>Isolated</strong></td>
+<td>Runs in separate sub-agent</td>
+<td>Clean handoff, parallel-capable</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact on Goals:</strong></p>
+<ul>
+<li>Main context → Simple, but consumes main context budget</li>
+<li>Isolated → Clean, but adds coordination overhead</li>
+</ul>
+<h3 id="dimension-5-composability">Dimension 5: Composability<a class="headerlink" href="#dimension-5-composability" title="Permanent link">&para;</a></h3>
+<p><strong>How well does this combine with other mechanisms?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>High</strong></td>
+<td>Easily combines with others</td>
+<td>Skills calling other Skills</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>Some combination possible</td>
+<td>Rules + CLAUDE.md context</td>
+</tr>
+<tr>
+<td><strong>Low</strong></td>
+<td>Standalone operation</td>
+<td>Commands execute independently</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact on Goals:</strong></p>
+<ul>
+<li>High composability → Flexible, but may increase complexity</li>
+<li>Low composability → Simple, but limited integration</li>
+</ul>
+<hr />
+<h2 id="the-mechanism-dimension-matrix">The Mechanism × Dimension Matrix<a class="headerlink" href="#the-mechanism-dimension-matrix" title="Permanent link">&para;</a></h2>
+<p>This matrix is your reference tool for understanding how each mechanism behaves.</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Portability</th>
+<th>Loading</th>
+<th>Invocation</th>
+<th>Isolation</th>
+<th>Composability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLAUDE.md</strong></td>
+<td>Project-bound</td>
+<td>Always</td>
+<td>Always active</td>
+<td>Main</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Rules</strong></td>
+<td>Mixed¹</td>
+<td>Pattern-matched</td>
+<td>Automatic</td>
+<td>Main</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td>Universal²</td>
+<td>On-demand</td>
+<td>Auto or User</td>
+<td>Main</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td><strong>Commands</strong></td>
+<td>Universal²</td>
+<td>On-demand</td>
+<td><strong>User-explicit</strong></td>
+<td>Main</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Sub-agents</strong></td>
+<td>Universal²</td>
+<td>On-demand</td>
+<td>Explicit or Auto</td>
+<td><strong>Isolated</strong></td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Footnotes:</strong></p>
+<ol>
+<li>Rules can be universal (e.g., TypeScript standards) or project-specific (e.g., local paths).
+   They become project-bound when they contain hardcoded project conventions.</li>
+<li>Skills, Commands, and Sub-agents are portable <em>by design</em>. Their portability depends on
+   whether you hardcode project-specific details (which you shouldn't).</li>
+</ol>
+<h3 id="reading-the-matrix">Reading the Matrix<a class="headerlink" href="#reading-the-matrix" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: "I need project-specific context available in every conversation"</strong></p>
+<ul>
+<li>Need: Project-bound + Always loaded + Always active</li>
+<li>→ <strong>CLAUDE.md</strong> (only mechanism that fits)</li>
+</ul>
+<p><strong>Example 2: "I want reusable how-to knowledge that Claude uses automatically"</strong></p>
+<ul>
+<li>Need: Universal + On-demand + Auto-invoked + High composability</li>
+<li>→ <strong>Skill</strong> (best fit across all dimensions)</li>
+</ul>
+<p><strong>Example 3: "I want a deployment workflow only I can trigger"</strong></p>
+<ul>
+<li>Need: Any portability + On-demand + User-explicit</li>
+<li>→ <strong>Command</strong> (user-explicit is the key differentiator)</li>
+</ul>
+<p><strong>Example 4: "I need to run a complex task without cluttering my conversation"</strong></p>
+<ul>
+<li>Need: Any + On-demand + Any + Isolated</li>
+<li>→ <strong>Sub-agent</strong> (only mechanism with isolation)</li>
+</ul>
+<blockquote>
+<p><strong>Scope Note: Claude Code Hooks</strong></p>
+<p>Claude Code also provides <strong>hooks</strong>—lifecycle callbacks (PreToolUse, PostToolUse,
+SubagentStart, SubagentStop, etc.) that run shell commands at specific points during
+a conversation. Hooks enable powerful automation: re-injecting context, preventing
+dangerous commands, auto-formatting files, or validating tool arguments.</p>
+<p>Hooks are <strong>out of scope</strong> for TrigMem because they address <em>lifecycle action automation</em>,
+not <em>what Claude stores and remembers</em>. TrigMem focuses on memory placement—where
+information lives so Claude can retrieve it. Hooks complement memory management (e.g., a
+hook could auto-format code after a skill runs) but are not themselves a memory mechanism.</p>
+</blockquote>
+<hr />
+<h2 id="applying-theory-to-decisions">Applying Theory to Decisions<a class="headerlink" href="#applying-theory-to-decisions" title="Permanent link">&para;</a></h2>
+<h3 id="when-the-decision-guide-is-clear">When the Decision Guide Is Clear<a class="headerlink" href="#when-the-decision-guide-is-clear" title="Permanent link">&para;</a></h3>
+<p>For most cases, the <a href="../04-two-phase-decision-guide/">Two-Phase Decision Guide</a> gives you a clear
+answer. Use it first—it encapsulates this theory into practical questions.</p>
+<h3 id="when-you-need-theory">When You Need Theory<a class="headerlink" href="#when-you-need-theory" title="Permanent link">&para;</a></h3>
+<p>Use this section when:</p>
+<ol>
+<li><strong>Edge cases</strong>: The decision guide doesn't clearly point to one destination</li>
+<li>Use the Matrix to compare trade-offs</li>
+<li>
+<p>Optimize for your most important goal (Economy, Precision, or Reusability)</p>
+</li>
+<li>
+<p><strong>Validating decisions</strong>: You want to confirm your choice is sound</p>
+</li>
+<li>Check the Matrix dimensions</li>
+<li>
+<p>Verify the mechanism matches your requirements</p>
+</li>
+<li>
+<p><strong>Designing new patterns</strong>: You're creating skills or extending the method</p>
+</li>
+<li>Use the Three Core Goals to guide your design</li>
+<li>Ensure you're not accidentally sacrificing one goal entirely</li>
+</ol>
+<h3 id="trade-off-examples">Trade-off Examples<a class="headerlink" href="#trade-off-examples" title="Permanent link">&para;</a></h3>
+<p><strong>"Should this rule be in CLAUDE.md or a Rule file?"</strong></p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>CLAUDE.md</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loading</td>
+<td>Always (costs tokens)</td>
+<td>Pattern-matched (efficient)</td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td>Every conversation</td>
+<td>Only when matching files edited</td>
+</tr>
+</tbody>
+</table>
+<p>→ If the rule applies to specific file types, use a Rule. If it's critical project-wide context
+that Claude needs constantly, use CLAUDE.md (but keep it brief).</p>
+<p><strong>"Should this be a Skill or a Command?"</strong></p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Skill</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Invocation</td>
+<td>Claude can auto-invoke</td>
+<td>User must invoke</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Knowledge Claude should use proactively</td>
+<td>Actions with side effects</td>
+</tr>
+</tbody>
+</table>
+<p>→ If Claude should decide when to apply this knowledge, use a Skill. If the user should
+control when the action runs, use a Command.</p>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<h3 id="the-three-core-goals_1">The Three Core Goals<a class="headerlink" href="#the-three-core-goals_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Context Economy</strong>: Minimize tokens, maximize effectiveness</li>
+<li><strong>Precision</strong>: Specific, actionable instructions</li>
+<li><strong>Reusability</strong>: Write once, use everywhere</li>
+</ol>
+<h3 id="the-5-dimensions_1">The 5 Dimensions<a class="headerlink" href="#the-5-dimensions_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Portability</strong>: Universal vs. project-bound</li>
+<li><strong>Loading</strong>: Always vs. pattern-matched vs. on-demand</li>
+<li><strong>Invocation</strong>: Always active vs. automatic vs. user-explicit</li>
+<li><strong>Context Isolation</strong>: Main context vs. isolated</li>
+<li><strong>Composability</strong>: How well it combines with other mechanisms</li>
+</ol>
+<h3 id="the-key-insight">The Key Insight<a class="headerlink" href="#the-key-insight" title="Permanent link">&para;</a></h3>
+<p>No single mechanism optimizes all three goals. TrigMem uses multiple mechanisms, each with
+different trade-off profiles, to let you choose the right tool for each type of information.</p>
+<p>For practical decisions, use the <a href="../04-two-phase-decision-guide/">Two-Phase Decision Guide</a>.
+Return here when you need to understand <em>why</em> a decision is correct or handle edge cases.</p>
+<hr />
+<p><em>Next: <a href="../02-what-youre-storing/">Section 2 - What You're Storing</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
