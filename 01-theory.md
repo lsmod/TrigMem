@@ -36,6 +36,7 @@ A 500-token CLAUDE.md file is processed:
 
 
 **Implications:**
+
 - Keep always-loaded content (CLAUDE.md) as small as possible — it consumes context window space every message
 - Use on-demand loading (Skills, Commands) for detailed instructions
 - Use the pointer pattern: brief references in CLAUDE.md, full content elsewhere
@@ -56,12 +57,14 @@ General advice is often ignored; specific steps are followed. The more precise y
 the more reliably Claude will execute them.
 
 **The Precision Hierarchy:**
+
 1. **Vague**: "Write good tests" (often ignored)
 2. **General**: "Write unit tests for all functions" (sometimes followed)
 3. **Specific**: "Use Jest, mock external dependencies, assert on return values" (usually followed)
 4. **Precise**: Step-by-step procedure with examples (reliably followed)
 
 **Implications:**
+
 - Skills should contain detailed, actionable procedures
 - Rules should be specific to file types/patterns
 - Don't try to be precise about everything in CLAUDE.md (violates Context Economy)
@@ -76,6 +79,7 @@ The best instructions are portable across projects. This prevents:
 - Redundant work updating the same patterns repeatedly
 
 **Implications:**
+
 - Separate universal patterns (portable Skills) from project-specific conventions (Rules/CLAUDE.md)
 - Don't hardcode paths in Skills—use configuration or let the project define them
 - Design Skills to work with any project using the same technology stack
@@ -97,11 +101,13 @@ These three goals create tension:
 ```
 
 **Trade-offs:**
+
 - **Economy vs. Precision**: More precise instructions = more tokens
 - **Precision vs. Reusability**: Project-specific precision kills portability
 - **Reusability vs. Economy**: Portable skills may load more than needed
 
 **The TrigMem Solution:**
+
 - Use **multiple mechanisms** with different trade-off profiles
 - **CLAUDE.md**: Optimizes for Economy (minimal, always-loaded)
 - **Skills**: Optimizes for Reusability + Precision (detailed, on-demand, portable)
@@ -126,6 +132,7 @@ you predict how your storage choice will affect the Three Core Goals.
 | **Mixed** | Can be either, depends on content | Rules for TypeScript (universal) vs. paths (project-bound) |
 
 **Impact on Goals:**
+
 - Universal → High Reusability
 - Project-bound → Can be more Precise for that project
 
@@ -140,6 +147,7 @@ you predict how your storage choice will affect the Three Core Goals.
 | **On-demand** | Loaded only when explicitly invoked | Low (only when needed) |
 
 **Impact on Goals:**
+
 - Always → Hurts Economy, but always available
 - On-demand → Great Economy, but requires invocation
 
@@ -154,6 +162,7 @@ you predict how your storage choice will affect the Three Core Goals.
 | **User-explicit** | Only runs when user invokes | Full user control |
 
 **Impact on Goals:**
+
 - Automatic → More convenient, but may load unexpectedly
 - User-explicit → Predictable, but requires user knowledge
 
@@ -175,6 +184,7 @@ you predict how your storage choice will affect the Three Core Goals.
 | **Isolated** | Runs in separate sub-agent | Clean handoff, parallel-capable |
 
 **Impact on Goals:**
+
 - Main context → Simple, but consumes main context budget
 - Isolated → Clean, but adds coordination overhead
 
@@ -189,6 +199,7 @@ you predict how your storage choice will affect the Three Core Goals.
 | **Low** | Standalone operation | Commands execute independently |
 
 **Impact on Goals:**
+
 - High composability → Flexible, but may increase complexity
 - Low composability → Simple, but limited integration
 
@@ -207,6 +218,7 @@ This matrix is your reference tool for understanding how each mechanism behaves.
 | **Sub-agents** | Universal² | On-demand | Explicit or Auto | **Isolated** | Medium |
 
 **Footnotes:**
+
 1. Rules can be universal (e.g., TypeScript standards) or project-specific (e.g., local paths).
    They become project-bound when they contain hardcoded project conventions.
 2. Skills, Commands, and Sub-agents are portable *by design*. Their portability depends on
@@ -215,18 +227,22 @@ This matrix is your reference tool for understanding how each mechanism behaves.
 ### Reading the Matrix
 
 **Example 1: "I need project-specific context available in every conversation"**
+
 - Need: Project-bound + Always loaded + Always active
 - → **CLAUDE.md** (only mechanism that fits)
 
 **Example 2: "I want reusable how-to knowledge that Claude uses automatically"**
+
 - Need: Universal + On-demand + Auto-invoked + High composability
 - → **Skill** (best fit across all dimensions)
 
 **Example 3: "I want a deployment workflow only I can trigger"**
+
 - Need: Any portability + On-demand + User-explicit
 - → **Command** (user-explicit is the key differentiator)
 
 **Example 4: "I need to run a complex task without cluttering my conversation"**
+
 - Need: Any + On-demand + Any + Isolated
 - → **Sub-agent** (only mechanism with isolation)
 

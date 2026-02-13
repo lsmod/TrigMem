@@ -96,6 +96,7 @@ Database migrations in prisma/migrations/
 
 ### Destination Hints
 → **CLAUDE.md** for high-level map (always needed)
+
 → **Rules** for directory-specific conventions (triggered when working in those areas)
 
 ---
@@ -139,6 +140,7 @@ Reset database:
 
 ### Destination Hints
 → **Commands** for user-initiated workflows (explicit invocation)
+
 → **CLAUDE.md** for frequently-needed quick commands (just the essential ones)
 
 ---
@@ -226,7 +228,9 @@ API endpoint conventions:
 
 ### Destination Hints
 → **Rules** for directory-specific conventions (load when relevant)
+
 → **CLAUDE.md** for project-wide conventions (if brief and always needed)
+
 → **Linked file** for detailed conventions (e.g., `See docs/architecture.md` in CLAUDE.md)
 
 ---
@@ -259,6 +263,7 @@ When using pnpm, always run 'pnpm install' after switching branches.
 
 ### Destination Hints
 → **Rules** for file-type-specific corrections (e.g., TypeScript rules for `.ts` files)
+
 → **CLAUDE.md** for project-wide corrections (if critical and always needed)
 
 ---
@@ -314,34 +319,40 @@ Use these questions to identify what you're storing:
 
 ### Question 1: Is this about WHAT my project is?
 **Yes** → **Category 1: Project Identity**
+
 - Project name, purpose, tech stack
 - Rarely changes
 - Anyone new needs to know this immediately
 
 ### Question 2: Is this about WHERE things are in my codebase?
 **Yes** → **Category 2: Codebase Structure**
+
 - Directory structure, file locations
 - Project-specific navigation
 - Helps Claude find things
 
 ### Question 3: Is this about HOW TO DO something (action/workflow)?
 **Yes, and it has side effects** → **Category 3: Operational Commands**
+
 - Build, test, deploy, run
 - Step-by-step procedures
 - User initiates these actions
 
 **Yes, and it's universal knowledge** → **Category 4: Reusable Patterns**
+
 - Could apply to any project with this tech stack
 - The concept, not the convention
 - "How to implement X pattern"
 
 **Yes, and it's how we specifically do it here** → **Category 5: Architectural Guidance**
+
 - Project-specific implementation details
 - File paths, naming conventions, local decisions
 - "In THIS project, we put X in Y"
 
 ### Question 4: Is this a correction for a repeated mistake?
 **Yes** → **Category 6: Iterative Corrections**
+
 - "Don't do X" or "Always do Y"
 - Accumulated from experience
 - Prevents recurring errors

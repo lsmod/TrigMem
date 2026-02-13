@@ -9,6 +9,7 @@ understand the theory (Section 1) and categories (Section 2), this guide shows y
 ## How This Guide Works
 
 **Phase 1: Triage** — Answer 4 quick questions to identify your destination.
+
 **Phase 2: Refinement** — Apply destination-specific guidance to finalize placement.
 
 > **Note for AI Agents**: This two-phase approach is designed for human learning. If you're an AI
@@ -49,12 +50,14 @@ Answer these questions in order. Stop at the first "Yes."
 ### Q1: Is this a user-triggered action with side effects?
 
 **Examples that say YES:**
+
 - "Deploy to staging"
 - "Run the full test suite"
 - "Generate a new component from template"
 - "Create a PR with our format"
 
 **Examples that say NO:**
+
 - "How to deploy" (that's knowledge, not an action)
 - "We use Jest for testing" (that's identity)
 
@@ -65,12 +68,14 @@ Answer these questions in order. Stop at the first "Yes."
 ### Q2: Is this universal how-to knowledge portable across projects?
 
 **Examples that say YES:**
+
 - "How to implement Hexagonal Architecture"
 - "How to write a React custom hook"
 - "TDD workflow: red-green-refactor"
 - "Code review best practices"
 
 **Examples that say NO:**
+
 - "In this project, domain goes in `src/domain/`" (that's project-specific)
 - "Run tests with `pnpm test`" (that's a command)
 
@@ -81,12 +86,14 @@ Answer these questions in order. Stop at the first "Yes."
 ### Q3: Does this need context isolation or parallel execution?
 
 **Examples that say YES:**
+
 - "Refactor all API handlers to new pattern"
 - "Fix these 5 independent bugs"
 - "Experiment with a new approach without polluting context"
 - "Large task with many planning/coding/testing steps"
 
 **Examples that say NO:**
+
 - "Fix this one bug" (simple task, no isolation needed)
 - "How to refactor" (that's knowledge for a skill)
 
@@ -195,6 +202,7 @@ Commands are user-only by default—Claude cannot auto-invoke them. This is the 
 actions with significant side effects.
 
 **Micro-examples:**
+
 - "Deploy to production" → Command (explicit user action, significant side effects)
 - "Extract the deployment steps into a reusable skill" → If the how-to knowledge is universal, refactor it from a Command into a Skill
 
@@ -280,6 +288,7 @@ This keeps agents lightweight and focused on execution.
 
 
 **Micro-examples:**
+
 - "Refactor all API handlers" → Sub-agent (large task, benefits from isolation)
 - "Spawn a frontend specialist and backend specialist in parallel" → Sub-agents (domain-specific experts)
 - "Run a code reviewer agent alongside a documentation agent" → Sub-agents (independent workstreams)
@@ -425,12 +434,14 @@ When that happens, **decompose it across mechanisms** — each part goes where i
 ## Summary
 
 **Phase 1 Triage** gets you to the right destination:
+
 1. User-triggered action? → Command
 2. Universal how-to? → Skill
 3. Needs isolation? → Sub-agent
 4. Always-needed context? → CLAUDE.md / Rules
 
 **Phase 2 Refinement** helps you finalize:
+
 - Commands: Simple vs. complex, arguments, user-only (default)
 - Skills: Portable check, invocation control, configurable pattern
 - Sub-agents: Isolation reason, context needs, skill references

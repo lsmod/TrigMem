@@ -4,6 +4,7 @@ This document contains 6 worked examples demonstrating the TrigMem decision proc
 walks through Phase 1 (Triage) and Phase 2 (Refinement) to arrive at the correct storage location.
 
 **How to Use These Examples:**
+
 1. Read the scenario
 2. Try to decide the destination yourself using the [Two-Phase Decision Guide](../04-two-phase-decision-guide.md)
 3. Expand the solution to check your answer

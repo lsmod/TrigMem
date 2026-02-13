@@ -356,6 +356,7 @@ React e-commerce app. React 18, TypeScript, Node.js, PostgreSQL.
 ```
 
 **Files Created:**
+
 - `.claude/commands/test.md` - Testing workflow
 - `.claude/skills/react-components/SKILL.md` - Component patterns
 - `.claude/rules/typescript.md` - TypeScript rules
@@ -364,6 +365,7 @@ React e-commerce app. React 18, TypeScript, Node.js, PostgreSQL.
 ### Verification Checklist
 
 After migration, verify:
+
 - [ ] CLAUDE.md is under 200 tokens (ideally under 100)
 - [ ] Every piece of content exists somewhere (nothing lost)
 - [ ] Discovery Anchors point to correct files
@@ -379,6 +381,7 @@ After migration, verify:
 **Situation:** Starting a new project, want to do it right from the start.
 
 **Approach:**
+
 1. Create minimal CLAUDE.md with identity and structure only
 2. Create Skills for your standard patterns as you develop them
 3. Add Rules as you encounter repeated corrections
@@ -406,6 +409,7 @@ See `docs/` for detailed documentation.
 **Situation:** Existing project with a CLAUDE.md under 200 lines that works okay.
 
 **Approach:**
+
 1. Don't migrate yet—if it works, keep it
 2. When you want to reuse a pattern, extract just that pattern to a Skill
 3. Migrate incrementally as patterns emerge
@@ -417,12 +421,14 @@ See `docs/` for detailed documentation.
 **Situation:** CLAUDE.md has grown to 500+ lines, Claude ignores some instructions.
 
 **Approach:**
+
 1. Full Audit: Tag everything with categories
 2. Aggressive Split: Move all Cat 3, 4, 5, 6 content out
 3. Keep only Cat 1 (Identity) and Cat 2 (Map) in CLAUDE.md
 4. Add Discovery Anchors for everything moved
 
 **Priority Order:**
+
 1. Move Commands first (biggest token savings, easiest)
 2. Move Patterns to Skills (enables reuse)
 3. Move Corrections to Rules (enables pattern-matching)
@@ -433,6 +439,7 @@ See `docs/` for detailed documentation.
 **Situation:** Multiple team members have added conflicting instructions to CLAUDE.md.
 
 **Approach:**
+
 1. Audit with the team: Tag and discuss each section
 2. Resolve conflicts before splitting
 3. Use Skills for shared patterns (version-controlled, reviewable)
@@ -440,6 +447,7 @@ See `docs/` for detailed documentation.
 5. Keep CLAUDE.md as minimal shared context
 
 **Process:**
+
 1. Create a branch for migration
 2. PR review the split content
 3. Team agrees on what goes where
@@ -450,16 +458,19 @@ See `docs/` for detailed documentation.
 ## Migration Checklist
 
 ### Pre-Migration
+
 - [ ] Backup current CLAUDE.md
 - [ ] Count current token size (rough estimate: lines × 5)
 - [ ] Decide if full or incremental migration
 
 ### During Migration
+
 - [ ] Step 1: Audit complete (all sections tagged)
 - [ ] Step 2: Split complete (files created in correct locations)
 - [ ] Step 3: Link complete (Discovery Anchors in place)
 
 ### Post-Migration
+
 - [ ] CLAUDE.md under 200 tokens
 - [ ] All moved content accessible
 - [ ] Commands work when invoked
@@ -468,6 +479,7 @@ See `docs/` for detailed documentation.
 - [ ] No information lost
 
 ### Validation
+
 - [ ] Start new Claude conversation
 - [ ] Verify Claude has project context
 - [ ] Test a command (`/test` or similar)
