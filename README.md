@@ -38,19 +38,31 @@ See the method in practice with worked examples:
 
 ## Installation
 
-Install the TrigMem skill bundle (decision skill + store command + rules) into your project:
+Install the TrigMem bundle (decision skill + store command + rules) into your project's `.claude/` directory.
 
-    npx skills add lsmod/trigmem
+**Quick install** (run from your project root):
 
-> **Note:** The `skills` CLI installs the `TrigMem:decision` skill automatically. You may need
-> to copy commands and rules manually if they are not included.
+```bash
+BASE=https://raw.githubusercontent.com/lsmod/trigmem/master/.claude
+curl --create-dirs -fsSL $BASE/skills/TrigMem/decision/SKILL.md              -o .claude/skills/TrigMem/decision/SKILL.md
+curl --create-dirs -fsSL $BASE/skills/TrigMem/decision/ref-categories.md     -o .claude/skills/TrigMem/decision/ref-categories.md
+curl --create-dirs -fsSL $BASE/skills/TrigMem/decision/ref-claudemd-sections.md -o .claude/skills/TrigMem/decision/ref-claudemd-sections.md
+curl --create-dirs -fsSL $BASE/skills/TrigMem/decision/ref-decision-support.md  -o .claude/skills/TrigMem/decision/ref-decision-support.md
+curl --create-dirs -fsSL $BASE/commands/TrigMem/store.md                     -o .claude/commands/TrigMem/store.md
+curl --create-dirs -fsSL $BASE/rules/skill-frontmatter.md                    -o .claude/rules/skill-frontmatter.md
+curl --create-dirs -fsSL $BASE/rules/command-frontmatter.md                  -o .claude/rules/command-frontmatter.md
+```
 
-**Manual installation** (if commands/rules are not copied automatically):
+**Manual install** (if you prefer not to run scripts):
 
-    BASE=https://raw.githubusercontent.com/lsmod/trigmem/master
-    curl --create-dirs -fsSL $BASE/.claude/commands/TrigMem/store.md -o .claude/commands/TrigMem/store.md
-    curl --create-dirs -fsSL $BASE/.claude/rules/skill-frontmatter.md   -o .claude/rules/skill-frontmatter.md
-    curl --create-dirs -fsSL $BASE/.claude/rules/command-frontmatter.md -o .claude/rules/command-frontmatter.md
+```bash
+git clone https://github.com/lsmod/trigmem.git
+cp -r trigmem/.claude/skills/TrigMem   your-project/.claude/skills/TrigMem
+cp -r trigmem/.claude/commands/TrigMem  your-project/.claude/commands/TrigMem
+cp trigmem/.claude/rules/skill-frontmatter.md    your-project/.claude/rules/
+cp trigmem/.claude/rules/command-frontmatter.md  your-project/.claude/rules/
+rm -rf trigmem
+```
 
 The rules files enforce frontmatter on all skill and command files — they are required for the
 `/TrigMem:store` command's frontmatter constraint to work correctly.
@@ -68,7 +80,7 @@ project to be GPL-licensed.
 
 ## Version
 
-0.2.1 Beta - 06/03/2026 - dual licensing + skills CLI installation
+0.2.2 Beta - 06/03/2026 - dual licensing + skills installation bash instructions
 
 ### Previous releases
 
