@@ -68,7 +68,7 @@ project to be GPL-licensed.
 
 ## Version
 
-0.2.0 Beta - 06/03/2026 - dual licensing + skills CLI installation
+0.2.1 Beta - 06/03/2026 - dual licensing + skills CLI installation
 
 ### Previous releases
 

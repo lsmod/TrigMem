@@ -24,3 +24,8 @@
 !.github/
 !.github/workflows/
 !.github/workflows/**
+
+# Allow Claude config (skills, rules, commands) but not local settings
+!.claude/
+!.claude/**
+.claude/settings.local.json
