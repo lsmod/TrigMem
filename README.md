@@ -1,6 +1,6 @@
 # TrigMem - Trigallez's Memory Management Method
 
-**WARNING: Alpha Version** - This method is under active development.
+**WARNING: Beta Version** - This method is under active development.
 
 ## Introduction
 
