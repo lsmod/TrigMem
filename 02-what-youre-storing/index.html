@@ -1,0 +1,2129 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/02-what-youre-storing/">
+      
+      
+        <link rel="prev" href="../01-theory/">
+      
+      
+        <link rel="next" href="../03-storage-options/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>2. What You're Storing - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-2-what-youre-storing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. What You're Storing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-6-information-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 6 Information Categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-1-project-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 1: Project Identity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 1: Project Identity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-2-codebase-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 2: Codebase Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 2: Codebase Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-3-operational-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 3: Operational Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 3: Operational Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-4-reusable-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 4: Reusable Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 4: Reusable Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-5-architectural-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 5: Architectural Guidance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 5: Architectural Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-6-iterative-corrections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 6: Iterative Corrections
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 6: Iterative Corrections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-critical-distinction-category-4-vs-category-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Critical Distinction: Category 4 vs. Category 5
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Critical Distinction: Category 4 vs. Category 5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-assessment-what-category-is-my-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Assessment: What Category Is My Content?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-Assessment: What Category Is My Content?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1-is-this-about-what-my-project-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1: Is this about WHAT my project is?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2-is-this-about-where-things-are-in-my-codebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2: Is this about WHERE things are in my codebase?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3-is-this-about-how-to-do-something-actionworkflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3: Is this about HOW TO DO something (action/workflow)?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4-is-this-a-correction-for-a-repeated-mistake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4: Is this a correction for a repeated mistake?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-flow-ambiguous-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision Flow: Ambiguous Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision Flow: Ambiguous Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#we-use-typescript-with-strict-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "We use TypeScript with strict mode"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-with-pnpm-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Run tests with pnpm test"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components-should-have-a-single-responsibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Components should have a single responsibility"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-6-information-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 6 Information Categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-1-project-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 1: Project Identity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 1: Project Identity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-2-codebase-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 2: Codebase Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 2: Codebase Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-3-operational-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 3: Operational Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 3: Operational Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-4-reusable-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 4: Reusable Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 4: Reusable Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-5-architectural-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 5: Architectural Guidance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 5: Architectural Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-6-iterative-corrections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Category 6: Iterative Corrections
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Category 6: Iterative Corrections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#character_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Character
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destination-hints_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-critical-distinction-category-4-vs-category-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Critical Distinction: Category 4 vs. Category 5
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Critical Distinction: Category 4 vs. Category 5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-assessment-what-category-is-my-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Assessment: What Category Is My Content?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-Assessment: What Category Is My Content?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#question-1-is-this-about-what-my-project-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1: Is this about WHAT my project is?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-2-is-this-about-where-things-are-in-my-codebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2: Is this about WHERE things are in my codebase?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-3-is-this-about-how-to-do-something-actionworkflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 3: Is this about HOW TO DO something (action/workflow)?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-4-is-this-a-correction-for-a-repeated-mistake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 4: Is this a correction for a repeated mistake?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-flow-ambiguous-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision Flow: Ambiguous Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision Flow: Ambiguous Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#we-use-typescript-with-strict-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "We use TypeScript with strict mode"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-with-pnpm-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Run tests with pnpm test"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components-should-have-a-single-responsibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Components should have a single responsibility"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-2-what-youre-storing">Section 2: What You're Storing<a class="headerlink" href="#section-2-what-youre-storing" title="Permanent link">&para;</a></h1>
+<p>Before choosing <em>where</em> to put information, you must first identify <em>what</em> it is. Most confusion comes
+from mixing different types of information together—for example, embedding universal architectural
+patterns alongside project-specific folder paths. This section helps you categorize your content so
+later sections can point you to the right destination.</p>
+<hr />
+<h2 id="the-6-information-categories">The 6 Information Categories<a class="headerlink" href="#the-6-information-categories" title="Permanent link">&para;</a></h2>
+<p>Every piece of information you want to store falls into one of six distinct categories. Understanding
+these categories is the foundation for making the right storage decision.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Category</th>
+<th>Character</th>
+<th>Typical Destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Project Identity</td>
+<td>Unique, rarely changes</td>
+<td>CLAUDE.md</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Codebase Structure</td>
+<td>Unique, helps navigation</td>
+<td>CLAUDE.md / Rules</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Operational Commands</td>
+<td>Procedural, project-specific</td>
+<td>Commands</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reusable Patterns</td>
+<td>Universal, portable</td>
+<td>Skills</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Architectural Guidance</td>
+<td>Project-specific application</td>
+<td>Rules / CLAUDE.md</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Iterative Corrections</td>
+<td>Reactive, accumulated</td>
+<td>Rules / CLAUDE.md</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="category-1-project-identity">Category 1: Project Identity<a class="headerlink" href="#category-1-project-identity" title="Permanent link">&para;</a></h2>
+<h3 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h3>
+<p>High-level context about what the project is and its core technology stack. This is the "business
+card" of your project—information that rarely changes and provides essential orientation for any AI
+assistant.</p>
+<h3 id="character">Character<a class="headerlink" href="#character" title="Permanent link">&para;</a></h3>
+<p><strong>Unique</strong> per project. Rarely changes once established.</p>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: E-commerce Platform</strong>
+<div class="highlight"><pre><span></span><code>This is ShopFlow, a B2B e-commerce platform for wholesale distributors.
+Built with: Next.js 14, TypeScript, Prisma, PostgreSQL, Stripe.
+</code></pre></div></p>
+<p><strong>Example 2: CLI Tool</strong>
+<div class="highlight"><pre><span></span><code>TrigMem is a methodology and skill collection for organizing Claude Code memory.
+Pure Markdown deliverables, no runtime dependencies.
+</code></pre></div></p>
+<p><strong>Example 3: Mobile App Backend</strong>
+<div class="highlight"><pre><span></span><code>PetTracker API - Backend service for pet health monitoring mobile app.
+Stack: Go, gRPC, Redis, MongoDB, deployed on GCP Cloud Run.
+</code></pre></div></p>
+<h3 id="destination-hints">Destination Hints<a class="headerlink" href="#destination-hints" title="Permanent link">&para;</a></h3>
+<p>→ Almost always goes in <strong>CLAUDE.md</strong> (always-loaded, identity-focused).</p>
+<hr />
+<h2 id="category-2-codebase-structure">Category 2: Codebase Structure<a class="headerlink" href="#category-2-codebase-structure" title="Permanent link">&para;</a></h2>
+<h3 id="description_1">Description<a class="headerlink" href="#description_1" title="Permanent link">&para;</a></h3>
+<p>Knowledge of where things live in <em>this specific</em> codebase. This helps Claude navigate your project
+without having to re-discover the structure each time.</p>
+<h3 id="character_1">Character<a class="headerlink" href="#character_1" title="Permanent link">&para;</a></h3>
+<p><strong>Unique</strong> per project. Helps Claude navigate efficiently.</p>
+<h3 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: Monorepo Layout</strong>
+<div class="highlight"><pre><span></span><code>packages/
+├── web/          # Next.js frontend
+├── api/          # Express backend
+├── shared/       # Shared types and utilities
+└── mobile/       # React Native app
+</code></pre></div></p>
+<p><strong>Example 2: Domain-Driven Design Layout</strong>
+<div class="highlight"><pre><span></span><code>src/
+├── domain/       # Business logic, entities
+├── application/  # Use cases, services
+├── infrastructure/  # Database, external APIs
+└── presentation/ # Controllers, views
+</code></pre></div></p>
+<p><strong>Example 3: Simple Project</strong>
+<div class="highlight"><pre><span></span><code>Components in src/components/
+API routes in src/pages/api/
+Database migrations in prisma/migrations/
+</code></pre></div></p>
+<h3 id="destination-hints_1">Destination Hints<a class="headerlink" href="#destination-hints_1" title="Permanent link">&para;</a></h3>
+<p>→ <strong>CLAUDE.md</strong> for high-level map (always needed)</p>
+<p>→ <strong>Rules</strong> for directory-specific conventions (triggered when working in those areas)</p>
+<hr />
+<h2 id="category-3-operational-commands">Category 3: Operational Commands<a class="headerlink" href="#category-3-operational-commands" title="Permanent link">&para;</a></h2>
+<h3 id="description_2">Description<a class="headerlink" href="#description_2" title="Permanent link">&para;</a></h3>
+<p>Instructions on how to build, test, deploy, and run the project. These are the "verbs"—actions
+that execute specific workflows.</p>
+<h3 id="character_2">Character<a class="headerlink" href="#character_2" title="Permanent link">&para;</a></h3>
+<p><strong>Procedural</strong> but project-specific. Step-by-step procedures with side effects.</p>
+<h3 id="examples_2">Examples<a class="headerlink" href="#examples_2" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: Development Workflow</strong>
+<div class="highlight"><pre><span></span><code>To start development:
+1. pnpm install
+2. docker compose up -d
+3. pnpm run dev
+</code></pre></div></p>
+<p><strong>Example 2: Deployment Process</strong>
+<div class="highlight"><pre><span></span><code>Deploy to staging:
+1. Run tests: pnpm test
+2. Build: pnpm build
+3. Deploy: ./scripts/deploy-staging.sh
+4. Smoke test: curl https://staging.example.com/health
+</code></pre></div></p>
+<p><strong>Example 3: Database Operations</strong>
+<div class="highlight"><pre><span></span><code>Reset database:
+1. docker compose down -v
+2. docker compose up -d postgres
+3. pnpm prisma migrate reset --force
+4. pnpm prisma db seed
+</code></pre></div></p>
+<h3 id="destination-hints_2">Destination Hints<a class="headerlink" href="#destination-hints_2" title="Permanent link">&para;</a></h3>
+<p>→ <strong>Commands</strong> for user-initiated workflows (explicit invocation)</p>
+<p>→ <strong>CLAUDE.md</strong> for frequently-needed quick commands (just the essential ones)</p>
+<hr />
+<h2 id="category-4-reusable-patterns">Category 4: Reusable Patterns<a class="headerlink" href="#category-4-reusable-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="description_3">Description<a class="headerlink" href="#description_3" title="Permanent link">&para;</a></h3>
+<p>Universal "how-to" knowledge that applies across many projects using the same technology or
+methodology. This is the <strong>concept</strong>—the pattern itself, independent of any specific implementation.</p>
+<h3 id="character_3">Character<a class="headerlink" href="#character_3" title="Permanent link">&para;</a></h3>
+<p><strong>Universal</strong>. Portable across projects using the same stack.</p>
+<h3 id="examples_3">Examples<a class="headerlink" href="#examples_3" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: Hexagonal Architecture Pattern</strong>
+<div class="highlight"><pre><span></span><code>Hexagonal Architecture separates business logic from infrastructure:
+- Domain layer contains pure business rules
+- Ports define interfaces the domain needs
+- Adapters implement ports for specific technologies
+- Dependencies point inward (adapters depend on ports, not vice versa)
+</code></pre></div></p>
+<p><strong>Example 2: React Custom Hook Pattern</strong>
+<div class="highlight"><pre><span></span><code>Custom hooks encapsulate reusable stateful logic:
+- Name starts with &quot;use&quot;
+- Can call other hooks
+- Returns values and functions the component needs
+- Follows the Rules of Hooks
+</code></pre></div></p>
+<p><strong>Example 3: Test-Driven Development Pattern</strong>
+<div class="highlight"><pre><span></span><code>TDD cycle:
+1. Write a failing test for the new behavior
+2. Write minimal code to make the test pass
+3. Refactor while keeping tests green
+4. Repeat
+</code></pre></div></p>
+<h3 id="destination-hints_3">Destination Hints<a class="headerlink" href="#destination-hints_3" title="Permanent link">&para;</a></h3>
+<p>→ <strong>Skills</strong> (reusable, on-demand, can be shared across projects)</p>
+<hr />
+<h2 id="category-5-architectural-guidance">Category 5: Architectural Guidance<a class="headerlink" href="#category-5-architectural-guidance" title="Permanent link">&para;</a></h2>
+<h3 id="description_4">Description<a class="headerlink" href="#description_4" title="Permanent link">&para;</a></h3>
+<p>How a universal pattern is implemented <em>specifically in this project</em>. This is the <strong>convention</strong>—
+the project-specific decisions about file locations, naming, and structure.</p>
+<h3 id="character_4">Character<a class="headerlink" href="#character_4" title="Permanent link">&para;</a></h3>
+<p><strong>Project-specific</strong> application of universal patterns.</p>
+<h3 id="examples_4">Examples<a class="headerlink" href="#examples_4" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: Hexagonal Implementation (This Project)</strong>
+<div class="highlight"><pre><span></span><code>In this project, Hexagonal Architecture is implemented as:
+- Domain: src/domain/
+- Ports: src/domain/ports/
+- Adapters: src/infrastructure/adapters/
+- Use cases: src/application/
+</code></pre></div></p>
+<p><strong>Example 2: Component Conventions (This Project)</strong>
+<div class="highlight"><pre><span></span><code>Our component file structure:
+- ComponentName/
+  ├── index.tsx         # Main component
+  ├── ComponentName.test.tsx
+  ├── ComponentName.styles.ts
+  └── types.ts
+</code></pre></div></p>
+<p><strong>Example 3: API Patterns (This Project)</strong>
+<div class="highlight"><pre><span></span><code>API endpoint conventions:
+- Routes: src/pages/api/v1/{resource}/[id].ts
+- Handlers: src/services/{resource}Service.ts
+- Validators: src/validators/{resource}Schema.ts
+</code></pre></div></p>
+<h3 id="destination-hints_4">Destination Hints<a class="headerlink" href="#destination-hints_4" title="Permanent link">&para;</a></h3>
+<p>→ <strong>Rules</strong> for directory-specific conventions (load when relevant)</p>
+<p>→ <strong>CLAUDE.md</strong> for project-wide conventions (if brief and always needed)</p>
+<p>→ <strong>Linked file</strong> for detailed conventions (e.g., <code>See docs/architecture.md</code> in CLAUDE.md)</p>
+<hr />
+<h2 id="category-6-iterative-corrections">Category 6: Iterative Corrections<a class="headerlink" href="#category-6-iterative-corrections" title="Permanent link">&para;</a></h2>
+<h3 id="description_5">Description<a class="headerlink" href="#description_5" title="Permanent link">&para;</a></h3>
+<p>"Remember this" fixes accumulated when Claude makes repeated mistakes. These are reactive learnings
+that prevent the same errors from recurring.</p>
+<h3 id="character_5">Character<a class="headerlink" href="#character_5" title="Permanent link">&para;</a></h3>
+<p><strong>Reactive</strong>. Accumulated learnings from experience.</p>
+<h3 id="examples_5">Examples<a class="headerlink" href="#examples_5" title="Permanent link">&para;</a></h3>
+<p><strong>Example 1: Language/Framework Quirks</strong>
+<div class="highlight"><pre><span></span><code>Don&#39;t use &#39;any&#39; in TypeScript - use &#39;unknown&#39; and narrow the type.
+</code></pre></div></p>
+<p><strong>Example 2: Project-Specific Gotchas</strong>
+<div class="highlight"><pre><span></span><code>The &#39;user&#39; table has a trigger - never INSERT directly, use the create_user() function.
+</code></pre></div></p>
+<p><strong>Example 3: Tool-Specific Behavior</strong>
+<div class="highlight"><pre><span></span><code>When using pnpm, always run &#39;pnpm install&#39; after switching branches.
+</code></pre></div></p>
+<h3 id="destination-hints_5">Destination Hints<a class="headerlink" href="#destination-hints_5" title="Permanent link">&para;</a></h3>
+<p>→ <strong>Rules</strong> for file-type-specific corrections (e.g., TypeScript rules for <code>.ts</code> files)</p>
+<p>→ <strong>CLAUDE.md</strong> for project-wide corrections (if critical and always needed)</p>
+<hr />
+<h2 id="the-critical-distinction-category-4-vs-category-5">The Critical Distinction: Category 4 vs. Category 5<a class="headerlink" href="#the-critical-distinction-category-4-vs-category-5" title="Permanent link">&para;</a></h2>
+<p>The most important separation to understand is between <strong>Reusable Patterns</strong> (Cat 4) and
+<strong>Architectural Guidance</strong> (Cat 5).</p>
+<h3 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h3>
+<p>When you mix these categories, you kill reusability:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># BAD: Mixed Categories</span>
+When implementing Hexagonal Architecture:
+<span class="k">-</span><span class="w"> </span>Put domain in src/domain/           ← This is Cat 5 (project-specific)
+<span class="k">-</span><span class="w"> </span>Put ports in src/ports/             ← This is Cat 5 (project-specific)
+<span class="k">-</span><span class="w"> </span>Domain should have no dependencies  ← This is Cat 4 (universal)
+</code></pre></div>
+<p>If you share this "skill" with another project, those paths won't work.</p>
+<h3 id="the-solution">The Solution<a class="headerlink" href="#the-solution" title="Permanent link">&para;</a></h3>
+<p>Separate the <strong>Universal How</strong> (Cat 4) from the <strong>Local Where</strong> (Cat 5):</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># GOOD: Category 4 (Skill - Portable)</span>
+Hexagonal Architecture separates business logic from infrastructure:
+<span class="k">-</span><span class="w"> </span>Domain layer contains pure business rules
+<span class="k">-</span><span class="w"> </span>Ports define interfaces the domain needs
+<span class="k">-</span><span class="w"> </span>Adapters implement ports
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gh"># GOOD: Category 5 (Rule - Project-Specific)</span>
+Our Hexagonal implementation:
+<span class="k">-</span><span class="w"> </span>Domain: src/domain/
+<span class="k">-</span><span class="w"> </span>Ports: src/domain/ports/
+<span class="k">-</span><span class="w"> </span>Adapters: src/infrastructure/
+</code></pre></div>
+<p>Now the skill is reusable, and the conventions are project-local.</p>
+<blockquote>
+<p><strong>Experimental Alternative:</strong> <a href="../07-configurable-skills/">Configurable Skills</a> offer a way to get
+the best of both worlds—keeping universal patterns portable while allowing project-specific
+configuration within the same skill file.</p>
+</blockquote>
+<hr />
+<h2 id="self-assessment-what-category-is-my-content">Self-Assessment: What Category Is My Content?<a class="headerlink" href="#self-assessment-what-category-is-my-content" title="Permanent link">&para;</a></h2>
+<p>Use these questions to identify what you're storing:</p>
+<h3 id="question-1-is-this-about-what-my-project-is">Question 1: Is this about WHAT my project is?<a class="headerlink" href="#question-1-is-this-about-what-my-project-is" title="Permanent link">&para;</a></h3>
+<p><strong>Yes</strong> → <strong>Category 1: Project Identity</strong></p>
+<ul>
+<li>Project name, purpose, tech stack</li>
+<li>Rarely changes</li>
+<li>Anyone new needs to know this immediately</li>
+</ul>
+<h3 id="question-2-is-this-about-where-things-are-in-my-codebase">Question 2: Is this about WHERE things are in my codebase?<a class="headerlink" href="#question-2-is-this-about-where-things-are-in-my-codebase" title="Permanent link">&para;</a></h3>
+<p><strong>Yes</strong> → <strong>Category 2: Codebase Structure</strong></p>
+<ul>
+<li>Directory structure, file locations</li>
+<li>Project-specific navigation</li>
+<li>Helps Claude find things</li>
+</ul>
+<h3 id="question-3-is-this-about-how-to-do-something-actionworkflow">Question 3: Is this about HOW TO DO something (action/workflow)?<a class="headerlink" href="#question-3-is-this-about-how-to-do-something-actionworkflow" title="Permanent link">&para;</a></h3>
+<p><strong>Yes, and it has side effects</strong> → <strong>Category 3: Operational Commands</strong></p>
+<ul>
+<li>Build, test, deploy, run</li>
+<li>Step-by-step procedures</li>
+<li>User initiates these actions</li>
+</ul>
+<p><strong>Yes, and it's universal knowledge</strong> → <strong>Category 4: Reusable Patterns</strong></p>
+<ul>
+<li>Could apply to any project with this tech stack</li>
+<li>The concept, not the convention</li>
+<li>"How to implement X pattern"</li>
+</ul>
+<p><strong>Yes, and it's how we specifically do it here</strong> → <strong>Category 5: Architectural Guidance</strong></p>
+<ul>
+<li>Project-specific implementation details</li>
+<li>File paths, naming conventions, local decisions</li>
+<li>"In THIS project, we put X in Y"</li>
+</ul>
+<h3 id="question-4-is-this-a-correction-for-a-repeated-mistake">Question 4: Is this a correction for a repeated mistake?<a class="headerlink" href="#question-4-is-this-a-correction-for-a-repeated-mistake" title="Permanent link">&para;</a></h3>
+<p><strong>Yes</strong> → <strong>Category 6: Iterative Corrections</strong></p>
+<ul>
+<li>"Don't do X" or "Always do Y"</li>
+<li>Accumulated from experience</li>
+<li>Prevents recurring errors</li>
+</ul>
+<hr />
+<h2 id="decision-flow-ambiguous-cases">Decision Flow: Ambiguous Cases<a class="headerlink" href="#decision-flow-ambiguous-cases" title="Permanent link">&para;</a></h2>
+<p>Some information could fit multiple categories. Here's how to resolve ambiguity:</p>
+<h3 id="we-use-typescript-with-strict-mode">"We use TypeScript with strict mode"<a class="headerlink" href="#we-use-typescript-with-strict-mode" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Identity</strong> (Cat 1) if it's part of defining the project</li>
+<li><strong>Correction</strong> (Cat 6) if it's reminding Claude of a standard</li>
+</ul>
+<p>→ <strong>Resolution</strong>: Put core tech stack in Cat 1 (CLAUDE.md). Add specific compiler rules to Cat 6
+(Rules for <code>.ts</code> files) only if Claude keeps getting it wrong.</p>
+<h3 id="run-tests-with-pnpm-test">"Run tests with <code>pnpm test</code>"<a class="headerlink" href="#run-tests-with-pnpm-test" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Operational Command</strong> (Cat 3) if it's a workflow step</li>
+<li><strong>Identity</strong> (Cat 1) if it's just stating the test runner</li>
+</ul>
+<p>→ <strong>Resolution</strong>: Simple command mentions go in Cat 1 (CLAUDE.md: "Tests: <code>pnpm test</code>"). Full
+test workflows go in Cat 3 (Command with pre/post steps).</p>
+<h3 id="components-should-have-a-single-responsibility">"Components should have a single responsibility"<a class="headerlink" href="#components-should-have-a-single-responsibility" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reusable Pattern</strong> (Cat 4) if it's teaching a principle</li>
+<li><strong>Correction</strong> (Cat 6) if Claude keeps making bloated components</li>
+</ul>
+<p>→ <strong>Resolution</strong>: If Claude already knows this, it's a Correction (triggered when relevant). If
+you're teaching a specific methodology, it's a Pattern (Skill).</p>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Yes Points To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Is this about <em>what</em> my project is?</td>
+<td>Cat 1: Project Identity</td>
+</tr>
+<tr>
+<td>Is this about <em>where</em> things are?</td>
+<td>Cat 2: Codebase Structure</td>
+</tr>
+<tr>
+<td>Is this a <em>command/action</em> with side effects?</td>
+<td>Cat 3: Operational Commands</td>
+</tr>
+<tr>
+<td>Is this <em>universal how-to</em> knowledge?</td>
+<td>Cat 4: Reusable Patterns</td>
+</tr>
+<tr>
+<td>Is this <em>our specific implementation</em>?</td>
+<td>Cat 5: Architectural Guidance</td>
+</tr>
+<tr>
+<td>Is this a <em>don't do that again</em> fix?</td>
+<td>Cat 6: Iterative Corrections</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>Understanding these six categories is essential before using the Two-Phase Decision Guide:</p>
+<ol>
+<li><strong>Project Identity</strong> → What is this project? (CLAUDE.md)</li>
+<li><strong>Codebase Structure</strong> → Where is everything? (CLAUDE.md / Rules)</li>
+<li><strong>Operational Commands</strong> → How do I run/build/deploy? (Commands)</li>
+<li><strong>Reusable Patterns</strong> → Universal how-to knowledge (Skills)</li>
+<li><strong>Architectural Guidance</strong> → Our specific implementation (Rules)</li>
+<li><strong>Iterative Corrections</strong> → Don't make that mistake again (Rules)</li>
+</ol>
+<p>The key insight: <strong>Separate the Universal How (Cat 4) from the Local Where (Cat 5)</strong> to maximize
+reusability while keeping project-specific conventions where they belong.</p>
+<hr />
+<p><em>Previous: <a href="../01-theory/">Section 1 - Why It Works: The Theory</a></em>
+<em>Next: <a href="../03-storage-options/">Section 3 - The Storage Options</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

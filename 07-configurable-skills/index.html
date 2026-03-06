@@ -1,0 +1,2352 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/07-configurable-skills/">
+      
+      
+        <link rel="prev" href="../06-migration-guide/">
+      
+      
+        <link rel="next" href="../examples/worked-examples/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>7. Configurable Skills - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-7-configurable-skills" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Configurable Skills
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-hardcoded-conventions-kill-reusability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Hardcoded Conventions Kill Reusability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Problem: Hardcoded Conventions Kill Reusability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-a-non-portable-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: A Non-Portable Skill
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-solution-separate-universal-how-from-local-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution: Separate "Universal How" from "Local Where"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution: Separate &#34;Universal How&#34; from &#34;Local Where&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pattern-universal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Pattern (Universal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-configuration-project-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Configuration (Project-Specific)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Result
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-configure-the-precision-reusability-breakthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Configure? The Precision-Reusability Breakthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Configure? The Precision-Reusability Breakthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-same-skill-two-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Same Skill, Two Projects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-configurable-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benefits of Configurable Skills
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benefits of Configurable Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-true-portability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. True Portability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-separation-of-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Separation of Concerns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-team-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Team Consistency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-easier-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Easier Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-self-documenting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Self-Documenting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-schema-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Schema Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Schema Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instructions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-initialization-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Initialization Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-Initialization Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-1-scan-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: Scan Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-2-prompt-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: Prompt Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-3-hybrid-scan-confirm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 3: Hybrid (Scan + Confirm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-each-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Each Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structure-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure Template
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skillmd-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SKILL.md Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readmemd-companion-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        README.md Companion Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-hexagonal-architecture-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Hexagonal Architecture Skill
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-for-configurable-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Cases for Configurable Skills
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases for Configurable Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coding-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coding Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invocation-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invocation Reliability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Invocation Reliability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-silent-invocation-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Silent Invocation Failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#techniques-to-improve-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Techniques to Improve Reliability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Techniques to Improve Reliability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-add-explicit-directives-in-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Add Explicit Directives in CLAUDE.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-the-skill-tool-explicitly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Use the Skill Tool Explicitly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-use-fully-qualified-skill-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Use Fully Qualified Skill Names
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-write-precise-description-frontmatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Write Precise description Frontmatter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-preload-skills-into-custom-sub-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Preload Skills into Custom Sub-agents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-future-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and Future Work
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations and Future Work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-improvements-epic-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Improvements (Epic 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-hardcoded-conventions-kill-reusability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Hardcoded Conventions Kill Reusability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Problem: Hardcoded Conventions Kill Reusability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-a-non-portable-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: A Non-Portable Skill
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-solution-separate-universal-how-from-local-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Solution: Separate "Universal How" from "Local Where"
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution: Separate &#34;Universal How&#34; from &#34;Local Where&#34;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pattern-universal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Pattern (Universal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-configuration-project-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Configuration (Project-Specific)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Result
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-configure-the-precision-reusability-breakthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Configure? The Precision-Reusability Breakthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Configure? The Precision-Reusability Breakthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-same-skill-two-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Same Skill, Two Projects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-configurable-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benefits of Configurable Skills
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benefits of Configurable Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-true-portability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. True Portability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-separation-of-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Separation of Concerns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-team-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Team Consistency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-easier-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Easier Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-self-documenting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Self-Documenting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-schema-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Schema Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Schema Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instructions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type Hints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-initialization-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Initialization Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-Initialization Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-1-scan-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: Scan Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-2-prompt-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: Prompt Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-3-hybrid-scan-confirm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 3: Hybrid (Scan + Confirm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-each-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Each Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structure-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure Template
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skillmd-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SKILL.md Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readmemd-companion-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        README.md Companion Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-hexagonal-architecture-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Hexagonal Architecture Skill
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases-for-configurable-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Cases for Configurable Skills
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases for Configurable Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coding-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coding Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invocation-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invocation Reliability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Invocation Reliability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-problem-silent-invocation-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Silent Invocation Failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#techniques-to-improve-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Techniques to Improve Reliability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Techniques to Improve Reliability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-add-explicit-directives-in-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Add Explicit Directives in CLAUDE.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-the-skill-tool-explicitly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Use the Skill Tool Explicitly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-use-fully-qualified-skill-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Use Fully Qualified Skill Names
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-write-precise-description-frontmatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Write Precise description Frontmatter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-preload-skills-into-custom-sub-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Preload Skills into Custom Sub-agents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-future-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and Future Work
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations and Future Work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-improvements-epic-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Improvements (Epic 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-7-configurable-skills">Section 7: Configurable Skills<a class="headerlink" href="#section-7-configurable-skills" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>EXPERIMENTAL</strong></p>
+<p>This section describes an advanced pattern for creating skills that adapt to different projects.
+The pattern is conceptually sound but the concrete implementations (example skills) will be
+delivered in Epic 3.</p>
+<p><strong>Current Status:</strong> Pattern documented, examples pending.</p>
+</blockquote>
+<hr />
+<h2 id="the-problem-hardcoded-conventions-kill-reusability">The Problem: Hardcoded Conventions Kill Reusability<a class="headerlink" href="#the-problem-hardcoded-conventions-kill-reusability" title="Permanent link">&para;</a></h2>
+<p>Skills are meant to be portable—write once, use everywhere. But in practice, many skills become
+project-specific because they hardcode local conventions.</p>
+<h3 id="example-a-non-portable-skill">Example: A Non-Portable Skill<a class="headerlink" href="#example-a-non-portable-skill" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># Hexagonal Architecture Skill</span>
+
+When implementing Hexagonal Architecture:
+
+<span class="k">1.</span> Put domain logic in <span class="sb">`src/domain/`</span>
+<span class="k">2.</span> Put ports (interfaces) in <span class="sb">`src/domain/ports/`</span>
+<span class="k">3.</span> Put adapters in <span class="sb">`src/infrastructure/adapters/`</span>
+<span class="k">4.</span> Put use cases in <span class="sb">`src/application/`</span>
+</code></pre></div>
+<p><strong>The Problem:</strong> These paths work for <em>this</em> project, but the next project might use:</p>
+<ul>
+<li><code>core/</code> instead of <code>src/domain/</code></li>
+<li><code>interfaces/</code> instead of <code>ports/</code></li>
+<li>A completely different directory structure</li>
+</ul>
+<p>If you share this skill, it won't work. You've mixed <strong>Category 4 (Universal Pattern)</strong> with
+<strong>Category 5 (Project-Specific Conventions)</strong>.</p>
+<hr />
+<h2 id="the-solution-separate-universal-how-from-local-where">The Solution: Separate "Universal How" from "Local Where"<a class="headerlink" href="#the-solution-separate-universal-how-from-local-where" title="Permanent link">&para;</a></h2>
+<p>Configurable skills solve this by separating the <em>pattern</em> from the <em>configuration</em>.</p>
+<h3 id="the-pattern-universal">The Pattern (Universal)<a class="headerlink" href="#the-pattern-universal" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gh"># Hexagonal Architecture Skill</span>
+
+When implementing Hexagonal Architecture:
+
+<span class="k">1.</span> Domain logic goes in the <span class="gs">**domain directory**</span>
+<span class="k">2.</span> Port interfaces go in the <span class="gs">**ports directory**</span>
+<span class="k">3.</span> Adapter implementations go in the <span class="gs">**adapters directory**</span>
+<span class="k">4.</span> Use case orchestration goes in the <span class="gs">**application directory**</span>
+</code></pre></div>
+<h3 id="the-configuration-project-specific">The Configuration (Project-Specific)<a class="headerlink" href="#the-configuration-project-specific" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Configuration</span>
+<span class="nt">domain_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain</span>
+<span class="nt">ports_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain/ports</span>
+<span class="nt">adapters_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/infrastructure/adapters</span>
+<span class="nt">application_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/application</span>
+</code></pre></div>
+<h3 id="the-result">The Result<a class="headerlink" href="#the-result" title="Permanent link">&para;</a></h3>
+<p>The skill reads its configuration and applies the pattern using <em>this project's</em> conventions.
+The same skill works in any project—just change the configuration.</p>
+<hr />
+<h2 id="why-configure-the-precision-reusability-breakthrough">Why Configure? The Precision-Reusability Breakthrough<a class="headerlink" href="#why-configure-the-precision-reusability-breakthrough" title="Permanent link">&para;</a></h2>
+<p>Configuration solves a fundamental dilemma in AI memory:</p>
+<table>
+<thead>
+<tr>
+<th>Without Configuration</th>
+<th>With Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reusable</strong> skills are vague</td>
+<td><strong>Pattern</strong> is reusable AND precise</td>
+</tr>
+<tr>
+<td><strong>Precise</strong> skills are project-bound</td>
+<td><strong>Configuration</strong> is project-specific</td>
+</tr>
+<tr>
+<td>You must choose one</td>
+<td>You get <strong>both</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-same-skill-two-projects">The Same Skill, Two Projects<a class="headerlink" href="#the-same-skill-two-projects" title="Permanent link">&para;</a></h3>
+<p><strong>Project A</strong> (E-commerce):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">domain_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/core/domain</span>
+<span class="w">  </span><span class="nt">application_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/core/use-cases</span>
+</code></pre></div>
+<p><strong>Project B</strong> (Healthcare API):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">domain_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lib/domain</span>
+<span class="w">  </span><span class="nt">application_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lib/services</span>
+</code></pre></div>
+<p>Same Hexagonal Architecture skill, different structures. The skill teaches <em>how</em> to implement
+the pattern; the configuration says <em>where</em> in this project.</p>
+<hr />
+<h2 id="benefits-of-configurable-skills">Benefits of Configurable Skills<a class="headerlink" href="#benefits-of-configurable-skills" title="Permanent link">&para;</a></h2>
+<h3 id="1-true-portability">1. True Portability<a class="headerlink" href="#1-true-portability" title="Permanent link">&para;</a></h3>
+<p>Write the skill once, configure per project. No more copying and editing.
+Portability is <em>stack-scoped</em>: a well-crafted skill becomes a reusable asset across all
+projects in the same technology stack (e.g., all React projects, all Python projects).</p>
+<h3 id="2-separation-of-concerns">2. Separation of Concerns<a class="headerlink" href="#2-separation-of-concerns" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The <strong>skill author</strong> focuses on the pattern (the "how")</li>
+<li>The <strong>skill user</strong> provides the configuration (the "where")</li>
+</ul>
+<h3 id="3-team-consistency">3. Team Consistency<a class="headerlink" href="#3-team-consistency" title="Permanent link">&para;</a></h3>
+<p>Everyone uses the same skill with the same configuration. No drift between team members.</p>
+<h3 id="4-easier-maintenance">4. Easier Maintenance<a class="headerlink" href="#4-easier-maintenance" title="Permanent link">&para;</a></h3>
+<p>Update the skill in one place, all projects benefit. Configuration stays local.</p>
+<h3 id="5-self-documenting">5. Self-Documenting<a class="headerlink" href="#5-self-documenting" title="Permanent link">&para;</a></h3>
+<p>The configuration block explicitly declares what the skill needs from the project.</p>
+<hr />
+<h2 id="configuration-schema-format">Configuration Schema Format<a class="headerlink" href="#configuration-schema-format" title="Permanent link">&para;</a></h2>
+<h3 id="basic-structure">Basic Structure<a class="headerlink" href="#basic-structure" title="Permanent link">&para;</a></h3>
+<p>A configurable skill has a <code># Configuration</code> section with a YAML block:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># Skill Name</span>
+
+<span class="gu">## Purpose</span>
+
+What this skill does.
+
+<span class="gu">## Configuration</span>
+
+<span class="sb">```yaml</span>
+<span class="c1"># Required</span>
+<span class="nt">domain_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain</span><span class="w"> </span><span class="c1"># Where domain logic lives</span>
+<span class="nt">ports_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain/ports</span><span class="w"> </span><span class="c1"># Where port interfaces live</span>
+
+<span class="c1"># Optional (with defaults)</span>
+<span class="nt">adapters_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/infrastructure</span><span class="w"> </span><span class="c1"># Where adapters live (default: src/adapters)</span>
+<span class="nt">use_barrel_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Whether to use index.ts exports (default: true)</span>
+<span class="sb">```</span>
+</code></pre></div>
+<h2 id="instructions">Instructions<a class="headerlink" href="#instructions" title="Permanent link">&para;</a></h2>
+<p>[Instructions that reference config values like "the domain directory"]</p>
+<div class="highlight"><pre><span></span><code>### Schema Elements
+
+| Element | Description | Example |
+|---------|-------------|---------|
+| **Key** | Configuration variable name | `domain_dir` |
+| **Value** | Project-specific value | `src/domain` |
+| **Comment** | Description/purpose | `# Where domain logic lives` |
+| **Default** | Fallback if not specified | `(default: src/adapters)` |
+
+### Required vs. Optional
+
+```yaml
+# Required - skill cannot function without these
+domain_dir: ???                   # REQUIRED: Where domain logic lives
+ports_dir: ???                    # REQUIRED: Where port interfaces live
+
+# Optional - skill has sensible defaults
+file_extension: .ts               # Optional (default: .ts)
+use_barrel_files: true            # Optional (default: true)
+```
+</code></pre></div>
+<p>Skills should:</p>
+<ul>
+<li>Fail clearly if required config is missing</li>
+<li>Use sensible defaults for optional config</li>
+<li>Document what each config key controls</li>
+</ul>
+<h3 id="type-hints">Type Hints<a class="headerlink" href="#type-hints" title="Permanent link">&para;</a></h3>
+<p>While not enforced, document expected types in comments:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Paths</span>
+<span class="nt">domain_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain</span><span class="w"> </span><span class="c1"># string: directory path</span>
+<span class="nt">ports_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain/ports</span><span class="w"> </span><span class="c1"># string: directory path</span>
+
+<span class="c1"># Booleans</span>
+<span class="nt">use_barrel_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># boolean: true/false</span>
+<span class="nt">strict_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"> </span><span class="c1"># boolean: true/false</span>
+
+<span class="c1"># Lists</span>
+<span class="nt">allowed_extensions</span><span class="p">:</span><span class="w"> </span><span class="c1"># list: file extensions</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.ts</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.tsx</span>
+
+<span class="c1"># Numbers</span>
+<span class="nt">max_file_lines</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"> </span><span class="c1"># number: maximum lines per file</span>
+</code></pre></div>
+<hr />
+<h2 id="self-initialization-patterns">Self-Initialization Patterns<a class="headerlink" href="#self-initialization-patterns" title="Permanent link">&para;</a></h2>
+<p>Configurable skills can get their configuration in three ways:</p>
+<h3 id="pattern-1-scan-mode">Pattern 1: Scan Mode<a class="headerlink" href="#pattern-1-scan-mode" title="Permanent link">&para;</a></h3>
+<p>The skill examines the codebase to infer configuration values.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Skill is invoked without configuration</li>
+<li>Skill scans project structure (package.json, directory layout, etc.)</li>
+<li>Skill infers configuration values</li>
+<li>Skill proceeds with inferred values</li>
+</ol>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Projects with standard structures (Next.js, Rails, etc.)</li>
+<li>Configuration that can be reliably detected</li>
+<li>Reducing friction for first-time use</li>
+</ul>
+<p><strong>Example Scan Logic:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gu">## Self-Initialization</span>
+
+If configuration is not provided, this skill will attempt to detect values:
+
+<span class="k">1.</span> Check for <span class="sb">`src/domain/`</span> → set <span class="sb">`domain_dir: src/domain`</span>
+<span class="k">2.</span> Check for <span class="sb">`core/`</span> → set <span class="sb">`domain_dir: core`</span>
+<span class="k">3.</span> Check for <span class="sb">`app/domain/`</span> → set <span class="sb">`domain_dir: app/domain`</span>
+<span class="k">4.</span> If none found → prompt user
+</code></pre></div>
+<h3 id="pattern-2-prompt-mode">Pattern 2: Prompt Mode<a class="headerlink" href="#pattern-2-prompt-mode" title="Permanent link">&para;</a></h3>
+<p>The skill asks the user for configuration on first use.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Skill is invoked without configuration</li>
+<li>Skill prompts user for each required value</li>
+<li>Skill can write configuration to the skill file for future use</li>
+<li>Skill proceeds with provided values</li>
+</ol>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Non-standard project structures</li>
+<li>Configuration that can't be reliably detected</li>
+<li>Ensuring explicit user intent</li>
+</ul>
+<p><strong>Example Prompt:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gu">## Self-Initialization</span>
+
+This skill requires configuration. Please provide:
+
+<span class="k">1.</span> <span class="gs">**Domain directory**</span>: Where should domain logic go?
+   Example: <span class="sb">`src/domain`</span>, <span class="sb">`core`</span>, <span class="sb">`lib/domain`</span>
+
+<span class="k">2.</span> <span class="gs">**Ports directory**</span>: Where should port interfaces go?
+   Example: <span class="sb">`src/domain/ports`</span>, <span class="sb">`core/interfaces`</span>
+
+<span class="k">3.</span> <span class="gs">**Adapters directory**</span>: Where should adapters go?
+   Example: <span class="sb">`src/infrastructure`</span>, <span class="sb">`lib/adapters`</span>
+</code></pre></div>
+<h3 id="pattern-3-hybrid-scan-confirm">Pattern 3: Hybrid (Scan + Confirm)<a class="headerlink" href="#pattern-3-hybrid-scan-confirm" title="Permanent link">&para;</a></h3>
+<p>The skill scans, then confirms with the user.</p>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>Skill scans project structure</li>
+<li>Skill presents inferred values to user</li>
+<li>User confirms or corrects</li>
+<li>Skill proceeds with confirmed values</li>
+</ol>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Balancing automation with user control</li>
+<li>Catching misdetections</li>
+<li>Building user confidence</li>
+</ul>
+<p><strong>Example Hybrid:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gu">## Self-Initialization</span>
+
+I detected the following structure:
+
+<span class="k">-</span><span class="w"> </span>Domain directory: <span class="sb">`src/domain`</span> ✓
+<span class="k">-</span><span class="w"> </span>Ports directory: <span class="sb">`src/domain/ports`</span> ✓
+<span class="k">-</span><span class="w"> </span>Adapters directory: <span class="sb">`src/infrastructure`</span> ✓
+
+Does this look correct? If not, please provide corrections.
+</code></pre></div>
+<h3 id="when-to-use-each-pattern">When to Use Each Pattern<a class="headerlink" href="#when-to-use-each-pattern" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Use When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scan</strong></td>
+<td>Standard frameworks, high confidence detection</td>
+</tr>
+<tr>
+<td><strong>Prompt</strong></td>
+<td>Unusual structures, critical configuration</td>
+</tr>
+<tr>
+<td><strong>Hybrid</strong></td>
+<td>Balance of convenience and control</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="structure-template">Structure Template<a class="headerlink" href="#structure-template" title="Permanent link">&para;</a></h2>
+<h3 id="skillmd-template">SKILL.md Template<a class="headerlink" href="#skillmd-template" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">skill-name</span><span class="p p-Indicator">}</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">{What this skill does}.</span>
+<span class="w">  </span><span class="no">Use when {triggers/scenarios}.</span>
+<span class="w">  </span><span class="no">Configurable: requires project-specific paths.</span>
+<span class="nt">allowed-tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read, Grep, Glob</span>
+<span class="nn">---</span>
+
+<span class="c1"># {Skill Name}</span>
+
+<span class="nt">&gt; **Configurable Skill**</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This skill requires project-specific configuration.</span>
+<span class="p p-Indicator">&gt;</span><span class="err"> See Configuration section below.</span>
+
+<span class="c1">## Purpose</span>
+
+<span class="p p-Indicator">{</span><span class="nv">Brief description of what this skill accomplishes.</span><span class="p p-Indicator">}</span>
+
+<span class="c1">## Configuration</span>
+
+<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">yaml</span>
+<span class="c1"># Required</span>
+<span class="p p-Indicator">{</span><span class="nv">key1</span><span class="p p-Indicator">}:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">example_value</span><span class="p p-Indicator">}</span><span class="w">          </span><span class="c1"># {description}</span>
+<span class="p p-Indicator">{</span><span class="nv">key2</span><span class="p p-Indicator">}:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">example_value</span><span class="p p-Indicator">}</span><span class="w">          </span><span class="c1"># {description}</span>
+
+<span class="c1"># Optional</span>
+<span class="p p-Indicator">{</span><span class="nv">key3</span><span class="p p-Indicator">}:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">default_value</span><span class="p p-Indicator">}</span><span class="w">          </span><span class="c1"># {description} (default: {default})</span>
+<span class="err">```</span>
+
+<span class="c1">## Self-Initialization</span>
+
+<span class="p p-Indicator">{</span><span class="nv">Describe how the skill gets its configuration if not provided.</span><span class="p p-Indicator">}</span>
+
+<span class="nt">Option 1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Scan</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Look for {pattern} → set {key1}</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Look for {pattern} → set {key2}</span>
+
+<span class="nt">Option 2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prompt</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ask user for {key1}</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;{question}&quot;</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ask user for {key2}</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;{question}&quot;</span>
+
+<span class="c1">## Instructions</span>
+
+<span class="c1">### Step 1: {First Step}</span>
+
+<span class="p p-Indicator">{</span><span class="nv">Instructions referencing config like &quot;the domain directory&quot; or &quot;configured ports path&quot;</span><span class="p p-Indicator">}</span>
+
+<span class="c1">### Step 2: {Second Step}</span>
+
+<span class="p p-Indicator">{</span><span class="nv">More instructions...</span><span class="p p-Indicator">}</span>
+
+<span class="c1">## Examples</span>
+
+<span class="c1">### Example 1: {Scenario}</span>
+
+<span class="p p-Indicator">{</span><span class="nv">Show the skill applied with sample configuration</span><span class="p p-Indicator">}</span>
+
+<span class="c1">## Validation</span>
+
+<span class="p p-Indicator">{</span><span class="nv">How to verify the skill was applied correctly</span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<h3 id="readmemd-companion-template">README.md Companion Template<a class="headerlink" href="#readmemd-companion-template" title="Permanent link">&para;</a></h3>
+<p>For skills distributed as packages or shared across teams:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># {Skill Name}</span>
+
+{Brief description}
+
+<span class="gu">## Installation</span>
+
+Copy the <span class="sb">`{skill-name}/`</span> folder to your project&#39;s <span class="sb">`.claude/skills/`</span> directory.
+
+<span class="gu">## Configuration</span>
+
+Before first use, configure the skill by editing <span class="sb">`SKILL.md`</span>:
+
+<span class="sb">```yaml</span>
+<span class="c1"># Configuration</span>
+<span class="p p-Indicator">{</span><span class="w"> </span><span class="nv">key1</span><span class="w"> </span><span class="p p-Indicator">}:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="nv">your_value</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="c1"># {what this controls}</span>
+<span class="p p-Indicator">{</span><span class="w"> </span><span class="nv">key2</span><span class="w"> </span><span class="p p-Indicator">}:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="nv">your_value</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"> </span><span class="c1"># {what this controls}</span>
+<span class="sb">```</span>
+
+<span class="gu">## Usage</span>
+
+{How to invoke the skill}
+
+<span class="gu">## Configuration Reference</span>
+
+| Key      | Required | Default     | Description   |
+| -------- | -------- | ----------- | ------------- |
+| <span class="sb">`{key1}`</span> | Yes      | -           | {description} |
+| <span class="sb">`{key2}`</span> | Yes      | -           | {description} |
+| <span class="sb">`{key3}`</span> | No       | <span class="sb">`{default}`</span> | {description} |
+
+<span class="gu">## Examples</span>
+
+{Show the skill in action with different configurations}
+</code></pre></div>
+<hr />
+<h2 id="example-hexagonal-architecture-skill">Example: Hexagonal Architecture Skill<a class="headerlink" href="#example-hexagonal-architecture-skill" title="Permanent link">&para;</a></h2>
+<p>Here's what a complete configurable skill looks like:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hexagonal-architecture</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">Implements Hexagonal Architecture (Ports and Adapters) pattern.</span>
+<span class="w">  </span><span class="no">Use when creating domain logic, defining ports, or implementing adapters.</span>
+<span class="w">  </span><span class="no">Configurable: requires project-specific directory paths.</span>
+<span class="nt">allowed-tools</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Read, Write, Grep, Glob</span>
+<span class="nn">---</span>
+
+<span class="c1"># Hexagonal Architecture</span>
+
+<span class="nt">&gt; **Configurable Skill**</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Edit the Configuration section for your project structure.</span>
+
+<span class="c1">## Purpose</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Guides implementation of Hexagonal Architecture, ensuring proper separation between</span>
+<span class="l l-Scalar l-Scalar-Plain">domain logic (inside) and infrastructure (outside).</span>
+
+<span class="c1">## Configuration</span>
+
+<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">yaml</span>
+<span class="c1"># Required - specify your project&#39;s directory structure</span>
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">domain_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain</span><span class="w">              </span><span class="c1"># Where domain entities and logic live</span>
+<span class="w">  </span><span class="nt">ports_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/domain/ports</span><span class="w">         </span><span class="c1"># Where port interfaces are defined</span>
+<span class="w">  </span><span class="nt">adapters_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/infrastructure</span><span class="w">    </span><span class="c1"># Where adapter implementations live</span>
+<span class="w">  </span><span class="nt">application_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/application</span><span class="w">    </span><span class="c1"># Where use cases/services live</span>
+
+<span class="c1"># Optional</span>
+<span class="nt">naming</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">file_case</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kebab-case</span><span class="w">               </span><span class="c1"># kebab-case, PascalCase, or camelCase</span>
+<span class="w">  </span><span class="nt">use_barrel_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">              </span><span class="c1"># Create index.ts exports (default: true)</span>
+
+<span class="c1"># Architectural decisions (embedded markdown for complex guidance)</span>
+<span class="nt">decisions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">repository_placement</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">## Where to Place Repositories</span>
+
+<span class="w">    </span><span class="no">**Decision:** Repositories can be use-case-specific or shared.</span>
+
+<span class="w">    </span><span class="no">| Condition | Location | Rationale |</span>
+<span class="w">    </span><span class="no">|-----------|----------|-----------|</span>
+<span class="w">    </span><span class="no">| Used by 1 use case | `{application_dir}/{use-case}/repositories/` | Keep cohesion |</span>
+<span class="w">    </span><span class="no">| Used by 2+ use cases | `{domain_dir}/repositories/` | Avoid duplication |</span>
+
+<span class="w">    </span><span class="no">**Example:** `OrderRepository` used by CreateOrder and CancelOrder → shared.</span>
+<span class="err">```</span>
+
+<span class="p p-Indicator">&gt;</span><span class="err"> **Note on `decisions:`** The `decisions:` key holds embedded markdown using YAML multiline</span>
+<span class="p p-Indicator">&gt;</span><span class="err"> strings (`|`). This keeps all configuration in one block while allowing rich decision</span>
+<span class="p p-Indicator">&gt;</span><span class="err"> documentation that Claude can render and apply.</span>
+
+<span class="c1">## Self-Initialization</span>
+
+<span class="l l-Scalar l-Scalar-Plain">If configuration is empty, I will</span><span class="p p-Indicator">:</span>
+
+<span class="nt">1. **Scan** for common patterns</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">src/domain/` → domain_dir</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">core/domain/` → domain_dir</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">lib/domain/` → domain_dir</span>
+
+<span class="nt">2. **Prompt** if not found</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Where</span><span class="nv"> </span><span class="s">should</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">logic</span><span class="nv"> </span><span class="s">live?</span><span class="nv"> </span><span class="s">(e.g.,</span><span class="nv"> </span><span class="s">src/domain)&quot;</span>
+
+<span class="c1">## Instructions</span>
+
+<span class="c1">### Creating Domain Entities</span>
+
+<span class="l l-Scalar l-Scalar-Plain">1. Create entity in the **domain directory** (`domain_dir`)</span>
+<span class="l l-Scalar l-Scalar-Plain">2. Entity should have no external dependencies</span>
+<span class="l l-Scalar l-Scalar-Plain">3. Export from barrel file if `use_barrel_files` is enabled</span>
+
+<span class="c1">### Defining Ports</span>
+
+<span class="l l-Scalar l-Scalar-Plain">1. Create interface in the **ports directory** (`ports_dir`)</span>
+<span class="l l-Scalar l-Scalar-Plain">2. Ports define what the domain needs from the outside world</span>
+<span class="nt">3. Name convention</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="l l-Scalar l-Scalar-Plain">I{Noun}Repository`, `I{Noun}Service`</span>
+
+<span class="c1">### Implementing Adapters</span>
+
+<span class="l l-Scalar l-Scalar-Plain">1. Create implementation in the **adapters directory** (`adapters_dir`)</span>
+<span class="l l-Scalar l-Scalar-Plain">2. Adapter implements a port interface</span>
+<span class="l l-Scalar l-Scalar-Plain">3. Contains all infrastructure-specific code (database, HTTP, etc.)</span>
+
+<span class="c1">### Creating Use Cases</span>
+
+<span class="l l-Scalar l-Scalar-Plain">1. Create use case in the **application directory** (`application_dir`)</span>
+<span class="l l-Scalar l-Scalar-Plain">2. Use case orchestrates domain entities via ports</span>
+<span class="l l-Scalar l-Scalar-Plain">3. Inject adapters through constructor</span>
+</code></pre></div>
+<hr />
+<h2 id="use-cases-for-configurable-skills">Use Cases for Configurable Skills<a class="headerlink" href="#use-cases-for-configurable-skills" title="Permanent link">&para;</a></h2>
+<h3 id="architecture-patterns">Architecture Patterns<a class="headerlink" href="#architecture-patterns" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Hexagonal Architecture (ports, adapters, domain)</li>
+<li>Clean Architecture (entities, use cases, interfaces)</li>
+<li>MVC variants (models, views, controllers)</li>
+</ul>
+<h3 id="testing-conventions">Testing Conventions<a class="headerlink" href="#testing-conventions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Test file locations and naming</li>
+<li>Fixture patterns</li>
+<li>Mock/stub conventions</li>
+</ul>
+<h3 id="coding-standards">Coding Standards<a class="headerlink" href="#coding-standards" title="Permanent link">&para;</a></h3>
+<ul>
+<li>File naming patterns</li>
+<li>Export conventions</li>
+<li>Error handling patterns</li>
+</ul>
+<h3 id="workflow-automation">Workflow Automation<a class="headerlink" href="#workflow-automation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>PR templates with project-specific sections</li>
+<li>Deployment scripts with environment paths</li>
+<li>Build configurations</li>
+</ul>
+<hr />
+<h2 id="invocation-reliability">Invocation Reliability<a class="headerlink" href="#invocation-reliability" title="Permanent link">&para;</a></h2>
+<h3 id="the-problem-silent-invocation-failure">The Problem: Silent Invocation Failure<a class="headerlink" href="#the-problem-silent-invocation-failure" title="Permanent link">&para;</a></h3>
+<p>When a skill's invocation is set to automatic (the default), Claude decides whether to invoke
+it based on the <code>description</code> frontmatter and conversation context. This decision is
+<em>probabilistic</em>—a skill that fires reliably in one session may not fire in another. Worse,
+failures are <strong>silent</strong>: Claude simply proceeds without the skill, and you may not notice
+the difference until you see lower-quality output.</p>
+<h3 id="techniques-to-improve-reliability">Techniques to Improve Reliability<a class="headerlink" href="#techniques-to-improve-reliability" title="Permanent link">&para;</a></h3>
+<h4 id="1-add-explicit-directives-in-claudemd">1. Add Explicit Directives in CLAUDE.md<a class="headerlink" href="#1-add-explicit-directives-in-claudemd" title="Permanent link">&para;</a></h4>
+<p>Tell Claude when to use specific skills:</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># In CLAUDE.md</span>
+<span class="gu">## Skill Directives</span>
+<span class="k">-</span><span class="w"> </span>Always use <span class="sb">`/code-review`</span> when reviewing pull requests
+<span class="k">-</span><span class="w"> </span>Use <span class="sb">`/error-handling`</span> when implementing try/catch patterns
+<span class="k">-</span><span class="w"> </span>Use <span class="sb">`/hexagonal-architecture`</span> when creating domain or adapter code
+</code></pre></div>
+<p>This trades a small amount of context economy for significantly more reliable invocation.</p>
+<h4 id="2-use-the-skill-tool-explicitly">2. Use the Skill Tool Explicitly<a class="headerlink" href="#2-use-the-skill-tool-explicitly" title="Permanent link">&para;</a></h4>
+<p>In prompts to Claude, reference the Skill tool directly:</p>
+<div class="highlight"><pre><span></span><code>Use the Skill tool to invoke the `code-review` skill, then review this PR.
+</code></pre></div>
+<p>This removes ambiguity and forces the invocation.</p>
+<h4 id="3-use-fully-qualified-skill-names">3. Use Fully Qualified Skill Names<a class="headerlink" href="#3-use-fully-qualified-skill-names" title="Permanent link">&para;</a></h4>
+<p>When a project or skill pack uses namespaced skills, reference the full qualified name:</p>
+<div class="highlight"><pre><span></span><code>Use the `/my-project:error-handling` skill.
+</code></pre></div>
+<h4 id="4-write-precise-description-frontmatter">4. Write Precise <code>description</code> Frontmatter<a class="headerlink" href="#4-write-precise-description-frontmatter" title="Permanent link">&para;</a></h4>
+<p>The <code>description</code> field is how Claude decides whether to auto-invoke a skill. Vague
+descriptions lead to unreliable matching. Be specific about triggers:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Bad — vague, Claude may not match this to relevant situations</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Helps</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">code</span><span class="nv"> </span><span class="s">quality&quot;</span>
+
+<span class="c1"># Good — specific triggers Claude can match against</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">Reviews code for security vulnerabilities, performance issues, and style violations.</span>
+<span class="w">  </span><span class="no">Use when reviewing pull requests, auditing code, or when the user asks about</span>
+<span class="w">  </span><span class="no">code quality, best practices, or security concerns.</span>
+</code></pre></div>
+<h4 id="5-preload-skills-into-custom-sub-agents">5. Preload Skills into Custom Sub-agents<a class="headerlink" href="#5-preload-skills-into-custom-sub-agents" title="Permanent link">&para;</a></h4>
+<p>Custom sub-agents (<code>.claude/agents/</code>) support a <code>skills:</code> frontmatter field that injects
+the full skill content into the agent's context at startup:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">skills</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">error-handling</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">code-review</span>
+<span class="nn">---</span>
+</code></pre></div>
+<p>This guarantees the sub-agent has access to the skill content—no probabilistic invocation
+needed. Note that ad-hoc Task tool sub-agents (Explore, Plan, general-purpose) do not
+support this mechanism; for those, pass skill content directly in the prompt.</p>
+<hr />
+<h2 id="limitations-and-future-work">Limitations and Future Work<a class="headerlink" href="#limitations-and-future-work" title="Permanent link">&para;</a></h2>
+<h3 id="current-limitations">Current Limitations<a class="headerlink" href="#current-limitations" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>No runtime enforcement</strong>: Configuration is documentation, not code</li>
+<li><strong>Manual configuration</strong>: Users must edit the YAML block</li>
+<li><strong>No validation</strong>: Skills can't verify configuration is correct</li>
+</ol>
+<h3 id="future-improvements-epic-3">Future Improvements (Epic 3)<a class="headerlink" href="#future-improvements-epic-3" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Example implementations</strong>: Concrete skills demonstrating the pattern</li>
+<li><strong>Self-initialization logic</strong>: Built-in scan/prompt patterns</li>
+<li><strong>Configuration validation</strong>: Check paths exist, types are correct</li>
+</ol>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>Configurable skills solve the portability problem by separating:</p>
+<ul>
+<li><strong>The Pattern</strong> (universal knowledge) in skill instructions</li>
+<li><strong>The Configuration</strong> (project-specific values) in a YAML block</li>
+</ul>
+<p><strong>Key Concepts:</strong></p>
+<ol>
+<li><strong>Configuration Schema</strong>: YAML block with required/optional keys</li>
+<li><strong>Self-Initialization</strong>: Scan, prompt, or hybrid to get values</li>
+<li><strong>Reference by Name</strong>: Instructions use "the domain directory" not <code>src/domain</code></li>
+</ol>
+<p>This pattern enables true skill reusability—write once, configure per project.</p>
+<hr />
+<p><em>Previous: <a href="../06-migration-guide/">Section 6 - Migration Guide</a></em>
+<em>Next: <a href="../examples/worked-examples/">Worked Examples</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

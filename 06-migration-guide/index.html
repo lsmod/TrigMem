@@ -1,0 +1,2030 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/06-migration-guide/">
+      
+      
+        <link rel="prev" href="../05-claudemd-best-practices/">
+      
+      
+        <link rel="next" href="../07-configurable-skills/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>6. Migration Guide - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-6-migration-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Migration Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-two-phase-decision-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Migrate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Migrate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signs-you-need-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signs You Need Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-not-to-migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When NOT to Migrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-3-step-migration-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 3-Step Migration Process
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Audit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Audit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-youre-doing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You're Doing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-category-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Category Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Split
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-youre-doing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You're Doing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-destination-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Destination Map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-commands-category-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Commands (Category 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-skills-category-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Skills (Category 4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-rules-categories-5-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Rules (Categories 5 &amp; 6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moving-to-docs-long-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Moving to Docs (Long Content)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-naming-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Naming Guide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Link
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Link">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-youre-doing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You're Doing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-discovery-anchor-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Discovery Anchor Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-and-after-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before and After Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-migration-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Migration Scenarios
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Migration Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-greenfield-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 1: Greenfield Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-brownfield-with-small-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 2: Brownfield with Small CLAUDE.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-brownfield-with-huge-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 3: Brownfield with Huge CLAUDE.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-4-team-with-conflicting-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 4: Team with Conflicting Instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#during-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        During Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Migrate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When to Migrate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signs-you-need-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signs You Need Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-not-to-migrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When NOT to Migrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-3-step-migration-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 3-Step Migration Process
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Audit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Audit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-youre-doing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You're Doing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-category-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Category Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Split
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-youre-doing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You're Doing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-destination-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Destination Map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-commands-category-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Commands (Category 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-skills-category-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Skills (Category 4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-rules-categories-5-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Rules (Categories 5 &amp; 6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#moving-to-docs-long-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Moving to Docs (Long Content)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-naming-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Naming Guide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Link
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Link">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-youre-doing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What You're Doing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-discovery-anchor-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Discovery Anchor Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-and-after-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before and After Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-migration-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Migration Scenarios
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Migration Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-greenfield-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 1: Greenfield Project
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-brownfield-with-small-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 2: Brownfield with Small CLAUDE.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-brownfield-with-huge-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 3: Brownfield with Huge CLAUDE.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-4-team-with-conflicting-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 4: Team with Conflicting Instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#during-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        During Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-6-migration-guide">Section 6: Migration Guide<a class="headerlink" href="#section-6-migration-guide" title="Permanent link">&para;</a></h1>
+<p>Most projects start with a messy, bloated CLAUDE.md—and that's okay. You don't need to over-engineer
+from day one. But when your CLAUDE.md grows unwieldy or you want to share patterns across projects,
+it's time to migrate.</p>
+<p>This guide provides a step-by-step process for reorganizing your existing CLAUDE.md using the
+TrigMem methodology.</p>
+<hr />
+<h2 id="when-to-migrate">When to Migrate<a class="headerlink" href="#when-to-migrate" title="Permanent link">&para;</a></h2>
+<h3 id="signs-you-need-migration">Signs You Need Migration<a class="headerlink" href="#signs-you-need-migration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] CLAUDE.md is over 200 lines</li>
+<li>[ ] Claude seems to ignore some instructions (context overload)</li>
+<li>[ ] You want to reuse patterns in another project</li>
+<li>[ ] Team members keep overwriting each other's instructions</li>
+<li>[ ] You're hitting token limits in long conversations</li>
+</ul>
+<h3 id="when-not-to-migrate">When NOT to Migrate<a class="headerlink" href="#when-not-to-migrate" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Your CLAUDE.md is small and working fine</li>
+<li>You're in the middle of a critical sprint</li>
+<li>The project is short-lived or throwaway</li>
+</ul>
+<p><strong>Rule of thumb:</strong> If it's not causing problems, don't fix it. Migrate when the pain exceeds
+the effort.</p>
+<hr />
+<h2 id="the-3-step-migration-process">The 3-Step Migration Process<a class="headerlink" href="#the-3-step-migration-process" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                        THE MIGRATION PROCESS                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  STEP 1: AUDIT                                                              │
+│  Tag every section with its Information Category (1-6)                      │
+│                                                                             │
+│  STEP 2: SPLIT                                                              │
+│  Move each category to its proper destination                               │
+│                                                                             │
+│  STEP 3: LINK                                                               │
+│  Replace moved content with Discovery Anchors                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="step-1-audit">Step 1: Audit<a class="headerlink" href="#step-1-audit" title="Permanent link">&para;</a></h2>
+<h3 id="what-youre-doing">What You're Doing<a class="headerlink" href="#what-youre-doing" title="Permanent link">&para;</a></h3>
+<p>Reading through your CLAUDE.md and tagging every section with one of the 6 Information Categories
+from <a href="../02-what-youre-storing/">Section 2</a>.</p>
+<h3 id="the-category-reference">The Category Reference<a class="headerlink" href="#the-category-reference" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Category</th>
+<th>Quick Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Project Identity</td>
+<td>"What is this project?"</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Codebase Structure</td>
+<td>"Where is everything?"</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Operational Commands</td>
+<td>"How do I run/build/deploy?"</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Reusable Patterns</td>
+<td>"Universal how-to knowledge"</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Architectural Guidance</td>
+<td>"Our specific conventions"</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Iterative Corrections</td>
+<td>"Don't make that mistake again"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-to-tag">How to Tag<a class="headerlink" href="#how-to-tag" title="Permanent link">&para;</a></h3>
+<p>Add category markers directly in your CLAUDE.md (you'll remove them after migration):</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># MyProject                           &lt;!-- Cat 1: Identity --&gt;</span>
+
+A React e-commerce application.       &lt;!-- Cat 1: Identity --&gt;
+
+<span class="gu">## Tech Stack                         &lt;!-- Cat 1: Identity --&gt;</span>
+<span class="k">-</span><span class="w"> </span>React 18, TypeScript, Tailwind
+<span class="k">-</span><span class="w"> </span>Node.js, Express, PostgreSQL
+
+<span class="gu">## Project Structure                  &lt;!-- Cat 2: Map --&gt;</span>
+<span class="k">-</span><span class="w"> </span>src/components/ - React components
+<span class="k">-</span><span class="w"> </span>src/api/ - Express routes
+<span class="k">-</span><span class="w"> </span>src/db/ - Database utilities
+
+<span class="gu">## Testing                            &lt;!-- Cat 3: Commands --&gt;</span>
+Run all tests: <span class="sb">`npm test`</span>
+Run with coverage: <span class="sb">`npm test:coverage`</span>
+E2E tests: <span class="sb">`npm run test:e2e`</span>
+
+Before PR:
+<span class="k">1.</span> Run lint
+<span class="k">2.</span> Run tests
+<span class="k">3.</span> Build
+
+<span class="gu">## Component Patterns                 &lt;!-- Cat 4: Reusable Pattern --&gt;</span>
+All components should:
+<span class="k">-</span><span class="w"> </span>Use functional components with hooks
+<span class="k">-</span><span class="w"> </span>Have a single responsibility
+<span class="k">-</span><span class="w"> </span>Include PropTypes or TypeScript types
+[... 30 lines of patterns ...]
+
+<span class="gu">## Our Conventions                    &lt;!-- Cat 5: Architectural Guidance --&gt;</span>
+<span class="k">-</span><span class="w"> </span>Components go in src/components/{Feature}/
+<span class="k">-</span><span class="w"> </span>API routes follow REST conventions
+<span class="k">-</span><span class="w"> </span>Database queries use raw SQL, not ORM
+
+<span class="gu">## Rules                              &lt;!-- Cat 6: Corrections --&gt;</span>
+<span class="k">-</span><span class="w"> </span>Never use <span class="sb">`any`</span> in TypeScript
+<span class="k">-</span><span class="w"> </span>Always handle loading/error states
+<span class="k">-</span><span class="w"> </span>Don&#39;t commit console.log statements
+</code></pre></div>
+<h3 id="audit-checklist">Audit Checklist<a class="headerlink" href="#audit-checklist" title="Permanent link">&para;</a></h3>
+<p>After tagging, verify:
+- [ ] Every section has a category tag
+- [ ] No section is tagged with multiple categories (split if needed)
+- [ ] You understand why each tag applies</p>
+<hr />
+<h2 id="step-2-split">Step 2: Split<a class="headerlink" href="#step-2-split" title="Permanent link">&para;</a></h2>
+<h3 id="what-youre-doing_1">What You're Doing<a class="headerlink" href="#what-youre-doing_1" title="Permanent link">&para;</a></h3>
+<p>Moving content from CLAUDE.md to its proper destination based on category.</p>
+<h3 id="the-destination-map">The Destination Map<a class="headerlink" href="#the-destination-map" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Destination</th>
+<th>File Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Project Identity</td>
+<td><strong>Keep in CLAUDE.md</strong></td>
+<td><code>CLAUDE.md</code></td>
+</tr>
+<tr>
+<td>2. Codebase Structure</td>
+<td><strong>Keep in CLAUDE.md</strong> (brief)</td>
+<td><code>CLAUDE.md</code></td>
+</tr>
+<tr>
+<td>3. Operational Commands</td>
+<td><strong>Commands</strong></td>
+<td><code>.claude/commands/{name}.md</code></td>
+</tr>
+<tr>
+<td>4. Reusable Patterns</td>
+<td><strong>Skills</strong></td>
+<td><code>.claude/skills/{name}/SKILL.md</code></td>
+</tr>
+<tr>
+<td>5. Architectural Guidance</td>
+<td><strong>Rules</strong> or <strong>Docs</strong></td>
+<td><code>.claude/rules/{name}.md</code> or <code>docs/</code></td>
+</tr>
+<tr>
+<td>6. Iterative Corrections</td>
+<td><strong>Rules</strong></td>
+<td><code>.claude/rules/{name}.md</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="creating-commands-category-3">Creating Commands (Category 3)<a class="headerlink" href="#creating-commands-category-3" title="Permanent link">&para;</a></h3>
+<p>For operational workflows, create command files:</p>
+<p><strong>Before (in CLAUDE.md):</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Testing</span>
+Run all tests: <span class="sb">`npm test`</span>
+Run with coverage: <span class="sb">`npm test:coverage`</span>
+E2E tests: <span class="sb">`npm run test:e2e`</span>
+
+Before PR:
+<span class="k">1.</span> Run lint
+<span class="k">2.</span> Run tests
+<span class="k">3.</span> Build
+</code></pre></div></p>
+<p><strong>After (in <code>.claude/commands/test.md</code>):</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># Test</span>
+
+Run the test suite for this project.
+
+<span class="gu">## Quick Test</span>
+npm test
+
+<span class="gu">## Full Test Workflow</span>
+<span class="k">1.</span> Run linting: <span class="sb">`npm run lint`</span>
+<span class="k">2.</span> Run unit tests: <span class="sb">`npm test`</span>
+<span class="k">3.</span> Run E2E tests: <span class="sb">`npm run test:e2e`</span>
+<span class="k">4.</span> Check coverage: <span class="sb">`npm test:coverage`</span>
+
+<span class="gu">## Before PR Checklist</span>
+<span class="k">- [ ]</span> All tests pass
+<span class="k">- [ ]</span> Coverage meets threshold
+<span class="k">- [ ]</span> No linting errors
+</code></pre></div></p>
+<h3 id="creating-skills-category-4">Creating Skills (Category 4)<a class="headerlink" href="#creating-skills-category-4" title="Permanent link">&para;</a></h3>
+<p>For reusable patterns, create skill directories:</p>
+<p><strong>Before (in CLAUDE.md):</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Component Patterns</span>
+All components should:
+<span class="k">-</span><span class="w"> </span>Use functional components with hooks
+<span class="k">-</span><span class="w"> </span>Have a single responsibility
+<span class="k">-</span><span class="w"> </span>Include PropTypes or TypeScript types
+<span class="k">-</span><span class="w"> </span>Be tested with React Testing Library
+[... detailed patterns ...]
+</code></pre></div></p>
+<p><strong>After (in <code>.claude/skills/react-components/SKILL.md</code>):</strong>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">react-components</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">React component patterns and best practices.</span>
+<span class="w">  </span><span class="no">Use when creating or reviewing React components.</span>
+<span class="nn">---</span>
+
+<span class="c1"># React Component Patterns</span>
+
+<span class="c1">## Core Principles</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use functional components with hooks</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Single responsibility per component</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Include TypeScript types for all props</span>
+
+<span class="c1">## Component Structure</span>
+<span class="p p-Indicator">[</span><span class="nv">... detailed patterns ...</span><span class="p p-Indicator">]</span>
+</code></pre></div></p>
+<h3 id="creating-rules-categories-5-6">Creating Rules (Categories 5 &amp; 6)<a class="headerlink" href="#creating-rules-categories-5-6" title="Permanent link">&para;</a></h3>
+<p>For conventions and corrections, create rule files:</p>
+<p><strong>Before (in CLAUDE.md):</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Rules</span>
+<span class="k">-</span><span class="w"> </span>Never use <span class="sb">`any`</span> in TypeScript
+<span class="k">-</span><span class="w"> </span>Always handle loading/error states
+<span class="k">-</span><span class="w"> </span>Don&#39;t commit console.log statements
+</code></pre></div></p>
+<p><strong>After (in <code>.claude/rules/typescript.md</code>):</strong>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">globs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*.ts&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.tsx&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+
+<span class="c1"># TypeScript Rules</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use `unknown` instead of `any` - narrow the type explicitly</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always handle loading and error states in async operations</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Remove all console.log statements before committing</span>
+</code></pre></div></p>
+<h3 id="moving-to-docs-long-content">Moving to Docs (Long Content)<a class="headerlink" href="#moving-to-docs-long-content" title="Permanent link">&para;</a></h3>
+<p>For detailed documentation that doesn't fit Rules or Skills:</p>
+<p><strong>Before (in CLAUDE.md):</strong>
+<div class="highlight"><pre><span></span><code><span class="gu">## Architecture</span>
+We use a modified MVC pattern with the following structure:
+[... 50+ lines of architecture explanation ...]
+</code></pre></div></p>
+<p><strong>After (in <code>docs/architecture.md</code>):</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># Architecture</span>
+
+We use a modified MVC pattern with the following structure:
+[... full content ...]
+</code></pre></div></p>
+<h3 id="file-naming-guide">File Naming Guide<a class="headerlink" href="#file-naming-guide" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Convention</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td><code>{action}.md</code></td>
+<td><code>test.md</code>, <code>deploy.md</code>, <code>build.md</code></td>
+</tr>
+<tr>
+<td>Skills</td>
+<td><code>{name}/SKILL.md</code></td>
+<td><code>react-components/SKILL.md</code></td>
+</tr>
+<tr>
+<td>Rules</td>
+<td><code>{scope}.md</code></td>
+<td><code>typescript.md</code>, <code>api-routes.md</code></td>
+</tr>
+<tr>
+<td>Docs</td>
+<td><code>{topic}.md</code></td>
+<td><code>architecture.md</code>, <code>conventions.md</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="step-3-link">Step 3: Link<a class="headerlink" href="#step-3-link" title="Permanent link">&para;</a></h2>
+<h3 id="what-youre-doing_2">What You're Doing<a class="headerlink" href="#what-youre-doing_2" title="Permanent link">&para;</a></h3>
+<p>Replacing the moved content with <strong>Discovery Anchors</strong>—brief pointers that tell Claude where to
+find detailed information.</p>
+<h3 id="the-discovery-anchor-pattern">The Discovery Anchor Pattern<a class="headerlink" href="#the-discovery-anchor-pattern" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gu">## [Topic]</span>
+[One-line summary]. See <span class="sb">`path/to/file`</span> for details.
+</code></pre></div>
+<p>Or for commands:</p>
+<div class="highlight"><pre><span></span><code><span class="gu">## [Topic]</span>
+Run <span class="sb">`/command-name`</span> or see <span class="sb">`.claude/commands/command-name.md`</span>.
+</code></pre></div>
+<h3 id="before-and-after-example">Before and After Example<a class="headerlink" href="#before-and-after-example" title="Permanent link">&para;</a></h3>
+<p><strong>Before Migration (~400 tokens):</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># MyProject</span>
+
+A React e-commerce application.
+
+<span class="gu">## Tech Stack</span>
+<span class="k">-</span><span class="w"> </span>React 18, TypeScript, Tailwind
+<span class="k">-</span><span class="w"> </span>Node.js, Express, PostgreSQL
+
+<span class="gu">## Project Structure</span>
+<span class="k">-</span><span class="w"> </span>src/components/ - React components
+<span class="k">-</span><span class="w"> </span>src/api/ - Express routes
+<span class="k">-</span><span class="w"> </span>src/db/ - Database utilities
+
+<span class="gu">## Testing</span>
+Run all tests: <span class="sb">`npm test`</span>
+Run with coverage: <span class="sb">`npm test:coverage`</span>
+E2E tests: <span class="sb">`npm run test:e2e`</span>
+
+Before PR:
+<span class="k">1.</span> Run lint
+<span class="k">2.</span> Run tests
+<span class="k">3.</span> Build
+
+<span class="gu">## Component Patterns</span>
+All components should:
+<span class="k">-</span><span class="w"> </span>Use functional components with hooks
+<span class="k">-</span><span class="w"> </span>Have a single responsibility
+<span class="k">-</span><span class="w"> </span>Include PropTypes or TypeScript types
+[... 30 more lines ...]
+
+<span class="gu">## Our Conventions</span>
+<span class="k">-</span><span class="w"> </span>Components go in src/components/{Feature}/
+<span class="k">-</span><span class="w"> </span>API routes follow REST conventions
+<span class="k">-</span><span class="w"> </span>Database queries use raw SQL, not ORM
+
+<span class="gu">## Rules</span>
+<span class="k">-</span><span class="w"> </span>Never use <span class="sb">`any`</span> in TypeScript
+<span class="k">-</span><span class="w"> </span>Always handle loading/error states
+<span class="k">-</span><span class="w"> </span>Don&#39;t commit console.log statements
+</code></pre></div></p>
+<p><strong>After Migration (~100 tokens):</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># MyProject</span>
+
+React e-commerce app. React 18, TypeScript, Node.js, PostgreSQL.
+
+<span class="gu">## Structure</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/components/`</span> - React components
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/api/`</span> - Express routes
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/db/`</span> - Database utilities
+
+<span class="gu">## Commands</span>
+<span class="k">-</span><span class="w"> </span>Tests: <span class="sb">`/test`</span> or <span class="sb">`npm test`</span>
+<span class="k">-</span><span class="w"> </span>Build: <span class="sb">`npm run build`</span>
+
+<span class="gu">## Docs</span>
+<span class="k">-</span><span class="w"> </span>Conventions: <span class="sb">`docs/conventions.md`</span>
+<span class="k">-</span><span class="w"> </span>Architecture: <span class="sb">`docs/architecture.md`</span>
+</code></pre></div></p>
+<p><strong>Files Created:</strong></p>
+<ul>
+<li><code>.claude/commands/test.md</code> - Testing workflow</li>
+<li><code>.claude/skills/react-components/SKILL.md</code> - Component patterns</li>
+<li><code>.claude/rules/typescript.md</code> - TypeScript rules</li>
+<li><code>docs/conventions.md</code> - Project conventions</li>
+</ul>
+<h3 id="verification-checklist">Verification Checklist<a class="headerlink" href="#verification-checklist" title="Permanent link">&para;</a></h3>
+<p>After migration, verify:</p>
+<ul>
+<li>[ ] CLAUDE.md is under 200 tokens (ideally under 100)</li>
+<li>[ ] Every piece of content exists somewhere (nothing lost)</li>
+<li>[ ] Discovery Anchors point to correct files</li>
+<li>[ ] Commands work when invoked (<code>/test</code>, etc.)</li>
+<li>[ ] Skills are recognized by Claude</li>
+</ul>
+<hr />
+<h2 id="common-migration-scenarios">Common Migration Scenarios<a class="headerlink" href="#common-migration-scenarios" title="Permanent link">&para;</a></h2>
+<h3 id="scenario-1-greenfield-project">Scenario 1: Greenfield Project<a class="headerlink" href="#scenario-1-greenfield-project" title="Permanent link">&para;</a></h3>
+<p><strong>Situation:</strong> Starting a new project, want to do it right from the start.</p>
+<p><strong>Approach:</strong></p>
+<ol>
+<li>Create minimal CLAUDE.md with identity and structure only</li>
+<li>Create Skills for your standard patterns as you develop them</li>
+<li>Add Rules as you encounter repeated corrections</li>
+<li>Create Commands for workflows you repeat</li>
+</ol>
+<p><strong>Starting Template:</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># [ProjectName]</span>
+
+[One-sentence description].
+
+<span class="gu">## Stack</span>
+[Technologies]
+
+<span class="gu">## Structure</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/`</span> - Source code
+<span class="k">-</span><span class="w"> </span><span class="sb">`tests/`</span> - Test files
+
+<span class="gu">## Docs</span>
+See <span class="sb">`docs/`</span> for detailed documentation.
+</code></pre></div></p>
+<h3 id="scenario-2-brownfield-with-small-claudemd">Scenario 2: Brownfield with Small CLAUDE.md<a class="headerlink" href="#scenario-2-brownfield-with-small-claudemd" title="Permanent link">&para;</a></h3>
+<p><strong>Situation:</strong> Existing project with a CLAUDE.md under 200 lines that works okay.</p>
+<p><strong>Approach:</strong></p>
+<ol>
+<li>Don't migrate yet—if it works, keep it</li>
+<li>When you want to reuse a pattern, extract just that pattern to a Skill</li>
+<li>Migrate incrementally as patterns emerge</li>
+</ol>
+<p><strong>Rule:</strong> Only migrate when the pain exceeds the effort.</p>
+<h3 id="scenario-3-brownfield-with-huge-claudemd">Scenario 3: Brownfield with Huge CLAUDE.md<a class="headerlink" href="#scenario-3-brownfield-with-huge-claudemd" title="Permanent link">&para;</a></h3>
+<p><strong>Situation:</strong> CLAUDE.md has grown to 500+ lines, Claude ignores some instructions.</p>
+<p><strong>Approach:</strong></p>
+<ol>
+<li>Full Audit: Tag everything with categories</li>
+<li>Aggressive Split: Move all Cat 3, 4, 5, 6 content out</li>
+<li>Keep only Cat 1 (Identity) and Cat 2 (Map) in CLAUDE.md</li>
+<li>Add Discovery Anchors for everything moved</li>
+</ol>
+<p><strong>Priority Order:</strong></p>
+<ol>
+<li>Move Commands first (biggest token savings, easiest)</li>
+<li>Move Patterns to Skills (enables reuse)</li>
+<li>Move Corrections to Rules (enables pattern-matching)</li>
+<li>Move long docs last</li>
+</ol>
+<h3 id="scenario-4-team-with-conflicting-instructions">Scenario 4: Team with Conflicting Instructions<a class="headerlink" href="#scenario-4-team-with-conflicting-instructions" title="Permanent link">&para;</a></h3>
+<p><strong>Situation:</strong> Multiple team members have added conflicting instructions to CLAUDE.md.</p>
+<p><strong>Approach:</strong></p>
+<ol>
+<li>Audit with the team: Tag and discuss each section</li>
+<li>Resolve conflicts before splitting</li>
+<li>Use Skills for shared patterns (version-controlled, reviewable)</li>
+<li>Use Rules for enforced conventions</li>
+<li>Keep CLAUDE.md as minimal shared context</li>
+</ol>
+<p><strong>Process:</strong></p>
+<ol>
+<li>Create a branch for migration</li>
+<li>PR review the split content</li>
+<li>Team agrees on what goes where</li>
+<li>Merge and update CLAUDE.md</li>
+</ol>
+<hr />
+<h2 id="migration-checklist">Migration Checklist<a class="headerlink" href="#migration-checklist" title="Permanent link">&para;</a></h2>
+<h3 id="pre-migration">Pre-Migration<a class="headerlink" href="#pre-migration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Backup current CLAUDE.md</li>
+<li>[ ] Count current token size (rough estimate: lines × 5)</li>
+<li>[ ] Decide if full or incremental migration</li>
+</ul>
+<h3 id="during-migration">During Migration<a class="headerlink" href="#during-migration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Step 1: Audit complete (all sections tagged)</li>
+<li>[ ] Step 2: Split complete (files created in correct locations)</li>
+<li>[ ] Step 3: Link complete (Discovery Anchors in place)</li>
+</ul>
+<h3 id="post-migration">Post-Migration<a class="headerlink" href="#post-migration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] CLAUDE.md under 200 tokens</li>
+<li>[ ] All moved content accessible</li>
+<li>[ ] Commands work when invoked</li>
+<li>[ ] Skills recognized by Claude</li>
+<li>[ ] Rules trigger on correct file patterns</li>
+<li>[ ] No information lost</li>
+</ul>
+<h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Start new Claude conversation</li>
+<li>[ ] Verify Claude has project context</li>
+<li>[ ] Test a command (<code>/test</code> or similar)</li>
+<li>[ ] Ask Claude about a pattern (should load skill)</li>
+<li>[ ] Edit a file that should trigger a rule</li>
+</ul>
+<hr />
+<h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>What You Have</th>
+<th>Where It Goes</th>
+<th>How to Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project description</td>
+<td>Keep in CLAUDE.md</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Directory map</td>
+<td>Keep in CLAUDE.md (brief)</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Run/build/deploy steps</td>
+<td><code>.claude/commands/</code></td>
+<td><code>/command-name</code></td>
+</tr>
+<tr>
+<td>How-to patterns</td>
+<td><code>.claude/skills/</code></td>
+<td>Claude auto-loads</td>
+</tr>
+<tr>
+<td>File conventions</td>
+<td><code>.claude/rules/</code></td>
+<td>Auto-triggered</td>
+</tr>
+<tr>
+<td>Corrections</td>
+<td><code>.claude/rules/</code></td>
+<td>Auto-triggered</td>
+</tr>
+<tr>
+<td>Long documentation</td>
+<td><code>docs/</code></td>
+<td><code>See docs/file.md</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Audit</strong>: Tag every section with its Information Category (1-6)</li>
+<li><strong>Split</strong>: Move content to proper destinations (Commands, Skills, Rules, Docs)</li>
+<li><strong>Link</strong>: Replace moved content with Discovery Anchors</li>
+</ol>
+<p><strong>The Goal:</strong> A lean CLAUDE.md (~100 tokens) that serves as an index, with detailed content
+living in the appropriate mechanism for each type of information.</p>
+<p><strong>Remember:</strong> Migrate when the pain exceeds the effort. A working messy CLAUDE.md is better
+than a broken organized one.</p>
+<hr />
+<p><em>Previous: <a href="../05-claudemd-best-practices/">Section 5 - CLAUDE.md Best Practices</a></em>
+<em>Next: <a href="../07-configurable-skills/">Section 7 - Configurable Skills</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

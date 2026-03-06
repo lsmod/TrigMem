@@ -1,0 +1,1961 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Trigallez's Memory Management Method for Claude Code">
+      
+      
+        <meta name="author" content="Arno Trigallez">
+      
+      
+        <link rel="canonical" href="https://lsmod.github.io/TrigMem/04-two-phase-decision-guide/">
+      
+      
+        <link rel="prev" href="../03-storage-options/">
+      
+      
+        <link rel="next" href="../05-claudemd-best-practices/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>4. Two-Phase Decision Guide - TrigMem</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-4-the-two-phase-decision-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TrigMem" class="md-header__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TrigMem
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Two-Phase Decision Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TrigMem" class="md-nav__button md-logo" aria-label="TrigMem" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    TrigMem
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lsmod/TrigMem" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lsmod/TrigMem
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-what-youre-storing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. What You're Storing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-storage-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Storage Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Two-Phase Decision Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-this-guide-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How This Guide Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-the-triage-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: The Triage Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: The Triage Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-is-this-a-user-triggered-action-with-side-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: Is this a user-triggered action with side effects?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-is-this-universal-how-to-knowledge-portable-across-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: Is this universal how-to knowledge portable across projects?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-does-this-need-context-isolation-or-parallel-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3: Does this need context isolation or parallel execution?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-is-this-always-needed-project-context-or-corrections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: Is this always-needed project context or corrections?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-decision-flowchart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Decision Flowchart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-refinement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Refinement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Command
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-it-a-simple-single-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it a simple, single action?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#does-it-need-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Does it need arguments?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-claude-never-auto-invoke-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should Claude NEVER auto-invoke this?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Skill
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-it-truly-portable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it truly portable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-claude-auto-invoke-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should Claude auto-invoke it?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-configurable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it configurable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-sub-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Sub-agent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Sub-agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-do-you-need-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do you need isolation?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#does-the-agent-need-special-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Does the agent need special context?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-it-reference-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should it reference skills?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sub-agents-dont-inherit-claudemd-skills-or-rules-use-skills-frontmatter-for-custom-agents-or-pass-content-in-the-prompt-for-ad-hoc-spawns-see-section-3-sub-agent-context-isolation-for-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &gt; ⚠️ Sub-agents don't inherit CLAUDE.md, skills, or rules. Use skills: frontmatter for custom agents, or pass content in the prompt for ad-hoc spawns. See Section 3 — Sub-agent Context Isolation for details.
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="&gt; ⚠️ Sub-agents don&#39;t inherit CLAUDE.md, skills, or rules. Use skills: frontmatter for custom agents, or pass content in the prompt for ad-hoc spawns. See Section 3 — Sub-agent Context Isolation for details.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-claudemd-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → CLAUDE.md / Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → CLAUDE.md / Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-it-project-identity-or-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it project identity or structure?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-tied-to-specific-file-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it tied to specific file patterns?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-a-correction-for-repeated-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it a correction for repeated mistakes?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-too-long-for-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it too long for CLAUDE.md?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-pointer-pattern-external-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Pointer Pattern (External Docs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Pointer Pattern (External Docs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-the-pointer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the pointer pattern:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-decision-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Decision Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-we-use-x-technology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "We use X technology"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-runbuilddeploy-something" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "Run/Build/Deploy something"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-follow-this-coding-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "Follow this coding standard"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-enforce-an-architectural-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "Enforce an architectural standard"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-claudemd-best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. CLAUDE.md Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-migration-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Migration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-configurable-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Configurable Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/worked-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-this-guide-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How This Guide Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-the-triage-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: The Triage Questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: The Triage Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-is-this-a-user-triggered-action-with-side-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1: Is this a user-triggered action with side effects?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-is-this-universal-how-to-knowledge-portable-across-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2: Is this universal how-to knowledge portable across projects?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-does-this-need-context-isolation-or-parallel-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3: Does this need context isolation or parallel execution?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-is-this-always-needed-project-context-or-corrections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4: Is this always-needed project context or corrections?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-decision-flowchart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Decision Flowchart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-refinement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Refinement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Refinement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Command
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-it-a-simple-single-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it a simple, single action?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#does-it-need-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Does it need arguments?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-claude-never-auto-invoke-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should Claude NEVER auto-invoke this?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Skill
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Skill">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-it-truly-portable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it truly portable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-claude-auto-invoke-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should Claude auto-invoke it?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-configurable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it configurable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-sub-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Sub-agent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Sub-agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-do-you-need-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do you need isolation?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#does-the-agent-need-special-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Does the agent need special context?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#should-it-reference-skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Should it reference skills?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sub-agents-dont-inherit-claudemd-skills-or-rules-use-skills-frontmatter-for-custom-agents-or-pass-content-in-the-prompt-for-ad-hoc-spawns-see-section-3-sub-agent-context-isolation-for-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &gt; ⚠️ Sub-agents don't inherit CLAUDE.md, skills, or rules. Use skills: frontmatter for custom agents, or pass content in the prompt for ad-hoc spawns. See Section 3 — Sub-agent Context Isolation for details.
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="&gt; ⚠️ Sub-agents don&#39;t inherit CLAUDE.md, skills, or rules. Use skills: frontmatter for custom agents, or pass content in the prompt for ad-hoc spawns. See Section 3 — Sub-agent Context Isolation for details.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-claudemd-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → CLAUDE.md / Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → CLAUDE.md / Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is-it-project-identity-or-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it project identity or structure?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-tied-to-specific-file-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it tied to specific file patterns?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-a-correction-for-repeated-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it a correction for repeated mistakes?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-it-too-long-for-claudemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is it too long for CLAUDE.md?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-pointer-pattern-external-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 → Pointer Pattern (External Docs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2 → Pointer Pattern (External Docs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-the-pointer-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the pointer pattern:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-decision-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Decision Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-we-use-x-technology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "We use X technology"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-runbuilddeploy-something" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "Run/Build/Deploy something"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-follow-this-coding-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "Follow this coding standard"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-enforce-an-architectural-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern: "Enforce an architectural standard"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="section-4-the-two-phase-decision-guide">Section 4: The Two-Phase Decision Guide<a class="headerlink" href="#section-4-the-two-phase-decision-guide" title="Permanent link">&para;</a></h1>
+<p>This is the <strong>practical heart</strong> of TrigMem—where theory meets action. The two-phase approach lets you
+make quick, reliable decisions—most common cases can be resolved in under 30 seconds. If you
+understand the theory (Section 1) and categories (Section 2), this guide shows you how to apply them.</p>
+<hr />
+<h2 id="how-this-guide-works">How This Guide Works<a class="headerlink" href="#how-this-guide-works" title="Permanent link">&para;</a></h2>
+<p><strong>Phase 1: Triage</strong> — Answer 4 quick questions to identify your destination.</p>
+<p><strong>Phase 2: Refinement</strong> — Apply destination-specific guidance to finalize placement.</p>
+<blockquote>
+<p><strong>Note for AI Agents</strong>: This two-phase approach is designed for human learning. If you're an AI
+reading this, you can often decide directly by analyzing the content against the 6 information
+categories (Section 2) and the mechanism characteristics (Section 3). The phased approach helps
+humans build intuition.</p>
+</blockquote>
+<hr />
+<h2 id="phase-1-the-triage-questions">Phase 1: The Triage Questions<a class="headerlink" href="#phase-1-the-triage-questions" title="Permanent link">&para;</a></h2>
+<p>Answer these questions in order. Stop at the first "Yes."</p>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│                           PHASE 1: TRIAGE                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Q1: Is this a USER-TRIGGERED ACTION with side effects?                    │
+│      (build, deploy, generate, run tests)                                   │
+│      YES → COMMAND                                                          │
+│                                                                             │
+│  Q2: Is this UNIVERSAL HOW-TO knowledge portable across projects?           │
+│      (patterns, methodologies, procedures)                                  │
+│      YES → SKILL                                                            │
+│                                                                             │
+│  Q3: Does this need CONTEXT ISOLATION or parallel execution?                │
+│      (large refactoring, independent workstreams)                           │
+│      YES → SUB-AGENT                                                        │
+│                                                                             │
+│  Q4: Is this ALWAYS-NEEDED project context or corrections?                  │
+│      (identity, structure, rules, fixes)                                    │
+│      YES → CLAUDE.md / RULES                                                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="q1-is-this-a-user-triggered-action-with-side-effects">Q1: Is this a user-triggered action with side effects?<a class="headerlink" href="#q1-is-this-a-user-triggered-action-with-side-effects" title="Permanent link">&para;</a></h3>
+<p><strong>Examples that say YES:</strong></p>
+<ul>
+<li>"Deploy to staging"</li>
+<li>"Run the full test suite"</li>
+<li>"Generate a new component from template"</li>
+<li>"Create a PR with our format"</li>
+</ul>
+<p><strong>Examples that say NO:</strong></p>
+<ul>
+<li>"How to deploy" (that's knowledge, not an action)</li>
+<li>"We use Jest for testing" (that's identity)</li>
+</ul>
+<p><strong>→ YES: Go to Phase 2 → Command</strong></p>
+<hr />
+<h3 id="q2-is-this-universal-how-to-knowledge-portable-across-projects">Q2: Is this universal how-to knowledge portable across projects?<a class="headerlink" href="#q2-is-this-universal-how-to-knowledge-portable-across-projects" title="Permanent link">&para;</a></h3>
+<p><strong>Examples that say YES:</strong></p>
+<ul>
+<li>"How to implement Hexagonal Architecture"</li>
+<li>"How to write a React custom hook"</li>
+<li>"TDD workflow: red-green-refactor"</li>
+<li>"Code review best practices"</li>
+</ul>
+<p><strong>Examples that say NO:</strong></p>
+<ul>
+<li>"In this project, domain goes in <code>src/domain/</code>" (that's project-specific)</li>
+<li>"Run tests with <code>pnpm test</code>" (that's a command)</li>
+</ul>
+<p><strong>→ YES: Go to Phase 2 → Skill</strong></p>
+<hr />
+<h3 id="q3-does-this-need-context-isolation-or-parallel-execution">Q3: Does this need context isolation or parallel execution?<a class="headerlink" href="#q3-does-this-need-context-isolation-or-parallel-execution" title="Permanent link">&para;</a></h3>
+<p><strong>Examples that say YES:</strong></p>
+<ul>
+<li>"Refactor all API handlers to new pattern"</li>
+<li>"Fix these 5 independent bugs"</li>
+<li>"Experiment with a new approach without polluting context"</li>
+<li>"Large task with many planning/coding/testing steps"</li>
+</ul>
+<p><strong>Examples that say NO:</strong></p>
+<ul>
+<li>"Fix this one bug" (simple task, no isolation needed)</li>
+<li>"How to refactor" (that's knowledge for a skill)</li>
+</ul>
+<p><strong>→ YES: Go to Phase 2 → Sub-agent</strong></p>
+<hr />
+<h3 id="q4-is-this-always-needed-project-context-or-corrections">Q4: Is this always-needed project context or corrections?<a class="headerlink" href="#q4-is-this-always-needed-project-context-or-corrections" title="Permanent link">&para;</a></h3>
+<p>If you've reached this question, your content is likely:
+- Project identity (what is this project?)
+- Codebase Structure (where is everything?)
+- Architectural guidance (how we do things here)
+- Iterative corrections (don't make that mistake again)</p>
+<p><strong>→ YES: Go to Phase 2 → CLAUDE.md / Rules</strong></p>
+<hr />
+<h2 id="visual-decision-flowchart">Visual Decision Flowchart<a class="headerlink" href="#visual-decision-flowchart" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    START([What do I want to store?]) --&gt; Q1{Q1: User-triggered&lt;br/&gt;action with&lt;br/&gt;side effects?}
+
+    Q1 --&gt;|Yes| CMD[COMMAND]
+    Q1 --&gt;|No| Q2{Q2: Universal how-to&lt;br/&gt;knowledge, portable&lt;br/&gt;across projects?}
+
+    Q2 --&gt;|Yes| SKILL[SKILL]
+    Q2 --&gt;|No| Q3{Q3: Needs context&lt;br/&gt;isolation or&lt;br/&gt;parallel execution?}
+
+    Q3 --&gt;|Yes| AGENT[SUB-AGENT]
+    Q3 --&gt;|No| Q4{Q4: Always-needed&lt;br/&gt;context or&lt;br/&gt;corrections?}
+
+    Q4 --&gt;|Yes| CONTEXT[CLAUDE.md / RULES]
+    Q4 --&gt;|No| DOCS[External Docs&lt;br/&gt;+ Pointer]
+
+    CMD --&gt; P2CMD[Phase 2: Command]
+    SKILL --&gt; P2SKILL[Phase 2: Skill]
+    AGENT --&gt; P2AGENT[Phase 2: Sub-agent]
+    CONTEXT --&gt; P2CTX[Phase 2: CLAUDE.md/Rules]
+    DOCS --&gt; P2DOCS[Phase 2: Pointer Pattern]
+
+    style START fill:#e1f5fe
+    style CMD fill:#c8e6c9
+    style SKILL fill:#fff9c4
+    style AGENT fill:#f3e5f5
+    style CONTEXT fill:#ffe0b2
+    style DOCS fill:#f5f5f5</code></pre>
+<hr />
+<h2 id="phase-2-refinement">Phase 2: Refinement<a class="headerlink" href="#phase-2-refinement" title="Permanent link">&para;</a></h2>
+<p>Once you've identified the destination, use these refinement guidelines.</p>
+<blockquote>
+<p><strong>Phase 2 Is Iterative—Like Refactoring</strong></p>
+<p>You don't need to get placement perfect on the first try. Phase 2 is like refactoring code:
+start with a reasonable placement, then adjust as you learn what works.</p>
+<ul>
+<li><strong>It's OK to move things later</strong>: A skill that starts in CLAUDE.md can move to Rules</li>
+<li><strong>Consider trade-offs over time</strong>: Token economy vs. precision vs. convenience</li>
+<li><strong>Watch for signals</strong>: If Claude ignores a rule, maybe it's in the wrong place</li>
+<li><strong>Stuck between two destinations?</strong> Use the <a href="../01-theory/#the-mechanism-dimension-matrix">Mechanism × Dimension Matrix</a> to compare trade-offs</li>
+</ul>
+<p>The goal is a <em>working</em> system, not a perfect one. Iterate based on real usage.</p>
+</blockquote>
+<hr />
+<h3 id="phase-2-command">Phase 2 → Command<a class="headerlink" href="#phase-2-command" title="Permanent link">&para;</a></h3>
+<p>You've determined this is a user-triggered action. Now refine:</p>
+<h4 id="is-it-a-simple-single-action">Is it a simple, single action?<a class="headerlink" href="#is-it-a-simple-single-action" title="Permanent link">&para;</a></h4>
+<p>Create a straightforward command file.</p>
+<div class="highlight"><pre><span></span><code>.claude/commands/deploy-staging.md
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gh"># Deploy to Staging</span>
+
+Deploy the current branch to the staging environment.
+
+<span class="gu">## Steps</span>
+<span class="k">1.</span> Run tests: <span class="sb">`pnpm test`</span>
+<span class="k">2.</span> Build: <span class="sb">`pnpm build`</span>
+<span class="k">3.</span> Deploy: <span class="sb">`./scripts/deploy-staging.sh`</span>
+<span class="k">4.</span> Verify: <span class="sb">`curl https://staging.example.com/health`</span>
+</code></pre></div>
+<h4 id="does-it-need-arguments">Does it need arguments?<a class="headerlink" href="#does-it-need-arguments" title="Permanent link">&para;</a></h4>
+<p>Use the <code>argument-hint</code> frontmatter.</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">argument-hint</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;[environment]&quot;</span>
+<span class="nn">---</span>
+</code></pre></div>
+<h4 id="should-claude-never-auto-invoke-this">Should Claude NEVER auto-invoke this?<a class="headerlink" href="#should-claude-never-auto-invoke-this" title="Permanent link">&para;</a></h4>
+<p>Commands are user-only by default—Claude cannot auto-invoke them. This is the right choice for
+actions with significant side effects.</p>
+<p><strong>Micro-examples:</strong></p>
+<ul>
+<li>"Deploy to production" → Command (explicit user action, significant side effects)</li>
+<li>"Extract the deployment steps into a reusable skill" → If the how-to knowledge is universal, refactor it from a Command into a Skill</li>
+</ul>
+<p><em>See <a href="../examples/worked-examples/">Worked Examples</a> for complete walkthroughs.</em></p>
+<hr />
+<h3 id="phase-2-skill">Phase 2 → Skill<a class="headerlink" href="#phase-2-skill" title="Permanent link">&para;</a></h3>
+<p>You've determined this is reusable knowledge. Now refine:</p>
+<h4 id="is-it-truly-portable">Is it truly portable?<a class="headerlink" href="#is-it-truly-portable" title="Permanent link">&para;</a></h4>
+<p>Check: Could this skill work in ANY project using the same technology?</p>
+<p><strong>Good (portable):</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># Hexagonal Architecture</span>
+
+Hexagonal Architecture separates business logic from infrastructure...
+</code></pre></div></p>
+<p><strong>Bad (has hardcoded paths):</strong>
+<div class="highlight"><pre><span></span><code><span class="gh"># Hexagonal Architecture</span>
+
+Put domain logic in <span class="sb">`src/domain/`</span> and infrastructure in <span class="sb">`src/infra/`</span>...
+</code></pre></div></p>
+<p>If you have project-specific paths, extract them to Rules or CLAUDE.md.</p>
+<h4 id="should-claude-auto-invoke-it">Should Claude auto-invoke it?<a class="headerlink" href="#should-claude-auto-invoke-it" title="Permanent link">&para;</a></h4>
+<p>By default, skills can be invoked by both user (<code>/skill-name</code>) and Claude (when relevant).</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Frontmatter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default (both can invoke)</td>
+<td><em>(none needed)</em></td>
+</tr>
+<tr>
+<td>User-only</td>
+<td><code>disable-model-invocation: true</code></td>
+</tr>
+<tr>
+<td>Claude-only (background knowledge)</td>
+<td><code>user-invocable: false</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="is-it-configurable">Is it configurable?<a class="headerlink" href="#is-it-configurable" title="Permanent link">&para;</a></h4>
+<p>If the skill needs project-specific values, consider the configurable skill pattern
+(see <a href="../07-configurable-skills/">Section 7 - Configurable Skills</a>).</p>
+<p><strong>Micro-example:</strong> "How to implement repository pattern" → Skill (universal how-to knowledge)</p>
+<p><em>See <a href="../examples/worked-examples/">Worked Examples</a> for complete walkthroughs.</em></p>
+<hr />
+<h3 id="phase-2-sub-agent">Phase 2 → Sub-agent<a class="headerlink" href="#phase-2-sub-agent" title="Permanent link">&para;</a></h3>
+<p>You've determined this needs isolation. Now refine:</p>
+<h4 id="why-do-you-need-isolation">Why do you need isolation?<a class="headerlink" href="#why-do-you-need-isolation" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parallel work</strong></td>
+<td>Multiple specialist sub-agents (frontend dev, backend dev, code reviewer)</td>
+</tr>
+<tr>
+<td><strong>Complex multi-step</strong></td>
+<td>Large refactoring with plan → implement → test cycle</td>
+</tr>
+<tr>
+<td><strong>Experimentation</strong></td>
+<td>Try an approach without polluting main context</td>
+</tr>
+<tr>
+<td><strong>Clean handoff</strong></td>
+<td>Get focused results back to main conversation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="does-the-agent-need-special-context">Does the agent need special context?<a class="headerlink" href="#does-the-agent-need-special-context" title="Permanent link">&para;</a></h4>
+<p>Agents can be configured with specific skills, tools, or instructions.</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># Refactoring Agent</span>
+
+You are a refactoring specialist. Use the <span class="sb">`hexagonal-architecture`</span> skill
+when restructuring code.
+
+<span class="gu">## Your Task</span>
+Refactor the authentication module to follow Hexagonal Architecture.
+
+<span class="gu">## Constraints</span>
+<span class="k">-</span><span class="w"> </span>Don&#39;t modify the API contracts
+<span class="k">-</span><span class="w"> </span>Maintain all existing tests
+</code></pre></div>
+<h4 id="should-it-reference-skills">Should it reference skills?<a class="headerlink" href="#should-it-reference-skills" title="Permanent link">&para;</a></h4>
+<p>Agents should <strong>reference</strong> skills for patterns rather than duplicating knowledge.
+This keeps agents lightweight and focused on execution.</p>
+<p><strong>Micro-examples:</strong></p>
+<ul>
+<li>"Refactor all API handlers" → Sub-agent (large task, benefits from isolation)</li>
+<li>"Spawn a frontend specialist and backend specialist in parallel" → Sub-agents (domain-specific experts)</li>
+<li>"Run a code reviewer agent alongside a documentation agent" → Sub-agents (independent workstreams)</li>
+</ul>
+<p><em>See <a href="../examples/worked-examples/">Worked Examples</a> for complete walkthroughs.</em></p>
+<h2 id="sub-agents-dont-inherit-claudemd-skills-or-rules-use-skills-frontmatter-for-custom-agents-or-pass-content-in-the-prompt-for-ad-hoc-spawns-see-section-3-sub-agent-context-isolation-for-details">&gt; <strong>⚠️ Sub-agents don't inherit CLAUDE.md, skills, or rules.</strong> Use <code>skills:</code> frontmatter for custom agents, or pass content in the prompt for ad-hoc spawns. See <a href="../03-storage-options/#5-sub-agents">Section 3 — Sub-agent Context Isolation</a> for details.<a class="headerlink" href="#sub-agents-dont-inherit-claudemd-skills-or-rules-use-skills-frontmatter-for-custom-agents-or-pass-content-in-the-prompt-for-ad-hoc-spawns-see-section-3-sub-agent-context-isolation-for-details" title="Permanent link">&para;</a></h2>
+<h3 id="phase-2-claudemd-rules">Phase 2 → CLAUDE.md / Rules<a class="headerlink" href="#phase-2-claudemd-rules" title="Permanent link">&para;</a></h3>
+<p>You've determined this is always-needed context. Now refine:</p>
+<h4 id="is-it-project-identity-or-structure">Is it project identity or structure?<a class="headerlink" href="#is-it-project-identity-or-structure" title="Permanent link">&para;</a></h4>
+<p>→ <strong>CLAUDE.md</strong></p>
+<div class="highlight"><pre><span></span><code><span class="gh"># Project: ShopFlow</span>
+B2B e-commerce platform for wholesale distributors.
+
+<span class="gu">## Stack</span>
+Next.js 14, TypeScript, Prisma, PostgreSQL
+
+<span class="gu">## Structure</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/app/`</span> - Next.js app router pages
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/components/`</span> - React components
+<span class="k">-</span><span class="w"> </span><span class="sb">`src/lib/`</span> - Shared utilities
+</code></pre></div>
+<h4 id="is-it-tied-to-specific-file-patterns">Is it tied to specific file patterns?<a class="headerlink" href="#is-it-tied-to-specific-file-patterns" title="Permanent link">&para;</a></h4>
+<p>→ <strong>Rules</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># .claude/rules/typescript.md</span>
+<span class="nn">---</span>
+<span class="nt">globs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*.ts&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.tsx&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+
+<span class="c1"># TypeScript Conventions</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Use `unknown` instead of `any`</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefer interfaces over types for object shapes</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always specify return types for functions</span>
+</code></pre></div>
+<h4 id="is-it-a-correction-for-repeated-mistakes">Is it a correction for repeated mistakes?<a class="headerlink" href="#is-it-a-correction-for-repeated-mistakes" title="Permanent link">&para;</a></h4>
+<p>→ <strong>Rules</strong> (targeted) or <strong>CLAUDE.md</strong> (if critical and universal)</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># .claude/rules/prisma.md</span>
+<span class="nn">---</span>
+<span class="nt">globs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;prisma/**&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*.prisma&quot;</span><span class="p p-Indicator">]</span>
+<span class="nn">---</span>
+
+<span class="c1"># Prisma Rules</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never INSERT directly to `user` table - use `create_user()` function</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always include `deleted_at IS NULL` in queries</span>
+</code></pre></div>
+<h4 id="is-it-too-long-for-claudemd">Is it too long for CLAUDE.md?<a class="headerlink" href="#is-it-too-long-for-claudemd" title="Permanent link">&para;</a></h4>
+<p>Use the <strong>pointer pattern</strong>: keep brief reference in CLAUDE.md, full content in external docs.</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># In CLAUDE.md</span>
+See <span class="sb">`docs/architecture.md`</span> for full architecture documentation.
+</code></pre></div>
+<p><strong>Micro-example:</strong> "We use PostgreSQL with Prisma" → CLAUDE.md (project identity, always needed)</p>
+<p><em>See <a href="../examples/worked-examples/">Worked Examples</a> for complete walkthroughs.</em></p>
+<hr />
+<h3 id="phase-2-pointer-pattern-external-docs">Phase 2 → Pointer Pattern (External Docs)<a class="headerlink" href="#phase-2-pointer-pattern-external-docs" title="Permanent link">&para;</a></h3>
+<p><strong>Recall Q4:</strong> <em>"Is this always-needed project context or corrections?"</em> (identity, structure, rules, fixes)</p>
+<p>If you answered "No" to Q4, your content might be:
+- Detailed documentation that's too long for CLAUDE.md
+- Reference material not needed in every conversation
+- Historical context or explanations</p>
+<h4 id="use-the-pointer-pattern">Use the pointer pattern:<a class="headerlink" href="#use-the-pointer-pattern" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Store full content</strong> in <code>docs/</code> folder</li>
+<li><strong>Add brief pointer</strong> in CLAUDE.md or relevant skill</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="gh"># In CLAUDE.md</span>
+<span class="gu">## Documentation</span>
+<span class="k">-</span><span class="w"> </span>Architecture: <span class="sb">`docs/architecture.md`</span>
+<span class="k">-</span><span class="w"> </span>Testing philosophy: <span class="sb">`docs/testing.md`</span>
+<span class="k">-</span><span class="w"> </span>API reference: <span class="sb">`docs/api.md`</span>
+</code></pre></div>
+<p>Claude will read these files when relevant, but they won't consume tokens in every message.</p>
+<hr />
+<h2 id="quick-decision-reference">Quick Decision Reference<a class="headerlink" href="#quick-decision-reference" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>If your content is...</th>
+<th>Then use...</th>
+<th>Because...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A workflow/action users trigger</td>
+<td><strong>Command</strong></td>
+<td>Explicit control, side effects</td>
+</tr>
+<tr>
+<td>Universal how-to knowledge</td>
+<td><strong>Skill</strong></td>
+<td>Reusable, on-demand, portable</td>
+</tr>
+<tr>
+<td>Large/complex isolated task</td>
+<td><strong>Sub-agent</strong></td>
+<td>Context isolation, parallelization</td>
+</tr>
+<tr>
+<td>Project identity/structure</td>
+<td><strong>CLAUDE.md</strong></td>
+<td>Always needed, minimal tokens</td>
+</tr>
+<tr>
+<td>File-type conventions</td>
+<td><strong>Rules</strong></td>
+<td>Pattern-triggered, contextual</td>
+</tr>
+<tr>
+<td>Mistake corrections</td>
+<td><strong>Rules</strong></td>
+<td>Automatic enforcement</td>
+</tr>
+<tr>
+<td>Long reference docs</td>
+<td><strong>External + Pointer</strong></td>
+<td>Token economy</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">&para;</a></h2>
+<p>Phase 2 sometimes reveals that a single piece of knowledge spans multiple categories.
+When that happens, <strong>decompose it across mechanisms</strong> — each part goes where it fits best.</p>
+<h3 id="pattern-we-use-x-technology">Pattern: "We use X technology"<a class="headerlink" href="#pattern-we-use-x-technology" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Identity statement</strong> (e.g., "We use PostgreSQL") → CLAUDE.md</li>
+<li><strong>How to use it</strong> (e.g., "How to write Prisma queries") → Skill</li>
+<li><strong>Our conventions</strong> (e.g., "Always use soft deletes") → Rules</li>
+</ul>
+<h3 id="pattern-runbuilddeploy-something">Pattern: "Run/Build/Deploy something"<a class="headerlink" href="#pattern-runbuilddeploy-something" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>The action itself</strong> → Command</li>
+<li><strong>How the process works</strong> (if teaching) → Skill</li>
+<li><strong>Prerequisites</strong> (e.g., "Requires Docker running") → CLAUDE.md</li>
+</ul>
+<h3 id="pattern-follow-this-coding-standard">Pattern: "Follow this coding standard"<a class="headerlink" href="#pattern-follow-this-coding-standard" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Universal standard</strong> (e.g., "SOLID principles") → Skill</li>
+<li><strong>Our specific rules</strong> (e.g., "Use kebab-case for files") → Rules</li>
+<li><strong>Why we do it</strong> (if long explanation) → External docs + pointer</li>
+</ul>
+<h3 id="pattern-enforce-an-architectural-standard">Pattern: "Enforce an architectural standard"<a class="headerlink" href="#pattern-enforce-an-architectural-standard" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>The pattern itself</strong> (e.g., "Repository Pattern principles") → Skill</li>
+<li><strong>Our conventions</strong> (e.g., "Repos live in <code>src/repos/</code>, use Prisma") → Rule</li>
+<li><strong>An agent that applies it</strong> (e.g., "Refactor all data access to use repos") → Sub-agent referencing the Skill</li>
+</ul>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p><strong>Phase 1 Triage</strong> gets you to the right destination:</p>
+<ol>
+<li>User-triggered action? → Command</li>
+<li>Universal how-to? → Skill</li>
+<li>Needs isolation? → Sub-agent</li>
+<li>Always-needed context? → CLAUDE.md / Rules</li>
+</ol>
+<p><strong>Phase 2 Refinement</strong> helps you finalize:</p>
+<ul>
+<li>Commands: Simple vs. complex, arguments, user-only (default)</li>
+<li>Skills: Portable check, invocation control, configurable pattern</li>
+<li>Sub-agents: Isolation reason, context needs, skill references</li>
+<li>CLAUDE.md/Rules: Identity vs. patterns, file triggers, pointer pattern</li>
+</ul>
+<p>For most decisions, Phase 1 is enough. Phase 2 handles the nuances.</p>
+<hr />
+<p><em>Previous: <a href="../03-storage-options/">Section 3 - The Storage Options</a></em>
+<em>Next: <a href="../05-claudemd-best-practices/">Section 5 - CLAUDE.md Best Practices</a></em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
